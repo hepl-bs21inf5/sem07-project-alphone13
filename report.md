@@ -1,0 +1,3 @@
+JOURNAL DE BORD 
+
+7.11.2024:
