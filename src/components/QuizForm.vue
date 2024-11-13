@@ -9,24 +9,22 @@
   const filled = computed<boolean>(() => cheval.value !== null);
 
   let score = 0 ; /* initialisation du score à 0*/ 
-  let bonnereponse= [cheval, 10, Eiffel,] /*liste mixte des bonnes réponses*/
+  let bonnereponse = [cheval, 10, Eiffel,] /*liste mixte des bonnes réponses*/
 
   function submit(event: Event): void {
-    if ((submit(event)) === (bonnereponse)) /*comparaison de l'entrée avec les bonnes réponses. aussi bien faire attention à bien mettre les parenthèses */ {
+    if (cheval.value == "blanc") {/*comparaison de l'entrée avec les bonnes réponses. aussi bien faire attention à bien mettre les parenthèses + faire plusieurs conditions pour chaque réponse */ {
       score +=1; /*incrémenter le score pour chaque bonne réponse trouvée*/ 
-    } else {
-      score==0
-    }
+    }}
    /*Mettre ICI une condition pour incrémenter le score afin que ça fasse plus 1 à chaque bonne réponse. Il faut le faire en Javascript. créer la variable 1score1, */
     event.preventDefault();
     if (filled.value) {
-      alert(`Vous avez choisi la couleur ${cheval.value} !`);
+      alert(`Vous avez choisi le score ${score} !`); /*alerte score final*/
     }
     else {
       alert('Vous avez pas réussi à avoir toutes les bonnes réponses')
     }
   } 
-  function resetquiz(submit): any {
+  function resetquiz(): any {
     console.log('Le quizz a été réinitialisé')
   }
 </script>
