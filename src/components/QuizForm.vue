@@ -1,48 +1,40 @@
 <script setup lang="ts">
-  import { computed, ref } from "vue";
+import { computed, ref } from 'vue'
 
-  
-  const cheval = ref<string | null>(null);
-  const calcul = ref<string | null>(null);
-  const Eiffel = ref<string | null>(null);
-  
-  const filled = computed<boolean>(() => cheval.value !== null);
+const cheval = ref<string | null>(null)
+const calcul = ref<string | null>(null)
+const Eiffel = ref<string | null>(null)
 
-  let score = 0 ; /* initialisation du score à 0*/ 
-  let bonnereponse = [cheval, 10, Eiffel,] /*liste mixte des bonnes réponses*/
+const filled = computed<boolean>(() => cheval.value !== null)
 
-  function submit(event: Event): void {
-    /*Mettre ICI une condition pour incrémenter le score afin que ça fasse plus 1 à chaque bonne réponse. Il faut le faire en Javascript. créer la variable 1score1, */
-
-    if (cheval.value == "blanc") {/*comparaison de l'entrée avec les bonnes réponses. aussi bien faire attention à bien mettre les parenthèses + faire plusieurs conditions pour chaque réponse */ {
-      score +=1; /*incrémenter le score pour chaque bonne réponse trouvée*/ 
-    }}
-    if (calcul.value == "10") { {/*on a mis la valeur en str donc il faut aussi la mettre en str ici */
-      score +=1;
-    }}
-    if (Eiffel.value == "Paris") {{
-      score +=1; 
-    }}
-   
-    event.preventDefault();
-    if (filled.value) {
-      alert(`Vous avez choisi le score ${score} !`); /*alerte score final*/
-    }
-    else {
-      alert('Vous avez pas réussi à avoir toutes les bonnes réponses')
-    }
-  } 
-  function resetquiz(): any {
-    console.log('Le quizz a été réinitialisé')
+function submit(event: Event): void {
+  event.preventDefault()
+  let score: number = 0
+  if (cheval.value === 'blanc') {
+    score += 1
   }
+
+  if (calcul.value == '10') {
+    /*on a mis la valeur en str donc il faut aussi la mettre en str ici */
+    score += 1
+  }
+  if (Eiffel.value == 'Paris') {
+    score += 1
+  }
+
+  alert(`Votre score est de ${score} sur 2`)
+}
+function reset(event: Event): void {
+  event.preventDefault()
+
+  cheval.value = null
+  calcul.value = null
+  Eiffel.value = null
+}
 </script>
-<!--Bouton de réinitialisation du quiz-->
 
-<button class="btn btn-secondary" @click="reset">Réinitialiser</button>
-
-<!--Un template pour toutes les questions-->
-<template>  <!--partie 1 pour les premières questions-->
-  <form @submit="submit">
+<template>
+  <form>
     De quelle couleur est le cheval blanc de Napoléon ?
     <div class="form-check">
       <input
@@ -77,11 +69,9 @@
       />
       <label class="form-check-label" for="chevalNoir">Noir</label>
     </div>
-   
-  </form>
 
-  <!--partie 2 pour la 2ème question-->
-  <form @submit="submit">
+    <!--partie 2 pour la 2ème question-->
+
     COmbien font 2+3+5 ?
     <div class="form-check">
       <input
@@ -127,12 +117,8 @@
       />
       <label class="form-check-label" for="calcul4">9</label>
     </div>
-  
-  </form>
 
-
-<!--partie 3 pour la 3ème question-->
-  <form @submit="submit">
+    <!--partie 3 pour la 3ème question-->
     Où se trouve la Tour-Eiffel ?
     <div class="form-check">
       <input
@@ -178,14 +164,7 @@
       />
       <label class="form-check-label" for="Eiffel4">Lausanne</label>
     </div>
-    <button
-      class="btn btn-primary"
-      :class="{ disabled: !filled }"
-      type="submit"
-    >
-      Terminer
-    </button>
   </form>
-
+  <button class="btn btn-primary" :class="{ disabled: !filled }" type="submit">Terminer</button>
+  <button class="btn btn-primary" @click="reset">Réinitialiser</button>
 </template>
-

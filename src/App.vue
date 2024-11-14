@@ -1,12 +1,13 @@
 <script setup lang="ts">
-  import { RouterLink, RouterView } from "vue-router";
+import { RouterLink, RouterView } from 'vue-router'
 </script>
-
+<!--là c'est pour modifier la arre de navigation et les logos qui vont avec-->
 <template>
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
       <RouterLink class="navbar-brand" to="/">
-        <i class="bi bi-question-square"></i>
+        <i class="bi bi-alexa"></i>
+        <!--là on a modifié licône du logo qui s'affiche à côté de quiz-->
         Quiz
       </RouterLink>
       <button
@@ -24,7 +25,7 @@
         <ul class="navbar-nav">
           <li class="nav-item">
             <RouterLink class="nav-link" to="/about">
-              <i class="bi bi-info-square"></i>
+              <i class="bi bi-patch-question"></i>
               À propos
             </RouterLink>
           </li>
