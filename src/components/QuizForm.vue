@@ -12,10 +12,18 @@
   let bonnereponse = [cheval, 10, Eiffel,] /*liste mixte des bonnes réponses*/
 
   function submit(event: Event): void {
+    /*Mettre ICI une condition pour incrémenter le score afin que ça fasse plus 1 à chaque bonne réponse. Il faut le faire en Javascript. créer la variable 1score1, */
+
     if (cheval.value == "blanc") {/*comparaison de l'entrée avec les bonnes réponses. aussi bien faire attention à bien mettre les parenthèses + faire plusieurs conditions pour chaque réponse */ {
       score +=1; /*incrémenter le score pour chaque bonne réponse trouvée*/ 
     }}
-   /*Mettre ICI une condition pour incrémenter le score afin que ça fasse plus 1 à chaque bonne réponse. Il faut le faire en Javascript. créer la variable 1score1, */
+    if (calcul.value == "10") { {/*on a mis la valeur en str donc il faut aussi la mettre en str ici */
+      score +=1;
+    }}
+    if (Eiffel.value == "Paris") {{
+      score +=1; 
+    }}
+   
     event.preventDefault();
     if (filled.value) {
       alert(`Vous avez choisi le score ${score} !`); /*alerte score final*/
