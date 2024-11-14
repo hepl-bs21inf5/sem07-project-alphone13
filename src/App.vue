@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 </script>
-<!--là c'est pour modifier la arre de navigation et les logos qui vont avec-->
+<!--là c'est pour modifier la barre de navigation et les logos qui vont avec-->
 <template>
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
