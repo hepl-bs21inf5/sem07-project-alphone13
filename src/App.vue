@@ -29,9 +29,16 @@ import { RouterLink, RouterView } from 'vue-router'
               À propos
             </RouterLink>
           </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/trivia">
+              <i class="bi bi-question"></i>
+              Trivia
+            </RouterLink>
+          </li>
         </ul>
       </div>
     </div>
   </nav>
+
   <RouterView />
 </template>

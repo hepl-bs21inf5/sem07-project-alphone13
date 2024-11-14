@@ -1,15 +1,15 @@
 <script setup lang="ts">
-  import { defineModel, defineProps, type PropType } from "vue";
+import { defineModel, defineProps, type PropType } from 'vue'
 
-  const model = defineModel<string | null>();
-  const props = defineProps({
-    id: { type: String, required: true },
-    text: { type: String, required: true },
-    options: {
-      type: Array as PropType<Array<{ value: string; text: string }>>,
-      required: true,
-    },
-  });
+const model = defineModel<string | null>()
+const props = defineProps({
+  id: { type: String, required: true },
+  text: { type: String, required: true },
+  options: {
+    type: Array as PropType<Array<{ value: string; text: string }>>,
+    required: true,
+  },
+})
 </script>
 
 <template>
@@ -28,3 +28,4 @@
     </label>
   </div>
 </template>
+<!--à ne pas modifier-->

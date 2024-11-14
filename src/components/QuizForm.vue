@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import QuestionRadio from '@/components/QuestionRadio.vue'
+import QuestionText from './QuestionText.vue'
 
 const cheval = ref<string | null>(null)
 const calcul = ref<string | null>(null)
@@ -35,7 +37,47 @@ function reset(event: Event): void {
 
 <template>
   <form>
-    De quelle couleur est le cheval blanc de Napoléon ?
+    <QuestionRadio
+      id="cheval"
+      v-model="cheval"
+      text="De quelle couleur est le cheval blanc de Napoléon ?"
+      :options="[
+        { value: 'blanc', text: 'Blanc' },
+        { value: 'brun', text: 'Brun' },
+        { value: 'noir', text: 'Noir' },
+      ]"
+    />
+    <!--ça importe ce qu'il y a dans le questiontext-->
+    <QuestionText
+      id="cheval"
+      v-model="cheval"
+      text="De quelle couleur est le cheval blanc de Napoléon ?"
+      placeholder="Veuillez saisir une couleur"
+    />
+
+    <QuestionRadio
+      id="calcul"
+      v-model="calcul"
+      text=" Combien font 2+3+5 ?"
+      :options="[
+        { value: '10', text: '10' },
+        { value: '9', text: '9' },
+        { value: '12', text: '12' },
+      ]"
+    />
+
+    <QuestionRadio
+      id="Eiffel"
+      v-model="Eiffel"
+      text=" Combien font 2+3+5 ?"
+      :options="[
+        { value: 'Oslo', text: 'Oslo' },
+        { value: 'Sydney', text: 'Sydney' },
+        { value: 'Paris', text: 'Paris' },
+      ]"
+    />
+
+    <!--De quelle couleur est le cheval blanc de Napoléon ?
     <div class="form-check">
       <input
         id="chevalBlanc"
@@ -70,7 +112,7 @@ function reset(event: Event): void {
       <label class="form-check-label" for="chevalNoir">Noir</label>
     </div>
 
-    <!--partie 2 pour la 2ème question-->
+    partie 2 pour la 2ème question
 
     COmbien font 2+3+5 ?
     <div class="form-check">
@@ -118,7 +160,7 @@ function reset(event: Event): void {
       <label class="form-check-label" for="calcul4">9</label>
     </div>
 
-    <!--partie 3 pour la 3ème question-->
+    partie 3 pour la 3ème question
     Où se trouve la Tour-Eiffel ?
     <div class="form-check">
       <input
@@ -163,7 +205,7 @@ function reset(event: Event): void {
         value="Lausanne"
       />
       <label class="form-check-label" for="Eiffel4">Lausanne</label>
-    </div>
+    </div>-->
   </form>
   <button class="btn btn-primary" :class="{ disabled: !filled }" type="submit">Terminer</button>
   <button class="btn btn-primary" @click="reset">Réinitialiser</button>
