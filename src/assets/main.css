@@ -1,17 +1,17 @@
 /* https://getbootstrap.com/docs/5.3/components/buttons/#variables */
 .btn-primary {
-    --bs-btn-color: #7eb6dd;
-    --bs-btn-bg: #710dfd;
-    --bs-btn-border-color: #bd0dfd;
-    --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: #d00bd7;
-    --bs-btn-hover-border-color: #440aca;
-    --bs-btn-focus-shadow-rgb: 49, 132, 253;
-    --bs-btn-active-color: #fff;
-    --bs-btn-active-bg: #0a90ca;
-    --bs-btn-active-border-color: #0a53be;
-    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --bs-btn-disabled-color: #fff;
-    --bs-btn-disabled-bg: #dd0dfd;
-    --bs-btn-disabled-border-color: #0d6efd;
-  }
+  --bs-btn-color: #02010d; /*Pour l'écriture des boutons*/
+  --bs-btn-bg: #11a5d7; /*Change la couleur du bouton réinitialiser*/
+  --bs-btn-border-color: #8023dd;
+  --bs-btn-hover-color: #04206c; /*Couleur de l'écriture lorsque l'on place la souris dessus le bouton réinitialiser*/
+  --bs-btn-hover-bg: #4a94a2; /*Change la couleur de "l'ombre" du bouton */
+  --bs-btn-hover-border-color: #98e534; /*Change la couleur du tour du bouton*/
+  --bs-btn-focus-shadow-rgb: 49, 132, 253;
+  --bs-btn-active-color: #ea9621;
+  --bs-btn-active-bg: #0a90ca;
+  --bs-btn-active-border-color: #3271cf;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #0d25fd; /*Changer la couleur du bouton terminer*/
+  --bs-btn-disabled-border-color: #0d6efd;
+}

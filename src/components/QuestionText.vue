@@ -5,13 +5,14 @@ const model = defineModel<string | null>()
 
 <template>
   <label for="exampleFormControlInput" class="form-label">
-    Combien de cantons dans la Suisse ?
+    Quel est le meilleur anime de tous les temps ?
   </label>
   <input
     id="exampleFormControlInput"
     v-model="model"
     class="form-control"
-    placeholder="Veuillez saisir une couleur"
+    placeholder="Saisir une réponse"
   />
-  <!--là on doit faire comme dans Question radio pour faire ce document-->
+  <!--là on doit faire comme dans Question radio pour faire ce document
+  Le placeholder permet de faire apparaître du texte dans le champ de saisie -->
 </template>

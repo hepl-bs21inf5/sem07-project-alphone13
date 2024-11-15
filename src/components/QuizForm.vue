@@ -7,7 +7,9 @@ const cheval = ref<string | null>(null)
 const calcul = ref<string | null>(null)
 const Eiffel = ref<string | null>(null)
 
-const filled = computed<boolean>(() => cheval.value !== null)
+const filled = computed<boolean>(
+  () => cheval.value !== null && calcul.value !== null && Eiffel.value !== null,
+) 
 
 function submit(event: Event): void {
   event.preventDefault()
@@ -24,7 +26,7 @@ function submit(event: Event): void {
     score += 1
   }
 
-  alert(`Votre score est de ${score} sur 2`)
+  alert(`Votre score est de ${score} sur 3`)
 }
 function reset(event: Event): void {
   event.preventDefault()
@@ -49,8 +51,8 @@ function reset(event: Event): void {
     />
     <!--ça importe ce qu'il y a dans le questiontext-->
     <QuestionText
-      id="cheval"
-      v-model="cheval"
+      id="exampleFormControlInput"
+      v-model="model"
       text="De quelle couleur est le cheval blanc de Napoléon ?"
       placeholder="Veuillez saisir une couleur"
     />
@@ -69,7 +71,7 @@ function reset(event: Event): void {
     <QuestionRadio
       id="Eiffel"
       v-model="Eiffel"
-      text=" Combien font 2+3+5 ?"
+      text=" Où se trouve la Tour-Eiffel ?"
       :options="[
         { value: 'Oslo', text: 'Oslo' },
         { value: 'Sydney', text: 'Sydney' },
@@ -77,7 +79,12 @@ function reset(event: Event): void {
       ]"
     />
 
-    <!--De quelle couleur est le cheval blanc de Napoléon ?
+    <button class="btn btn-primary" :class="{ disabled: !filled }" @click="submit">Terminer</button>
+    <button class="btn btn-primary" @click="reset">Réinitialiser</button>
+  </form>
+
+  <!-- Ancien code HTML qui prend bien plus de place
+    De quelle couleur est le cheval blanc de Napoléon ?
     <div class="form-check">
       <input
         id="chevalBlanc"
@@ -205,8 +212,6 @@ function reset(event: Event): void {
         value="Lausanne"
       />
       <label class="form-check-label" for="Eiffel4">Lausanne</label>
-    </div>-->
-  </form>
-  <button class="btn btn-primary" :class="{ disabled: !filled }" type="submit">Terminer</button>
-  <button class="btn btn-primary" @click="reset">Réinitialiser</button>
+    </div>
+          LES BOUTONS DOIVENT ÊTRE DANS LE FORM POUR BIEN MARCHER-->
 </template>

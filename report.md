@@ -29,6 +29,7 @@ Dans le fichier QuizForm.vue :
 Quelles sont les similarités et les différences entre ref et computed ?
 
 Que se passe-t-il lorsqu'on clique sur le bouton "Terminer" ?
+Il permet de terminer le quiz et d'envoyer les réponses afin de vérifier si elles sont justes
 
 Qu'est-ce qu'un v-model ?
 C'est une commande qui permet de lier une donnée JavaScript et un élément HTML automatiquement. Par exemple, si il y a un chamgement de valeur dans le code HTML, il y a une mise à jour automatique dans le JavaScript.
