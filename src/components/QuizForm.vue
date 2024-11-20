@@ -9,7 +9,7 @@ const Eiffel = ref<string | null>(null)
 
 const filled = computed<boolean>(
   () => cheval.value !== null && calcul.value !== null && Eiffel.value !== null,
-) 
+)
 
 function submit(event: Event): void {
   event.preventDefault()
