@@ -60,7 +60,7 @@ Les heures passées à faire le projet
 temps destimation : 40 min
 temps réel: 72 min
 
-# réponse questons de la semaine 2 :
+# réponse questons de la semaine 2 : à répondre
 
 Quelle est la différence entre un prop et un modèle (v-model) ?
 
