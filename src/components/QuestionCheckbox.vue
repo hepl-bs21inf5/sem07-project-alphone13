@@ -1,3 +1,6 @@
+const checkedNames = ref<string[]>([]);
+
+<template> 
 <div class="form-check">
     pas obligé
     <input
@@ -19,3 +22,4 @@
     />
     <label class="form-check-label" for="checkboxJohn">John</label>
   </div>
+  </template>

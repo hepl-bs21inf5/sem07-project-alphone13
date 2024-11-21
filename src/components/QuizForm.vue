@@ -2,14 +2,23 @@
 import { computed, ref } from 'vue'
 import QuestionRadio from '@/components/QuestionRadio.vue'
 import QuestionText from './QuestionText.vue'
+import { defineModel } from 'vue'
 
+const model = ref<
+  string | null
+>() /*Le ref est utlisée pour les valeurs réactives (la valeur réactives va être suivie par vue.js) */
 const cheval = ref<string | null>(null)
 const calcul = ref<string | null>(null)
-const Eiffel = ref<string | null>(null)
+const eiffel = ref<string | null>(null)
+const correctAnswers = ref<boolean[]>([])
 
 const filled = computed<boolean>(
-  () => cheval.value !== null && calcul.value !== null && Eiffel.value !== null,
+  /*On a mis du boolean à la place*/ () =>
+    cheval.value !== null && calcul.value !== null && eiffel.value !== null,
 )
+
+const score = computed<number>(() => correctAnswers.value.filter((value) => value).length)
+const totalScore = 3 // à compléter
 
 function submit(event: Event): void {
   event.preventDefault()
@@ -22,7 +31,7 @@ function submit(event: Event): void {
     /*on a mis la valeur en str donc il faut aussi la mettre en str ici */
     score += 1
   }
-  if (Eiffel.value == 'Paris') {
+  if (eiffel.value == 'Paris') {
     score += 1
   }
 
@@ -33,7 +42,7 @@ function reset(event: Event): void {
 
   cheval.value = null
   calcul.value = null
-  Eiffel.value = null
+  eiffel.value = null
 }
 </script>
 
@@ -41,7 +50,8 @@ function reset(event: Event): void {
   <form>
     <QuestionRadio
       id="cheval"
-      v-model="cheval"
+      v-model="correctAnswers[0]"
+      answer="blanc"
       text="De quelle couleur est le cheval blanc de Napoléon ?"
       :options="[
         { value: 'blanc', text: 'Blanc' },
@@ -53,13 +63,14 @@ function reset(event: Event): void {
     <QuestionText
       id="exampleFormControlInput"
       v-model="model"
-      text="De quelle couleur est le cheval blanc de Napoléon ?"
-      placeholder="Veuillez saisir une couleur"
+      text="De quelle"
+      placeholder="Veuillez saisir une réponse"
     />
 
     <QuestionRadio
       id="calcul"
-      v-model="calcul"
+      v-model="correctAnswers[1]"
+      answer="10"
       text=" Combien font 2+3+5 ?"
       :options="[
         { value: '10', text: '10' },
@@ -69,8 +80,9 @@ function reset(event: Event): void {
     />
 
     <QuestionRadio
-      id="Eiffel"
-      v-model="Eiffel"
+      id="eiffel"
+      v-model="correctAnswers[2]"
+      answer="Paris"
       text=" Où se trouve la Tour-Eiffel ?"
       :options="[
         { value: 'Oslo', text: 'Oslo' },
@@ -78,7 +90,9 @@ function reset(event: Event): void {
         { value: 'Paris', text: 'Paris' },
       ]"
     />
-
+    <div>Réponses correctes : {{ correctAnswers }}</div>
+    <div>Score : {{ score }} / {{ totalScore }}</div>
+    <!--Calcule le score-->
     <button class="btn btn-primary" :class="{ disabled: !filled }" @click="submit">Terminer</button>
     <button class="btn btn-primary" @click="reset">Réinitialiser</button>
   </form>

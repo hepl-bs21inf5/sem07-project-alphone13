@@ -14,5 +14,6 @@ const model = defineModel<string | null>()
     placeholder="Saisir une réponse"
   />
   <!--là on doit faire comme dans Question radio pour faire ce document
-  Le placeholder permet de faire apparaître du texte dans le champ de saisie -->
+  Le placeholder permet de faire apparaître du texte dans le champ de saisie 
+  là on fait un composant pour tous les types de questions-->
 </template>
