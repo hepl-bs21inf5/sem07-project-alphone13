@@ -68,7 +68,142 @@ Comment rendre la propriété placeholder optionnelle ?
 
 # commentaires
 
-On a créer une version plus compacte du code. Ce qui est en commentaire à la fin est lancienne version qui marche, mais bien plus logue en matière de code.
+On a créer une version plus compacte du code. Ce qui est en commentaire à la fin est l'ancienne version qui marche, mais bien plus logue en matière de code.
+
+Voici l'ancienne version du code :
+
+  <!-- Ancien code HTML qui prend bien plus de place
+    De quelle couleur est le cheval blanc de Napoléon ?
+    <div class="form-check">
+      <input
+        id="chevalBlanc"
+        v-model="cheval"
+        class="form-check-input"
+        type="radio"
+        name="cheval"
+        value="blanc"
+      />
+      <label class="form-check-label" for="chevalBlanc">Blanc</label>
+    </div>
+    <div class="form-check">
+      <input
+        id="chevalBrun"
+        v-model="cheval"
+        class="form-check-input"
+        type="radio"
+        name="cheval"
+        value="brun"
+      />
+      <label class="form-check-label" for="chevalBrun">Brun</label>
+    </div>
+    <div class="form-check">
+      <input
+        id="chevalNoir"
+        v-model="cheval"
+        class="form-check-input"
+        type="radio"
+        name="cheval"
+        value="noir"
+      />
+      <label class="form-check-label" for="chevalNoir">Noir</label>
+    </div>
+
+    partie 2 pour la 2ème question
+
+    COmbien font 2+3+5 ?
+    <div class="form-check">
+      <input
+        id="calcul1"
+        v-model="calcul"
+        class="form-check-input"
+        type="radio"
+        name="calcul"
+        value="10"
+      />
+      <label class="form-check-label" for="calcul1">10</label>
+    </div>
+    <div class="form-check">
+      <input
+        id="calcul2"
+        v-model="calcul"
+        class="form-check-input"
+        type="radio"
+        name="calcul"
+        value="12"
+      />
+      <label class="form-check-label" for="calcul2">12</label>
+    </div>
+    <div class="form-check">
+      <input
+        id="calcul3"
+        v-model="calcul"
+        class="form-check-input"
+        type="radio"
+        name="calcul"
+        value="15"
+      />
+      <label class="form-check-label" for="calcul3">15</label>
+    </div>
+    <div class="form-check">
+      <input
+        id="calcul4"
+        v-model="calcul"
+        class="form-check-input"
+        type="radio"
+        name="calcul"
+        value="9"
+      />
+      <label class="form-check-label" for="calcul4">9</label>
+    </div>
+
+    partie 3 pour la 3ème question
+    Où se trouve la Tour-Eiffel ?
+    <div class="form-check">
+      <input
+        id="Eiffel1"
+        v-model="Eiffel"
+        class="form-check-input"
+        type="radio"
+        name="Sydney"
+        value="Sydney"
+      />
+      <label class="form-check-label" for="Eiffel1">Sydney</label>
+    </div>
+    <div class="form-check">
+      <input
+        id="Eiffel2"
+        v-model="Eiffel"
+        class="form-check-input"
+        type="radio"
+        name="Oslo"
+        value="Oslo"
+      />
+      <label class="form-check-label" for="Eiffel2">Oslo</label>
+    </div>
+    <div class="form-check">
+      <input
+        id="Eiffel3"
+        v-model="Eiffel"
+        class="form-check-input"
+        type="radio"
+        name="Paris"
+        value="Paris"
+      />
+      <label class="form-check-label" for="Eiffel3">Paris</label>
+    </div>
+    <div class="form-check">
+      <input
+        id="Eiffel4"
+        v-model="Eiffel"
+        class="form-check-input"
+        type="radio"
+        name="Lausanne"
+        value="Lausanne"
+      />
+      <label class="form-check-label" for="Eiffel4">Lausanne</label>
+    </div>
+          LES BOUTONS DOIVENT ÊTRE DANS LE FORM POUR BIEN MARCHER-->
+
 On a modifier le code pour le calcul du score.
 
 ## 21.11.2024
@@ -77,10 +212,99 @@ temps:
 temps destimation : 75 min
 temps réel: 65 min
 
-Cette fois-ci j'ai cru que j'allais passé plus de temps, car je ne comprenais pas au début ce qui était demandé. Mais en demandant de laide j'ai pu surpasser cette difficulté.
+Cette fois-ci j'ai cru que j'allais passé plus de temps, car je ne comprenais pas au début ce qui était demandé. Mais en demandant de l'aide j'ai pu surpasser cette difficulté.
 
 # Réponses aux questions
 
-À quoi sert l'option immediate: true dans le watch ? Que se passe-t-il si on l'enlève ou si on met immediate: false ?
+À quoi sert l'option immediate: true dans le watch ?
+
+Que se passe-t-il si on l'enlève ou si on met immediate: false ?
 
 Proposer une autre manière de calculer le score et comparer les deux méthodes.
+
+## 28.11.2024
+
+# Temps
+
+temps estimé :
+temps réellement passé : 60 min
+
+# Commentaires
+
+On s'est occupé des réponses, en modifiant d'abord le script de QuestionRadio.
+
+un watch sur value qui permet d'exécuter une fonction à chaque fois que value change
+
+# Réponses aux questions
+
+Comment pourrait-on réécrire la ligne suivante sans l'opérateur ternaire (avec des if et else) ?
+model.value =
+value.value === props.answer ? QuestionState.Correct : QuestionState.Wrong;
+
+Comment pourrait-on réécrire autrement la logique du watch sur value ?
+
+## 5.12.2024
+
+# Commentaires
+
+on a changé la forme du function submit et reset. Voici lancienne version:
+
+function submit(event: Event): void {
+event.preventDefault()
+let score: number = 0
+if (cheval.value === 'blanc') {
+score += 1
+}
+
+if (calcul.value == '10') {
+/_on a mis la valeur en str donc il faut aussi la mettre en str ici _/
+score += 1
+}
+if (eiffel.value == 'Paris') {
+score += 1
+}
+
+alert(`Votre score est de ${score} sur 3`)
+}
+
+function reset(event: Event): void {
+event.preventDefault()
+
+cheval.value = null
+calcul.value = null
+eiffel.value = null
+}
+
+cette version contient des conditions qui vérifient si la réponse est juste et additionne le score.
+
+La nouvelle verison permet
+
+# Notes de code
+
+const model = ref<
+string | null
+
+> () /_Le ref est utlisée pour les valeurs réactives (la valeur réactives va être suivie par vue.js) _/
+> const cheval = ref<string | null>(null)
+> const calcul = ref<string | null>(null)
+> const eiffel = ref<string | null>(null)
+
+qui va avec:
+const filled = computed<boolean>(
+/_On a mis du boolean à la place, c'est lié avecle bouton primary disabeld filled_/ () =>
+cheval.value !== null && calcul.value !== null && eiffel.value !== null,
+)
+const correctAnswers = ref<boolean[]>([])
+
+AVANT : on cherchait à savoir si la réponse était juste avec des valeurs booléennes.
+
+//Calcule le score total
+const score = computed<number>(() => correctAnswers.value.filter((value) => value).length)
+const totalScore = 3
+
+# Notes de compréhension
+
+le v-model= "something[0]", la valeur qui est entre crochets doit être dans un certain ordre. Il ne faut pas qu'il y ait des chiffres qui sautent/manquent.
+
+# personnalisation
+Bootstrap est correctement utilisé pour rendre l'application responsive.

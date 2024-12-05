@@ -2,55 +2,43 @@
 import { computed, ref } from 'vue'
 import QuestionRadio from '@/components/QuestionRadio.vue'
 import QuestionText from './QuestionText.vue'
-import { defineModel } from 'vue'
+import { QuestionState } from '@/utils/models'
 
-const model = ref<
-  string | null
->() /*Le ref est utlisée pour les valeurs réactives (la valeur réactives va être suivie par vue.js) */
-const cheval = ref<string | null>(null)
-const calcul = ref<string | null>(null)
-const eiffel = ref<string | null>(null)
-const correctAnswers = ref<boolean[]>([])
-
-const filled = computed<boolean>(
-  /*On a mis du boolean à la place*/ () =>
-    cheval.value !== null && calcul.value !== null && eiffel.value !== null,
+const checkedNames = ref<string[]>([])
+const questionStates = ref<QuestionState[]>([])
+const filled = computed<boolean>(() =>
+  questionStates.value.every((state) => state === QuestionState.Fill),
 )
 
-const score = computed<number>(() => correctAnswers.value.filter((value) => value).length)
-const totalScore = 3 // à compléter
+const submitted = computed<boolean>(() =>
+  questionStates.value.every(
+    (state) => state === QuestionState.Correct || state === QuestionState.Wrong,
+  ),
+)
+
+const score = computed<number>(
+  () => questionStates.value.filter((state) => state === QuestionState.Correct).length,
+)
+const totalScore = computed<number>(() => questionStates.value.length)
 
 function submit(event: Event): void {
+  // fait des comparaison valeur vide-pleine
   event.preventDefault()
-  let score: number = 0
-  if (cheval.value === 'blanc') {
-    score += 1
-  }
-
-  if (calcul.value == '10') {
-    /*on a mis la valeur en str donc il faut aussi la mettre en str ici */
-    score += 1
-  }
-  if (eiffel.value == 'Paris') {
-    score += 1
-  }
-
-  alert(`Votre score est de ${score} sur 3`)
+  questionStates.value = questionStates.value.map(() => QuestionState.Submit) //envoie les réponses rentrées par l'utilisateur
 }
+
 function reset(event: Event): void {
   event.preventDefault()
-
-  cheval.value = null
-  calcul.value = null
-  eiffel.value = null
+  questionStates.value = questionStates.value.map(() => QuestionState.Empty) //on met l'état des réponses à vide.
 }
 </script>
 
 <template>
   <form>
+    <!--Là on a modifier le v-model correct.Answer en questionStates pour que ça corresponde à une valeur réactive (ref), qu'on a définit plus haut. -->
     <QuestionRadio
       id="cheval"
-      v-model="correctAnswers[0]"
+      v-model="questionStates[0]"
       answer="blanc"
       text="De quelle couleur est le cheval blanc de Napoléon ?"
       :options="[
@@ -59,17 +47,18 @@ function reset(event: Event): void {
         { value: 'noir', text: 'Noir' },
       ]"
     />
-    <!--ça importe ce qu'il y a dans le questiontext-->
+    <!--ça importe ce qu'il y a dans le questiontext. permet de faire une réponse libre-->
     <QuestionText
       id="exampleFormControlInput"
-      v-model="model"
-      text="De quelle"
+      v-model="questionStates[1]"
+      text=" Quel est le meilleur anime de tous les temps ?"
       placeholder="Veuillez saisir une réponse"
+      answer="10"
     />
 
     <QuestionRadio
       id="calcul"
-      v-model="correctAnswers[1]"
+      v-model="questionStates[2]"
       answer="10"
       text=" Combien font 2+3+5 ?"
       :options="[
@@ -81,7 +70,7 @@ function reset(event: Event): void {
 
     <QuestionRadio
       id="eiffel"
-      v-model="correctAnswers[2]"
+      v-model="questionStates[3]"
       answer="Paris"
       text=" Où se trouve la Tour-Eiffel ?"
       :options="[
@@ -90,142 +79,35 @@ function reset(event: Event): void {
         { value: 'Paris', text: 'Paris' },
       ]"
     />
-    <div>Réponses correctes : {{ correctAnswers }}</div>
-    <div>Score : {{ score }} / {{ totalScore }}</div>
     <!--Calcule le score-->
+    <div>Réponses correctes : {{ questionStates }}</div>
+
     <button class="btn btn-primary" :class="{ disabled: !filled }" @click="submit">Terminer</button>
+
     <button class="btn btn-primary" @click="reset">Réinitialiser</button>
+
+    <div>Score : {{ score }} / {{ totalScore }}</div>
+    <div>Debug états : {{ questionStates }}</div>
   </form>
 
-  <!-- Ancien code HTML qui prend bien plus de place
-    De quelle couleur est le cheval blanc de Napoléon ?
-    <div class="form-check">
-      <input
-        id="chevalBlanc"
-        v-model="cheval"
-        class="form-check-input"
-        type="radio"
-        name="cheval"
-        value="blanc"
-      />
-      <label class="form-check-label" for="chevalBlanc">Blanc</label>
-    </div>
-    <div class="form-check">
-      <input
-        id="chevalBrun"
-        v-model="cheval"
-        class="form-check-input"
-        type="radio"
-        name="cheval"
-        value="brun"
-      />
-      <label class="form-check-label" for="chevalBrun">Brun</label>
-    </div>
-    <div class="form-check">
-      <input
-        id="chevalNoir"
-        v-model="cheval"
-        class="form-check-input"
-        type="radio"
-        name="cheval"
-        value="noir"
-      />
-      <label class="form-check-label" for="chevalNoir">Noir</label>
-    </div>
-
-    partie 2 pour la 2ème question
-
-    COmbien font 2+3+5 ?
-    <div class="form-check">
-      <input
-        id="calcul1"
-        v-model="calcul"
-        class="form-check-input"
-        type="radio"
-        name="calcul"
-        value="10"
-      />
-      <label class="form-check-label" for="calcul1">10</label>
-    </div>
-    <div class="form-check">
-      <input
-        id="calcul2"
-        v-model="calcul"
-        class="form-check-input"
-        type="radio"
-        name="calcul"
-        value="12"
-      />
-      <label class="form-check-label" for="calcul2">12</label>
-    </div>
-    <div class="form-check">
-      <input
-        id="calcul3"
-        v-model="calcul"
-        class="form-check-input"
-        type="radio"
-        name="calcul"
-        value="15"
-      />
-      <label class="form-check-label" for="calcul3">15</label>
-    </div>
-    <div class="form-check">
-      <input
-        id="calcul4"
-        v-model="calcul"
-        class="form-check-input"
-        type="radio"
-        name="calcul"
-        value="9"
-      />
-      <label class="form-check-label" for="calcul4">9</label>
-    </div>
-
-    partie 3 pour la 3ème question
-    Où se trouve la Tour-Eiffel ?
-    <div class="form-check">
-      <input
-        id="Eiffel1"
-        v-model="Eiffel"
-        class="form-check-input"
-        type="radio"
-        name="Sydney"
-        value="Sydney"
-      />
-      <label class="form-check-label" for="Eiffel1">Sydney</label>
-    </div>
-    <div class="form-check">
-      <input
-        id="Eiffel2"
-        v-model="Eiffel"
-        class="form-check-input"
-        type="radio"
-        name="Oslo"
-        value="Oslo"
-      />
-      <label class="form-check-label" for="Eiffel2">Oslo</label>
-    </div>
-    <div class="form-check">
-      <input
-        id="Eiffel3"
-        v-model="Eiffel"
-        class="form-check-input"
-        type="radio"
-        name="Paris"
-        value="Paris"
-      />
-      <label class="form-check-label" for="Eiffel3">Paris</label>
-    </div>
-    <div class="form-check">
-      <input
-        id="Eiffel4"
-        v-model="Eiffel"
-        class="form-check-input"
-        type="radio"
-        name="Lausanne"
-        value="Lausanne"
-      />
-      <label class="form-check-label" for="Eiffel4">Lausanne</label>
-    </div>
-          LES BOUTONS DOIVENT ÊTRE DANS LE FORM POUR BIEN MARCHER-->
+  <div class="form-check">
+    <input
+      id="checkboxJane"
+      v-model="checkedNames"
+      class="form-check-input"
+      type="checkbox"
+      value="Jane"
+    />
+    <label class="form-check-label" for="checkboxJane">Jane</label>
+  </div>
+  <div class="form-check">
+    <input
+      id="checkboxJohn"
+      v-model="checkedNames"
+      class="form-check-input"
+      type="checkbox"
+      value="John"
+    />
+    <label class="form-check-label" for="checkboxJohn">John</label>
+  </div>
 </template>
