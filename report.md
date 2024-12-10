@@ -63,6 +63,8 @@ temps réel: 72 min
 # réponse questons de la semaine 2 : à répondre
 
 Quelle est la différence entre un prop et un modèle (v-model) ?
+Props: transmission des données parent vers enfant
+v-model: Combine un prop et un événement. Lie un composant parent avec un composant enfant
 
 Comment rendre la propriété placeholder optionnelle ?
 
@@ -216,9 +218,15 @@ Cette fois-ci j'ai cru que j'allais passé plus de temps, car je ne comprenais p
 
 # Réponses aux questions
 
+un watch est un handler. Il observe une donnée et quand la donnée change le watch s'exécute.
+
+Un handler (ou gestionnaire en français) est une fonction ou un bloc de code que vous définissez pour répondre à un événement ou à une situation particulière (pris de Chat)
+
 À quoi sert l'option immediate: true dans le watch ?
+à executer la fonction de rappel watch et à synchroniser les données dès le départ. Réactivité des changement de valeur. Il faut que le watch soit configuré pour que immediate : true marche.
 
 Que se passe-t-il si on l'enlève ou si on met immediate: false ?
+Si on enlève immediate :false il se passera que le handler sera exécuté que lorsque la valeur surveillée/assignée change pour la première fois.
 
 Proposer une autre manière de calculer le score et comparer les deux méthodes.
 
@@ -240,6 +248,14 @@ un watch sur value qui permet d'exécuter une fonction à chaque fois que value 
 Comment pourrait-on réécrire la ligne suivante sans l'opérateur ternaire (avec des if et else) ?
 model.value =
 value.value === props.answer ? QuestionState.Correct : QuestionState.Wrong;
+
+on peut le réecrire avec des if et else comme ça :
+
+if (value.value === props.answer) {
+model.value = QuestionState.Correct;
+} else {
+model.value = QuestionState.Wrong;
+}
 
 Comment pourrait-on réécrire autrement la logique du watch sur value ?
 
@@ -307,4 +323,9 @@ const totalScore = 3
 le v-model= "something[0]", la valeur qui est entre crochets doit être dans un certain ordre. Il ne faut pas qu'il y ait des chiffres qui sautent/manquent.
 
 # personnalisation
+
 Bootstrap est correctement utilisé pour rendre l'application responsive.
+
+# 10.12.2024
+
+j'ai passé du temps à répondre aux questions. Il faut que je revoie quel type de fonction est un immidiate et il faut que je fasse un résumé de tout ça.
