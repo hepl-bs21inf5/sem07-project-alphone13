@@ -62,3 +62,11 @@ watch(model, (newModel) => {
     </label>
   </div>
 </template>
+<style scoped>
+.text-danger {
+  color: rgb(128, 0, 0) !important;
+}
+.text-success {
+  color: rgb(196, 34, 196) !important;
+}
+</style>

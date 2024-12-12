@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineModel } from 'vue'
+import { defineModel, type PropType } from 'vue'
 import { ref, watch } from 'vue'
 import { QuestionState } from '@/utils/models'
 
@@ -11,7 +11,8 @@ const model = defineModel<QuestionState>()
 const props = defineProps({
   id: { type: String, required: true },
   text: { type: String, required: true },
-  answer: { type: String, required: true },
+  answer: { type: Array as PropType<Array<String>>, required: true },
+  answerDetail: { type: String, default: '' },
   placeholder: { type: String, default: 'Veuillez saisir une réponse' },
 })
 
@@ -31,17 +32,24 @@ watch(
 
 watch(model, (newModel) => {
   if (newModel === QuestionState.Submit) {
-    model.value = value.value === props.answer ? QuestionState.Correct : QuestionState.Wrong
+    model.value = props.answer.includes(value.value ?? '')
+      ? QuestionState.Correct
+      : QuestionState.Wrong
   } else if (newModel === QuestionState.Empty) {
     value.value = null
   }
 })
 </script>
-
+<style scoped>
+.text-danger {
+  color: rgb(128, 0, 0) !important;
+}
+.text-success {
+  color: rgb(196, 34, 196) !important;
+}
+</style>
 <template>
-  <label for="exampleFormControlInput" class="form-label">
-    Quel est le meilleur anime de tous les temps ?
-  </label>
+  <label for="exampleFormControlInput" class="form-label"> Combien de pattes a un chat ? </label>
   <input
     id="exampleFormControlInput"
     v-model="value"
@@ -53,7 +61,12 @@ watch(model, (newModel) => {
       model === QuestionState.Wrong
     "
   />
-
+  <!--là on ajoute des bootstraps pour modifier les couleurs-->
+  <div v-if="model === QuestionState.Correct || model === QuestionState.Wrong">
+    <p v-if="model === QuestionState.Correct" class="text-success">Juste !</p>
+    <p v-else class="text-danger">Faux ! La réponse était : {{ props.answer }}</p>
+    <p class="blockquote-footer">{{ props.answerDetail }}</p>
+  </div>
   <!--là on doit faire comme dans Question radio pour faire ce document
   Le placeholder permet de faire apparaître du texte dans le champ de saisie 
   là on fait un composant pour tous les types de questions-->

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, type PropType } from 'vue'
-import { defineModel } from 'vue'
+import { defineModel, computed } from 'vue'
 import { QuestionState } from '@/utils/models' //définition générale de chaque propriété
 const model = defineModel<QuestionState>() //le composant
 const props = defineProps({
@@ -8,11 +8,16 @@ const props = defineProps({
   id: { type: String, required: true },
   text: { type: String, required: true },
   answer: { type: String, required: true },
+  answerDetail: { type: String, default: '' },
   options: {
     type: Array as PropType<Array<{ value: string; text: string }>>,
     required: true,
   },
 })
+
+const answerText = computed<string>(
+  () => props.options.find((option) => option.value === props.answer)?.text ?? props.answer,
+)
 
 const value = ref<string | null>(null)
 
@@ -60,5 +65,17 @@ watch(model, (newModel) => {
       {{ option.text }}
     </label>
   </div>
+  <div v-if="model === QuestionState.Correct || model === QuestionState.Wrong">
+    <p v-if="model === QuestionState.Correct" class="text-success">Juste !</p>
+    <p v-else class="text-danger">Faux ! La réponse était : {{ answerText }}</p>
+    <p class="blockquote-footer">{{ props.answerDetail }}</p>
+  </div>
 </template>
-<!--à ne pas modifier-->
+<style scoped>
+.text-danger {
+  color: rgb(128, 0, 0) !important;
+}
+.text-success {
+  color: rgb(196, 34, 196) !important;
+}
+</style>

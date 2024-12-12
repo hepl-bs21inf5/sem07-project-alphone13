@@ -1,17 +1,17 @@
 /* https://getbootstrap.com/docs/5.3/components/buttons/#variables */
 .btn-primary {
-  --bs-btn-color: #02010d; /*Pour l'écriture des boutons*/
-  --bs-btn-bg: #11a5d7; /*Change la couleur du bouton réinitialiser*/
+  --bs-btn-color: #000000; /*Pour l'écriture du bouton réinitialiser*/
+  --bs-btn-bg: #593dc9; /*Change la couleur du bouton réinitialiser*/
   --bs-btn-border-color: #8023dd;
   --bs-btn-hover-color: #04206c; /*Couleur de l'écriture lorsque l'on place la souris dessus le bouton réinitialiser*/
-  --bs-btn-hover-bg: #4a94a2; /*Change la couleur de "l'ombre" du bouton */
-  --bs-btn-hover-border-color: #98e534; /*Change la couleur du tour du bouton*/
+  --bs-btn-hover-bg: #d97be3; /*Change la couleur de "l'ombre" du bouton */
+  --bs-btn-hover-border-color: #711274; /*Change la couleur du tour du bouton*/
   --bs-btn-focus-shadow-rgb: 49, 132, 253;
-  --bs-btn-active-color: #ea9621;
+  --bs-btn-active-color: #000000; /*pas besoin pour le quiz*/
   --bs-btn-active-bg: #ca0ac0; /*je crois que ça change le tour des touches réinitialiser et terminer*/
-  --bs-btn-active-border-color: #3271cf;
+  --bs-btn-active-border-color: #14d0ed;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: #fff;
-  --bs-btn-disabled-bg: #0d25fd; /*Changer la couleur du bouton terminer*/
-  --bs-btn-disabled-border-color: #0d6efd;
+  --bs-btn-disabled-color: #0175b9be; /*Change la couleur du texte du bouton terminer*/
+  --bs-btn-disabled-bg: #5462fa; /*Changer la couleur du bouton terminer*/
+  --bs-btn-disabled-border-color: #b93ae3;
 }

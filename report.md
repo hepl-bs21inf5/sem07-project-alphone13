@@ -327,5 +327,24 @@ le v-model= "something[0]", la valeur qui est entre crochets doit être dans un 
 Bootstrap est correctement utilisé pour rendre l'application responsive.
 
 # 10.12.2024
+# temps
+commencé à 10h15
 
 j'ai passé du temps à répondre aux questions. Il faut que je revoie quel type de fonction est un immidiate et il faut que je fasse un résumé de tout ça.
+
+# semaine 5 12.12.2024
+J'ai modifié un peu la structure du code et j'ai modifié le CheckBox dans QuizForm.
+il faut que jajoute des espaces entre les questions
+
+Pour la question où il faut écrire soi-même la réponse, j'ai modifier answer (dansle QuizForm) afin qu'il puisse contenir une liste de réponses. 
+
+## Réponses aux questions
+là il faut que la string soit un élément contenu dans la liste 
+
+
+Que se passe-t-il lorsqu'on ne met pas de valeur à answer-detail ? Est-ce satisfaisant ? Si ce n'est pas le cas, proposer une amélioration.
+
+# Prise de notes 
+dans QuestionText
+model.value = props.answer.includes(value.value ?? "") ? QuestionState.Correct : QuestionState.Wrong;
+ce que fait cette ligne : elle vérifie si la valeur donnée se trouve dans la liste définie dans QuizForm.vue. props.answer.includes(value.value ?? "") regarde si la réponse mise est vide et si la réponse est vide elle va la considérer comme une chaîne de caractère vide.
