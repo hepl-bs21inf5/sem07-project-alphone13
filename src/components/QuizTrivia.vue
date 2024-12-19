@@ -10,15 +10,16 @@ const questions = ref<
     incorrect_answers: string[]
   }[]
 >([])
+//Il faut que j'adapte en fontion de TRivia et non comme dans QuizForm
 const submitted = computed<boolean>(() =>
   questionStates.value.every(
     (state) => state === QuestionState.Correct || state === QuestionState.Wrong,
   ),
 )
 const answers = reactive<{ [key: number]: string | null }>({})
-
 const checkedNames = ref<string[]>([])
 const questionStates = ref<QuestionState[]>([])
+
 const filled = computed<boolean>(() =>
   questionStates.value.every((state) => state === QuestionState.Fill),
 )
@@ -27,6 +28,7 @@ const score = computed<number>(
 )
 const totalScore = computed<number>(() => questionStates.value.length)
 /*pour faire comme dans Quizform avec les message de félicitations */
+
 function submit(event: Event): void {
   // fait des comparaison valeur vide-pleine
   event.preventDefault()
@@ -49,7 +51,8 @@ fetch('https://opentdb.com/api.php?amount=10&type=multiple')
       v-for="(question, index) in questions"
       :id="index.toString()"
       :key="index"
-      answer=""
+      :submitted="submitted"
+      answer="answers[index]"
       :text="question.question"
       :options="[
         { value: question.correct_answer, text: question.correct_answer },
@@ -58,7 +61,7 @@ fetch('https://opentdb.com/api.php?amount=10&type=multiple')
           text: answer,
         })),
       ]"
-    />
+    /><!--j'ai ajouté le submitted pour que ça puisse envoyer la réponse et qu'elle soit vérifiée-->
   </form>
   <div>Réponses correctes : {{ questionStates }}</div>
 

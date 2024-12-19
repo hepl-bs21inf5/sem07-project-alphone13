@@ -32,7 +32,6 @@ function reset(event: Event): void {
   event.preventDefault()
   questionStates.value = questionStates.value.map(() => QuestionState.Empty) //on met l'état des réponses à vide.
 }
-
 </script>
 
 <template>
@@ -89,8 +88,8 @@ function reset(event: Event): void {
       :answer="['Pou', 'Talking with Tom']"
       answer-detail="['Pou et Talking with Tom ne sont pas des licences Nintendo.']"
     />
-    <p>&nbsp;</p>
-    <!-- Ajoute une ligne vide -->
+    <p>&nbsp;</p> <!-- Ajoute une ligne vide -->
+    
     <QuestionRadio
       id="eiffel"
       v-model="questionStates[3]"
@@ -103,7 +102,6 @@ function reset(event: Event): void {
         { value: 'Paris', text: 'Paris' },
       ]"
     />
-    <!--Calcule le score-->
     <div>Réponses correctes : {{ questionStates }}</div>
 
     <button class="btn btn-primary" :class="{ disabled: !filled }" @click="submit">Terminer</button>

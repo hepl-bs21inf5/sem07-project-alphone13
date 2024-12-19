@@ -416,6 +416,12 @@ ajouter une image et faire les bootstaps
 commencé à 10h00
 fini ce qu'il fallait faire (en tous cas le minimum) à 11h20
 
+J'ai commencé à améliorer Trivia.Vue et les boutons réinitialiser et terminer ne marchaient pas, alors que j'avais repris le code de QuizForm qui lui marchait. 
+Ce que je fais pour que ça marche :  
+
+
+Ensuite j'ai ajouté des espaces dans QuiForm.vue pour que visuellemnt ce soit mieux.
+
 # Réponses aux questions
 
 visualiser le rapport ctr maj v
