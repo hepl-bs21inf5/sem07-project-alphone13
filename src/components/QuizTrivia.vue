@@ -17,8 +17,8 @@ const submitted = computed<boolean>(() =>
   ),
 )
 const answers = reactive<{ [key: number]: string | null }>({})
-const checkedNames = ref<string[]>([])
 const questionStates = ref<QuestionState[]>([])
+
 
 const filled = computed<boolean>(() =>
   questionStates.value.every((state) => state === QuestionState.Fill),
@@ -30,19 +30,29 @@ const totalScore = computed<number>(() => questionStates.value.length)
 /*pour faire comme dans Quizform avec les message de félicitations */
 
 function submit(event: Event): void {
-  // fait des comparaison valeur vide-pleine
   event.preventDefault()
-  questionStates.value = questionStates.value.map(() => QuestionState.Submit) //envoie les réponses rentrées par l'utilisateur
+  questionStates.value = questions.value.map((question, index) => {
+    const userAnswer = answers[index]
+    if (userAnswer === question.correct_answer) {
+      return QuestionState.Correct
+    } else {
+      return QuestionState.Wrong
+    }
+  })
 }
 
 function reset(event: Event): void {
   event.preventDefault()
-  questionStates.value = questionStates.value.map(() => QuestionState.Empty) //on met l'état des réponses à vide.
+  questionStates.value = questions.value.map(() => QuestionState.Empty)
 }
 
 fetch('https://opentdb.com/api.php?amount=10&type=multiple')
   .then((response) => response.json())
-  .then((data) => (questions.value = data.results))
+  .then((data) => {
+    questions.value = data.results
+    questionStates.value = data.results.map(() => QuestionState.Empty)
+  })
+
 </script>
 
 <template>

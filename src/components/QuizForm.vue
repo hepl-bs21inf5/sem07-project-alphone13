@@ -23,9 +23,8 @@ const score = computed<number>(
 const totalScore = computed<number>(() => questionStates.value.length)
 
 function submit(event: Event): void {
-  // fait des comparaison valeur vide-pleine
   event.preventDefault()
-  questionStates.value = questionStates.value.map(() => QuestionState.Submit) //envoie les réponses rentrées par l'utilisateur
+  questionStates.value = questionStates.value.map(() => QuestionState.Submit)
 }
 
 function reset(event: Event): void {
@@ -88,8 +87,9 @@ function reset(event: Event): void {
       :answer="['Pou', 'Talking with Tom']"
       answer-detail="['Pou et Talking with Tom ne sont pas des licences Nintendo.']"
     />
-    <p>&nbsp;</p> <!-- Ajoute une ligne vide -->
-    
+    <p>&nbsp;</p>
+    <!-- Ajoute une ligne vide -->
+
     <QuestionRadio
       id="eiffel"
       v-model="questionStates[3]"

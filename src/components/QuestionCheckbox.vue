@@ -9,7 +9,7 @@ const model = defineModel<QuestionState>()
 const props = defineProps({
   id: { type: String, required: true },
   text: { type: String, required: true },
-  answerDetail: { type: String, default: ''},
+  answerDetail: { type: String, default: '' },
   answer: { type: Array as PropType<string[]>, required: true }, // on doit initier afin que la réponse est une liste
   options: {
     type: Array as PropType<Array<{ value: string; text: string }>>,
@@ -33,7 +33,7 @@ watch(
 
 watch(model, (newModel) => {
   if (newModel === QuestionState.Submit) {
-    const isCorrect = // Ces 3 lignes sont faites par ChatGPT //J'aurai pu aussi trier les deux listes et les comparer
+    const isCorrect =
       props.answer.length === value.value.length &&
       props.answer.every((val) => value.value.includes(val))
     model.value = isCorrect ? QuestionState.Correct : QuestionState.Wrong

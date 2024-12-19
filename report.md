@@ -20,6 +20,8 @@ Ce fût difficile d evoir où on faisait des erreurs, car parfois VSCode nous me
 Pour les questions du quiz, j'ai copié-collé le template du cheval. et changé le script des autres questions, ainsi que leur score.
 pour la question 2 : le nom est calcul
 
+#### Notes personnelles (de compréhensions)
+
 le template contient toutes les questions du quiz.
 
 la page web ne saffichait pas dans le navigateur du coup, j'ai pris du retard.
@@ -41,27 +43,28 @@ HomeView.vue : document HTML contenant le titre et affiche le titre
 QuizForm.vue : Permet de créer la page de quiz avec les question et réponses en HTML et Javascript
 
 Dans le fichier QuizForm.vue :
-
 Quelles sont les similarités et les différences entre ref et computed ?
 
 #### REF:
 
-est ulisisé pour les valeurs réactives. Les valeurs qu'il retourne ont une propriété .value et si la valeur est un objet vue.js le met automatiquement à jour.
+est ulisisé pour les valeurs réactives. Les valeurs qu'il retourne ont une propriété '.value' et si la valeur est un objet vue.js, il le met automatiquement à jour.
 
 #### COMPUTED:
 
-C'est une fonction qui permet de calculer dynamiquement une valeur en fonction des données existantes. il, met aussi à jour les valeurs en cas de modifications. valeur dérivée
+C'est une fonction qui permet de calculer une valeur en fonction des données existantes. Il met aussi à jour les valeurs en cas de modifications. (valeur dérivée)
 
-la diférence entre le ref réside dans les valeurs. Si une valeur peut être directement modifiée alors on utilise le ref
+La diférence entre le ref réside dans les valeurs. Si une valeur peut être directement modifiée alors on utilise le ref.
 
 Que se passe-t-il lorsqu'on clique sur le bouton "Terminer" ?
-Il permet de terminer le quiz et d'envoyer les réponses afin de vérifier si elles sont justes
+
+Il permet de terminer le quiz et d'envoyer les réponses afin de vérifier si elles sont justes.
 
 Qu'est-ce qu'un v-model ?
+
 C'est une commande qui permet de lier une donnée JavaScript et un élément HTML automatiquement. Par exemple, si il y a un chamgement de valeur dans le code HTML, il y a une mise à jour automatique dans le JavaScript.
 
 À quoi sert le :class="{ disabled: !filled }" ?
-Il sert à lier l'attribut class d'un élément HTML avec un élément du JavaScript et rend la class dynamique.
+Il sert à lier l'attribut 'class' d'un élément HTML avec un élément du JavaScript et rend la class dynamique.
 
 ## 14.11.2024
 
@@ -84,7 +87,7 @@ On a créer une version plus compacte du code. Ce qui est en commentaire à la f
 Voici l'ancienne version du code :
 
 ```HTML
-  <!-- Ancien code HTML qui prend bien plus de place-->
+  <!-- Ancien code HTML qui prend bien plus de place dans le composant-->
     De quelle couleur est le cheval blanc de Napoléon ?
     <div class="form-check">
       <input
@@ -120,7 +123,7 @@ Voici l'ancienne version du code :
       <label class="form-check-label" for="chevalNoir">Noir</label>
     </div>
 
-    partie 2 pour la 2ème question
+    <!--partie 2 pour la 2ème question-->
 
     Combien font 2+3+5 ?
     <div class="form-check">
@@ -244,7 +247,7 @@ function submit(event: Event): void {
       alert('Vous avez pas réussi à avoir toutes les bonnes réponses')
     }
   }
-  function resetquiz(): any {
+  function resetquiz(): any
     console.log('Le quizz a été réinitialisé')
   if (calcul.value == '10') {
     /*on a mis la valeur en str donc il faut aussi la mettre en str ici */
@@ -264,7 +267,7 @@ temps réel: 65 min
 
 Cette fois-ci j'ai cru que j'allais passé plus de temps, car je ne comprenais pas au début ce qui était demandé. Mais en demandant de l'aide j'ai pu surpasser cette difficulté.
 
-# Réponses aux questions
+# Réponses aux questions avec mes propres mots
 
 un watch est un handler. Il observe une donnée et quand la donnée change le watch s'exécute.
 
@@ -294,16 +297,22 @@ un watch sur value qui permet d'exécuter une fonction à chaque fois que value 
 # Réponses aux questions
 
 Comment pourrait-on réécrire la ligne suivante sans l'opérateur ternaire (avec des if et else) ?
+Comme ça:
+
+```JS
 model.value =
 value.value === props.answer ? QuestionState.Correct : QuestionState.Wrong;
+```
 
 on peut le réecrire avec des if et else comme ça :
 
+```JS
 if (value.value === props.answer) {
 model.value = QuestionState.Correct;
 } else {
 model.value = QuestionState.Wrong;
 }
+```
 
 Comment pourrait-on réécrire autrement la logique du watch sur value ?
 
@@ -311,7 +320,7 @@ Comment pourrait-on réécrire autrement la logique du watch sur value ?
 
 # Commentaires
 
-on a changé la forme du function submit et reset. Voici lancienne version:
+on a changé la forme des méthodes function submit et reset dans QuizForm.Vue. Voici l'ancienne version:
 
 ```JS
 function submit(event: Event): void {
@@ -322,7 +331,6 @@ score += 1
 }
 
 if (calcul.value == '10') {
-/_on a mis la valeur en str donc il faut aussi la mettre en str ici _/
 score += 1
 }
 if (eiffel.value == 'Paris') {
@@ -334,14 +342,31 @@ alert(`Votre score est de ${score} sur 3`)
 
 function reset(event: Event): void {
 event.preventDefault()
-
+dshbcwoivjwerpijvnepkverhvbfejnvrnmf enlever
 cheval.value = null
 calcul.value = null
 eiffel.value = null
 }
 ```
 
-cette version contient des conditions qui vérifient si la réponse est juste et additionne le score sous forme de condition.
+Cette version contient des conditions qui vérifient si la réponse est juste et additionne le score sous forme de condition.
+
+Et voici la nouvelle version de submit et rest du QuizForm.Vue:
+
+```JS
+// fait des comparaison valeur vide-pleine
+function submit(event: Event): void {
+  event.preventDefault()
+  questionStates.value = questionStates.value.map(() => QuestionState.Submit)
+   //envoie les réponses rentrées par l'utilisateur
+}
+
+function reset(event: Event): void {
+  event.preventDefault()
+  questionStates.value = questionStates.value.map(() => QuestionState.Empty)
+  //on met l'état des réponses à vide.
+}
+```
 
 La nouvelle verison est plus dynamique et plus compacte. Elle contient également les liens entre les différents composants
 
@@ -351,18 +376,18 @@ La nouvelle verison est plus dynamique et plus compacte. Elle contient égalemen
 const model = ref<
 string | null
 
-> () /_Le ref est utlisée pour les valeurs réactives (la valeur réactives va être suivie par vue.js) _/
+> ()
 > const cheval = ref<string | null>(null)
 > const calcul = ref<string | null>(null)
 > const eiffel = ref<string | null>(null)
 
 qui va avec:
 const filled = computed<boolean>(
-/_On a mis du boolean à la place, c'est lié avecle bouton primary disabeld filled_/ () =>
+ () =>
 cheval.value !== null && calcul.value !== null && eiffel.value !== null,
 )
 const correctAnswers = ref<boolean[]>([])
-
+//_On a mis du boolean à la place, c'est lié avecle bouton primary disabeld filled_//
 //AVANT : on cherchait à savoir si la réponse était juste avec des valeurs booléennes.
 
 //Calcule le score total
@@ -370,9 +395,12 @@ const score = computed<number>(() => correctAnswers.value.filter((value) => valu
 const totalScore = 3
 ```
 
+Avant ce code vérifiait que chaque réponse donne une valeur booléenne (true or false)
+
 # Notes de compréhension
 
-le v-model= "something[0]", la valeur qui est entre crochets doit être dans un certain ordre. Il ne faut pas qu'il y ait des chiffres qui sautent/manquent.
+Le ref est utlisée pour les valeurs réactives (la valeur réactives va être suivie par vue.js)
+le v-model= "something[0]", la valeur qui est entre crochets permet de facilement structurer l'ordre des v-model. Il faut juste pas qu'il y ait des chiffres qui sautent/manquent entre chaque indice.
 
 Que veut dire qu'un code est plus dynamique?:
 Un code est plus dynamique lorsqu'il interagit avec l'utilisateur, réagit aux changements ou adapte son comportement en fonction de divers facteurs (données,environnements,conditions,...)
@@ -381,7 +409,7 @@ Un code est plus dynamique lorsqu'il interagit avec l'utilisateur, réagit aux c
 
 Bootstrap est correctement utilisé pour rendre l'application responsive.
 
-# semaine 5 12.12.2024
+# semaine 5 : 12.12.2024
 
 J'ai modifié un peu la structure du code et j'ai modifié le CheckBox dans QuizForm.
 il faut que jajoute des espaces entre les questions
@@ -400,15 +428,33 @@ là il faut que la string soit un élément contenu dans la liste
 
 Que se passe-t-il lorsqu'on ne met pas de valeur à answer-detail ? Est-ce satisfaisant ? Si ce n'est pas le cas, proposer une amélioration.
 
-# Prise de notes
+# Prise de notes et quelques explications de ce que j'ai fait dans le Checkbox
 
-dans QuestionText
+Dans QuestionCheckbox:
+
+```JS
+watch(model, (newModel) => {
+  if (newModel === QuestionState.Submit) {
+    const isCorrect = //J'aurai pu aussi trier les deux listes et les comparer
+      props.answer.length === value.value.length &&
+      props.answer.every((val) => value.value.includes(val))
+    model.value = isCorrect ? QuestionState.Correct : QuestionState.Wrong
+  } else if (newModel === QuestionState.Empty) {
+    value.value = []
+  }
+})
+```
+
+Les 3 lignes props.answer.length === value.value.length && props.answer.every((val) => value.value. et model.value = isCorrect ? QuestionState.Correct : QuestionState.Wrongincludes(val)) ont été faite avec ChatGPT,car je n'avais pas compris qu'il fallait comparer les valeurs entre elles et les écrire de la sorte.
+
+Dans QuestionText:
 model.value = props.answer.includes(value.value ?? "") ? QuestionState.Correct : QuestionState.Wrong;
 ce que fait cette ligne : elle vérifie si la valeur donnée se trouve dans la liste définie dans QuizForm.vue. props.answer.includes(value.value ?? "") regarde si la réponse mise est vide et si la réponse est vide elle va la considérer comme une chaîne de caractère vide.
 
 ## 19.12.2024
 
-fait des modifications au niveau des couleurs de la page web. Demander pk TRivia vmodel beug hahaha.
+J'ai fait des modifications au niveau des couleurs de la page web. Je n'avais pas compris pourquoi Trivia v-model beugais, mais finalement je l'ai supprimé car il n'était pas utile dans le code.
+
 ajouter une image et faire les bootstaps
 
 # Temps
@@ -416,15 +462,75 @@ ajouter une image et faire les bootstaps
 commencé à 10h00
 fini ce qu'il fallait faire (en tous cas le minimum) à 11h20
 
-J'ai commencé à améliorer Trivia.Vue et les boutons réinitialiser et terminer ne marchaient pas, alors que j'avais repris le code de QuizForm qui lui marchait. 
-Ce que je fais pour que ça marche :  
+## Améliorations des composants
 
+#### Trivia.Vue
+
+J'ai commencé à améliorer Trivia.Vue et les boutons réinitialiser et terminer ne marchaient pas, alors que j'avais repris le code de QuizForm qui lui marchait. Il fallait que je puisse bien initialiser les constante et en plus adapter la logique des méthodes. Le reste restait pareil que dans QuizForm.
+Aussi j'ai modifié la partie avec le fetch.
+
+Code des méthodes de QuizForm :
+
+```JS
+function submit(event: Event): void {
+  event.preventDefault()
+  questionStates.value = questionStates.value.map(() => QuestionState.Submit)
+}
+
+function reset(event: Event): void {
+  event.preventDefault()
+  questionStates.value = questionStates.value.map(() => QuestionState.Empty) //on met l'état des réponses à vide.
+}
+```
+
+Ce que je fais pour que ça marche :
+J'ai ajouté une ligne en plus dans la fonction Submit:
+
+```JS
+function submit(event: Event): void {
+  event.preventDefault()
+  questionStates.value = questions.value.map((question, index) => {
+    const userAnswer = answers[index]
+    if (userAnswer === question.correct_answer) {
+      return QuestionState.Correct
+    } else {
+      return QuestionState.Wrong
+    }
+  })
+}
+```
+
+En fait la version de QuizFrom de QuizTrivia ignoraient les réponses de l'utilisateur, car il n'y avait pas de constante 'utilisateur' (qui est ici userAnswer) et donc ne vérifiait pas les réponses inscites. Elle ne calculait pas non plus si la réponse était juste ou fausse. C'est la condition qui a été ajoutée dans les parenthèses de question.value.map(). map() vient créer un nouveau tableau en parcourant un tableau existant (ici c'est question.value) et en applicant un changement à chaque élément selon une logique prédéfinie.
+
+Ancien code fetch de QuizTrivia:
+
+```JS
+fetch('https://opentdb.com/api.php?amount=10&type=multiple')
+  .then((response) => response.json())
+  .then((data) => (questions.value = data.results))
+```
+
+Nouveau code fetch de QuizTrivia:
+
+```JS
+fetch('https://opentdb.com/api.php?amount=10&type=multiple')
+  .then((response) => response.json())
+  .then((data) => {
+    questions.value = data.results
+    questionStates.value = data.results.map(() => QuestionState.Empty)
+  })
+```
+
+L'ancienne version se contentait de récupérer les questions via l'API avec fetch et stockaient les variable dans question.value.
+
+La nouvelle version initialise question.value dans un tableau de questions (qui est ici data.results). Le data.results est lui initialisé à QuestionState.Empty qui fait que les réponses soient vides au début.
+Cette version récupère comme la précédente, les questions via l'API.
+
+####
 
 Ensuite j'ai ajouté des espaces dans QuiForm.vue pour que visuellemnt ce soit mieux.
 
 # Réponses aux questions
-
-visualiser le rapport ctr maj v
 
 # Lien GitHub
 
