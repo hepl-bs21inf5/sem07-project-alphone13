@@ -24,13 +24,18 @@ le template contient toutes les questions du quiz.
 
 la page web ne saffichait pas dans le navigateur du coup, j'ai pris du retard.
 
-### réponses aux questions de la semaine 1
+### Réponses aux questions de la semaine 1
 
-Les rôles :
+#### Les rôles :
+
 main.ts : (TypeScript) vient initialiser l'application Vue et Monte l'application sur une partie spécifique de la page web (le DOM, qui est une représentation en mémoire de la page web et permet de modifier ou de lire une page web).
+
 mains.css: Permet de gérer le style de la page HTML
+
 App.vue: Permet de modifier le types de barre de navigation ainsi que le logo clickable pour naviguer sur différentes pages.
+
 router/index.ts: sert à la configuration des routes (chemins urls). détermine quels éléments doivent être affichés sur l'application Vue
+
 Aboutview.vue: Affiche le texte de l'index 'À propos'
 HomeView.vue : document HTML contenant le titre et affiche le titre
 QuizForm.vue : Permet de créer la page de quiz avec les question et réponses en HTML et Javascript
@@ -39,9 +44,13 @@ Dans le fichier QuizForm.vue :
 
 Quelles sont les similarités et les différences entre ref et computed ?
 
-REF: est ulisisé pour les valeurs réactives. Les valeurs qu'il retourne ont une propriété .value et si la valeur est un objet vue.js le met automatiquement à jour.
+#### REF:
 
-COMPUTED: C'est une fonction qui permet de calculer dynamiquement une valeur en fonction des données existantes. il ,met aussi à jour les valeurs en cas de modifications. valeur dérivée
+est ulisisé pour les valeurs réactives. Les valeurs qu'il retourne ont une propriété .value et si la valeur est un objet vue.js le met automatiquement à jour.
+
+#### COMPUTED:
+
+C'est une fonction qui permet de calculer dynamiquement une valeur en fonction des données existantes. il, met aussi à jour les valeurs en cas de modifications. valeur dérivée
 
 la diférence entre le ref réside dans les valeurs. Si une valeur peut être directement modifiée alors on utilise le ref
 
@@ -60,7 +69,7 @@ Les heures passées à faire le projet
 temps destimation : 40 min
 temps réel: 72 min
 
-# réponse questons de la semaine 2 : à répondre
+### réponse questons de la semaine 2 : à répondre
 
 Quelle est la différence entre un prop et un modèle (v-model) ?
 Props: transmission des données parent vers enfant
@@ -68,13 +77,14 @@ v-model: Combine un prop et un événement. Lie un composant parent avec un comp
 
 Comment rendre la propriété placeholder optionnelle ?
 
-# commentaires
+### Commentaires
 
 On a créer une version plus compacte du code. Ce qui est en commentaire à la fin est l'ancienne version qui marche, mais bien plus logue en matière de code.
 
 Voici l'ancienne version du code :
 
-  <!-- Ancien code HTML qui prend bien plus de place
+```HTML
+  <!-- Ancien code HTML qui prend bien plus de place-->
     De quelle couleur est le cheval blanc de Napoléon ?
     <div class="form-check">
       <input
@@ -112,7 +122,7 @@ Voici l'ancienne version du code :
 
     partie 2 pour la 2ème question
 
-    COmbien font 2+3+5 ?
+    Combien font 2+3+5 ?
     <div class="form-check">
       <input
         id="calcul1"
@@ -158,7 +168,7 @@ Voici l'ancienne version du code :
       <label class="form-check-label" for="calcul4">9</label>
     </div>
 
-    partie 3 pour la 3ème question
+    <!--partie 3 pour la 3ème question-->
     Où se trouve la Tour-Eiffel ?
     <div class="form-check">
       <input
@@ -204,9 +214,46 @@ Voici l'ancienne version du code :
       />
       <label class="form-check-label" for="Eiffel4">Lausanne</label>
     </div>
-          LES BOUTONS DOIVENT ÊTRE DANS LE FORM POUR BIEN MARCHER-->
 
-On a modifier le code pour le calcul du score.
+```
+
+On a modifié le code pour le calcul du score. Voici l'ancien code avec les commentaires que j'ai mis pour comprendre comment fonctionne le code:
+
+```JS
+function submit(event: Event): void {
+  event.preventDefault()
+  let score: number = 0
+  if (cheval.value === 'blanc') {
+    score += 1
+  }
+     if (cheval.value == "blanc") {/*comparaison de l'entrée avec les bonnes réponses. aussi bien faire attention à bien mettre les parenthèses + faire plusieurs conditions pour chaque réponse */ {
+      score +=1; /*incrémenter le score pour chaque bonne réponse trouvée*/
+    }}
+    if (calcul.value == "10") { {/*on a mis la valeur en str donc il faut aussi la mettre en str ici */
+      score +=1;
+    }}
+    if (Eiffel.value == "Paris") {{
+      score +=1;
+    }}
+
+    event.preventDefault();
+    if (filled.value) {
+      alert(`Vous avez choisi le score ${score} !`); /*alerte score final*/
+    }
+    else {
+      alert('Vous avez pas réussi à avoir toutes les bonnes réponses')
+    }
+  }
+  function resetquiz(): any {
+    console.log('Le quizz a été réinitialisé')
+  if (calcul.value == '10') {
+    /*on a mis la valeur en str donc il faut aussi la mettre en str ici */
+    score += 1
+  }
+  if (Eiffel.value == 'Paris') {
+    score += 1
+  }
+```
 
 ## 21.11.2024
 
@@ -266,6 +313,7 @@ Comment pourrait-on réécrire autrement la logique du watch sur value ?
 
 on a changé la forme du function submit et reset. Voici lancienne version:
 
+```JS
 function submit(event: Event): void {
 event.preventDefault()
 let score: number = 0
@@ -291,13 +339,15 @@ cheval.value = null
 calcul.value = null
 eiffel.value = null
 }
+```
 
-cette version contient des conditions qui vérifient si la réponse est juste et additionne le score.
+cette version contient des conditions qui vérifient si la réponse est juste et additionne le score sous forme de condition.
 
-La nouvelle verison est plus dynamique
+La nouvelle verison est plus dynamique et plus compacte. Elle contient également les liens entre les différents composants
 
 # Notes de code
 
+```JS
 const model = ref<
 string | null
 
@@ -313,11 +363,12 @@ cheval.value !== null && calcul.value !== null && eiffel.value !== null,
 )
 const correctAnswers = ref<boolean[]>([])
 
-AVANT : on cherchait à savoir si la réponse était juste avec des valeurs booléennes.
+//AVANT : on cherchait à savoir si la réponse était juste avec des valeurs booléennes.
 
 //Calcule le score total
 const score = computed<number>(() => correctAnswers.value.filter((value) => value).length)
 const totalScore = 3
+```
 
 # Notes de compréhension
 
@@ -368,3 +419,7 @@ fini ce qu'il fallait faire (en tous cas le minimum) à 11h20
 # Réponses aux questions
 
 visualiser le rapport ctr maj v
+
+# Lien GitHub
+
+https://hepl-bs21inf5.github.io/sem07-projet-{alphone13]/

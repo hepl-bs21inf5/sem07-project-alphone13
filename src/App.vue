@@ -7,7 +7,7 @@ import { RouterLink, RouterView } from 'vue-router'
     <div class="container-fluid">
       <RouterLink class="navbar-brand" to="/">
         <i class="bi bi-alexa"></i>
-        <!--là on a modifié licône du logo qui s'affiche à côté de quiz-->
+        <!--là on a modifié l'icône du logo qui s'affiche à côté de quiz-->
         Quiz
       </RouterLink>
       <button
@@ -42,3 +42,5 @@ import { RouterLink, RouterView } from 'vue-router'
 
   <RouterView />
 </template>
+
+faire les bootstrap dans cette fenêtre

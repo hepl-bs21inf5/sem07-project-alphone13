@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import QuestionRadio from '@/components/QuestionRadio.vue'
 import { QuestionState } from '@/utils/models'
-import { reactive, ref } from 'vue'
+import { reactive, ref, computed } from 'vue'
 
 const questions = ref<
   {
@@ -10,13 +10,33 @@ const questions = ref<
     incorrect_answers: string[]
   }[]
 >([])
+const submitted = computed<boolean>(() =>
+  questionStates.value.every(
+    (state) => state === QuestionState.Correct || state === QuestionState.Wrong,
+  ),
+)
 const answers = reactive<{ [key: number]: string | null }>({})
 
-/*const checkedNames = ref<string[]>([])
+const checkedNames = ref<string[]>([])
 const questionStates = ref<QuestionState[]>([])
 const filled = computed<boolean>(() =>
   questionStates.value.every((state) => state === QuestionState.Fill),
-) /*pour faire comme dans Quizform avec les message de félicitations */
+)
+const score = computed<number>(
+  () => questionStates.value.filter((state) => state === QuestionState.Correct).length,
+)
+const totalScore = computed<number>(() => questionStates.value.length)
+/*pour faire comme dans Quizform avec les message de félicitations */
+function submit(event: Event): void {
+  // fait des comparaison valeur vide-pleine
+  event.preventDefault()
+  questionStates.value = questionStates.value.map(() => QuestionState.Submit) //envoie les réponses rentrées par l'utilisateur
+}
+
+function reset(event: Event): void {
+  event.preventDefault()
+  questionStates.value = questionStates.value.map(() => QuestionState.Empty) //on met l'état des réponses à vide.
+}
 
 fetch('https://opentdb.com/api.php?amount=10&type=multiple')
   .then((response) => response.json())
@@ -40,12 +60,12 @@ fetch('https://opentdb.com/api.php?amount=10&type=multiple')
       ]"
     />
   </form>
-  <!--<div>Réponses correctes : {{ questionStates }}</div>
+  <div>Réponses correctes : {{ questionStates }}</div>
 
-<button class="btn btn-primary" :class="{ disabled: !filled }" @click="submit">Terminer</button>
-</form>
-<button class="btn btn-primary" @click="reset">Réinitialiser</button>
+  <button class="btn btn-primary" :class="{ disabled: !filled }" @click="submit">Terminer</button>
 
-<div>Score : {{ score }} / {{ totalScore }}</div>
-<div>Debug états : {{ questionStates }}</div>-->
+  <button class="btn btn-primary" @click="reset">Réinitialiser</button>
+
+  <div>Score : {{ score }} / {{ totalScore }}</div>
+  <div>Debug états : {{ questionStates }}</div>
 </template>
