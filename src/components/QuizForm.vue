@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import QuestionRadio from '@/components/QuestionRadio.vue'
 import QuestionText from './QuestionText.vue'
 import { QuestionState } from '@/utils/models'
+import QuestionCheckbox from './QuestionCheckbox.vue'
 
 const checkedNames = ref<string[]>([])
 const questionStates = ref<QuestionState[]>([])
@@ -31,32 +32,12 @@ function reset(event: Event): void {
   event.preventDefault()
   questionStates.value = questionStates.value.map(() => QuestionState.Empty) //on met l'état des réponses à vide.
 }
+
 </script>
 
 <template>
-  
-  <!-- <div class="form-check">
-    <input
-      id="Lausanne"
-      v-model="questionStates[4]"
-      class="form-check-input"
-      type="checkbox"
-      value="Lausanne"
-    />
-    <label class="form-check-label" for="checkboxLausanne">Lausanne</label>
-  </div>
-  <div class="form-check">
-    <input
-      id="Berne"
-      v-model="questionStates[5]"
-      class="form-check-input"
-      type="checkbox"
-      value="Berne"
-    />
-    <label class="form-check-label" for="checkboxBerne">Berne</label>
-  </div>-->
-
   <form>
+    <p>&nbsp;</p>
     <!--Là on a modifier le v-model correct.Answer en questionStates pour que ça corresponde à une valeur réactive (ref), qu'on a définit plus haut. -->
     <QuestionRadio
       id="cheval"
@@ -70,17 +51,17 @@ function reset(event: Event): void {
         { value: 'noir', text: 'Noir' },
       ]"
     />
+    <p>&nbsp;</p>
     <!--ça importe ce qu'il y a dans le questiontext. permet de faire une réponse libre-->
     <QuestionText
       id="exampleFormControlInput"
       v-model="questionStates[1]"
       text=" Combien de pattes a un chat ?"
       placeholder="Veuillez saisir une réponse"
-      answer-detail="Le chat est un mammifère quadrupède."
+      answer-detail="Le chat est un mammifère quadrupède, donc un animal à quatre pattes."
       :answer="['4', 'quatre', 'Quatre', 'Un quadripède']"
-
     />
-
+    <p>&nbsp;</p>
     <QuestionRadio
       id="calcul"
       v-model="questionStates[2]"
@@ -93,7 +74,23 @@ function reset(event: Event): void {
         { value: '12', text: '12' },
       ]"
     />
-
+    <p>&nbsp;</p>
+    <QuestionCheckbox
+      id="games"
+      v-model="questionStates[4]"
+      text="Lesquels parmi ces jeux ne se jouent pas sur Nintendo (Plusieurs réponses possibles)"
+      :submitted="submitted"
+      :options="[
+        { value: 'Mario Galaxy 2', text: 'Mario Galaxy 2' },
+        { value: 'Pou', text: 'Pou' },
+        { value: 'Talking with Tom', text: 'Talking with Tom' },
+        { value: 'Paper Mario - Origami King', text: 'Paper Mario - Origami King' },
+      ]"
+      :answer="['Pou', 'Talking with Tom']"
+      answer-detail="['Pou et Talking with Tom ne sont pas des licences Nintendo.']"
+    />
+    <p>&nbsp;</p>
+    <!-- Ajoute une ligne vide -->
     <QuestionRadio
       id="eiffel"
       v-model="questionStates[3]"
@@ -112,7 +109,7 @@ function reset(event: Event): void {
     <button class="btn btn-primary" :class="{ disabled: !filled }" @click="submit">Terminer</button>
   </form>
   <button class="btn btn-primary" @click="reset">Réinitialiser</button>
-  
+
   <div>Score : {{ score }} / {{ totalScore }}</div>
   <div>Debug états : {{ questionStates }}</div>
 </template>

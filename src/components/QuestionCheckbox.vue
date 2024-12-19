@@ -9,6 +9,7 @@ const model = defineModel<QuestionState>()
 const props = defineProps({
   id: { type: String, required: true },
   text: { type: String, required: true },
+  answerDetail: { type: String, default: ''},
   answer: { type: Array as PropType<string[]>, required: true }, // on doit initier afin que la réponse est une liste
   options: {
     type: Array as PropType<Array<{ value: string; text: string }>>,
@@ -60,6 +61,11 @@ watch(model, (newModel) => {
     <label class="form-check-label" :for="`${props.id}-${option.value}`">
       {{ option.text }}
     </label>
+  </div>
+  <div v-if="model === QuestionState.Correct || model === QuestionState.Wrong">
+    <p v-if="model === QuestionState.Correct" class="text-success">Juste !</p>
+    <p v-else class="text-danger">Faux ! Les réponses étaient : {{ props.answer.join(', ') }}</p>
+    <p v-if="props.answerDetail" class="blockquote-footer">{{ props.answerDetail }}</p>
   </div>
 </template>
 <style scoped>

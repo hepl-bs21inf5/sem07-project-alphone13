@@ -27,11 +27,11 @@ la page web ne saffichait pas dans le navigateur du coup, j'ai pris du retard.
 ### réponses aux questions de la semaine 1
 
 Les rôles :
-main.ts : TypeScript
+main.ts : (TypeScript) vient initialiser l'application Vue et Monte l'application sur une partie spécifique de la page web (le DOM, qui est une représentation en mémoire de la page web et permet de modifier ou de lire une page web).
 mains.css: Permet de gérer le style de la page HTML
 App.vue: Permet de modifier le types de barre de navigation ainsi que le logo clickable pour naviguer sur différentes pages.
-router/index.ts:
-Aboutview.vue:
+router/index.ts: sert à la configuration des routes (chemins urls). détermine quels éléments doivent être affichés sur l'application Vue
+Aboutview.vue: Affiche le texte de l'index 'À propos'
 HomeView.vue : document HTML contenant le titre et affiche le titre
 QuizForm.vue : Permet de créer la page de quiz avec les question et réponses en HTML et Javascript
 
@@ -210,7 +210,8 @@ On a modifier le code pour le calcul du score.
 
 ## 21.11.2024
 
-temps:
+# Temps
+
 temps destimation : 75 min
 temps réel: 65 min
 
@@ -234,7 +235,7 @@ Proposer une autre manière de calculer le score et comparer les deux méthodes.
 
 # Temps
 
-temps estimé :
+temps estimé : 45 min
 temps réellement passé : 60 min
 
 # Commentaires
@@ -293,7 +294,7 @@ eiffel.value = null
 
 cette version contient des conditions qui vérifient si la réponse est juste et additionne le score.
 
-La nouvelle verison permet
+La nouvelle verison est plus dynamique
 
 # Notes de code
 
@@ -322,29 +323,48 @@ const totalScore = 3
 
 le v-model= "something[0]", la valeur qui est entre crochets doit être dans un certain ordre. Il ne faut pas qu'il y ait des chiffres qui sautent/manquent.
 
+Que veut dire qu'un code est plus dynamique?:
+Un code est plus dynamique lorsqu'il interagit avec l'utilisateur, réagit aux changements ou adapte son comportement en fonction de divers facteurs (données,environnements,conditions,...)
+
 # personnalisation
 
 Bootstrap est correctement utilisé pour rendre l'application responsive.
 
-# 10.12.2024
-# temps
-commencé à 10h15
-
-j'ai passé du temps à répondre aux questions. Il faut que je revoie quel type de fonction est un immidiate et il faut que je fasse un résumé de tout ça.
-
 # semaine 5 12.12.2024
+
 J'ai modifié un peu la structure du code et j'ai modifié le CheckBox dans QuizForm.
 il faut que jajoute des espaces entre les questions
 
-Pour la question où il faut écrire soi-même la réponse, j'ai modifier answer (dansle QuizForm) afin qu'il puisse contenir une liste de réponses. 
+Pour la question où il faut écrire soi-même la réponse, j'ai modifier answer (dansle QuizForm) afin qu'il puisse contenir une liste de réponses.
+
+# temps
+
+commencé à 10h15 et finis ce que qu'il fallait faire vers environ 11h30
+
+j'ai passé du temps à répondre aux questions. Il faut que je revoie quel type de fonction est un immidiate et il faut que je fasse un résumé de tout ça.
 
 ## Réponses aux questions
-là il faut que la string soit un élément contenu dans la liste 
 
+là il faut que la string soit un élément contenu dans la liste
 
 Que se passe-t-il lorsqu'on ne met pas de valeur à answer-detail ? Est-ce satisfaisant ? Si ce n'est pas le cas, proposer une amélioration.
 
-# Prise de notes 
+# Prise de notes
+
 dans QuestionText
 model.value = props.answer.includes(value.value ?? "") ? QuestionState.Correct : QuestionState.Wrong;
 ce que fait cette ligne : elle vérifie si la valeur donnée se trouve dans la liste définie dans QuizForm.vue. props.answer.includes(value.value ?? "") regarde si la réponse mise est vide et si la réponse est vide elle va la considérer comme une chaîne de caractère vide.
+
+## 19.12.2024
+
+fait des modifications au niveau des couleurs de la page web. Demander pk TRivia vmodel beug hahaha.
+ajouter une image et faire les bootstaps
+
+# Temps
+
+commencé à 10h00
+fini ce qu'il fallait faire (en tous cas le minimum) à 11h20
+
+# Réponses aux questions
+
+visualiser le rapport ctr maj v
