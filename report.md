@@ -12,7 +12,7 @@ Tableau des heures passées:
 | ...         | ...          | ...   |
 | Total       | 1h10         | 2h30  |
 
-Commentaires:
+#### Commentaires:
 
 on a installé ce dont on avait besoin pour le projet avec l'aide du terminal.
 Ce fût difficile d evoir où on faisait des erreurs, car parfois VSCode nous met les vagues rouges alors qu'il n'y a pas de fautes.
@@ -80,7 +80,7 @@ v-model: Combine un prop et un événement. Lie un composant parent avec un comp
 
 Comment rendre la propriété placeholder optionnelle ?
 
-### Commentaires
+#### Commentaires
 
 On a créer une version plus compacte du code. Ce qui est en commentaire à la fin est l'ancienne version qui marche, mais bien plus logue en matière de code.
 
@@ -403,6 +403,7 @@ Le ref est utlisée pour les valeurs réactives (la valeur réactives va être s
 le v-model= "something[0]", la valeur qui est entre crochets permet de facilement structurer l'ordre des v-model. Il faut juste pas qu'il y ait des chiffres qui sautent/manquent entre chaque indice.
 
 Que veut dire qu'un code est plus dynamique?:
+
 Un code est plus dynamique lorsqu'il interagit avec l'utilisateur, réagit aux changements ou adapte son comportement en fonction de divers facteurs (données,environnements,conditions,...)
 
 # personnalisation
@@ -416,7 +417,7 @@ il faut que jajoute des espaces entre les questions
 
 Pour la question où il faut écrire soi-même la réponse, j'ai modifier answer (dansle QuizForm) afin qu'il puisse contenir une liste de réponses.
 
-# temps
+# Temps
 
 commencé à 10h15 et finis ce que qu'il fallait faire vers environ 11h30
 
@@ -524,7 +525,10 @@ fetch('https://opentdb.com/api.php?amount=10&type=multiple')
 L'ancienne version se contentait de récupérer les questions via l'API avec fetch et stockaient les variable dans question.value.
 
 La nouvelle version initialise question.value dans un tableau de questions (qui est ici data.results). Le data.results est lui initialisé à QuestionState.Empty qui fait que les réponses soient vides au début.
+
 Cette version récupère comme la précédente, les questions via l'API.
+
+J'arrivais pas à faire fonctionner les boutons correctement. j'ai dû demander de l'aide car je ne trouvais pas l'erreur. En fait les boutons marchaient correctement que après avoir cliqueé sur 'réinitialiser', c-à-d que le bouton terminer marchait après avoir sélectionner toutes les réponses. Puis par la suite c'était le bouton réinitialiser qui ne marchait pas.
 
 ####
 
@@ -535,3 +539,16 @@ Ensuite j'ai ajouté des espaces dans QuiForm.vue pour que visuellemnt ce soit m
 # Lien GitHub
 
 https://hepl-bs21inf5.github.io/sem07-projet-{alphone13]/
+
+
+
+code à remmetre why not
+trivia
+fetch('https://opentdb.com/api.php?amount=10&type=multiple')
+  .then((response) => response.json())
+  .then((data) => {
+    questions.value = data.results
+    if (questions.value.length) {
+      questionStates.value = questions.value.map(() => QuestionState.Empty)
+    }
+  })

@@ -103,9 +103,9 @@ function reset(event: Event): void {
       ]"
     />
     <div>Réponses correctes : {{ questionStates }}</div>
-
-    <button class="btn btn-primary" :class="{ disabled: !filled }" @click="submit">Terminer</button>
   </form>
+  <button class="btn btn-primary" :class="{ disabled: !filled }" @click="submit">Terminer</button>
+
   <button class="btn btn-primary" @click="reset">Réinitialiser</button>
 
   <div>Score : {{ score }} / {{ totalScore }}</div>
