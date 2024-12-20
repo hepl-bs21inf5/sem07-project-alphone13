@@ -528,7 +528,9 @@ La nouvelle version initialise question.value dans un tableau de questions (qui 
 
 Cette version récupère comme la précédente, les questions via l'API.
 
-J'arrivais pas à faire fonctionner les boutons correctement. j'ai dû demander de l'aide car je ne trouvais pas l'erreur. En fait les boutons marchaient correctement que après avoir cliqueé sur 'réinitialiser', c-à-d que le bouton terminer marchait après avoir sélectionner toutes les réponses. Puis par la suite c'était le bouton réinitialiser qui ne marchait pas.
+J'arrivais pas à faire fonctionner les boutons correctement. j'ai dû demander de l'aide car je ne trouvais pas l'erreur. En fait les boutons marchaient correctement que après avoir cliqueé sur 'réinitialiser', c-à-d que le bouton terminer marchait après avoir sélectionner toutes les réponses. Puis par la suite c'était le bouton réinitialiser qui ne marchait pas. Je suis restée bloquer dessus pendant un bon moment et j'ai demandé de l'aide au prof.
+
+Ce dont j'ai compris avec ça c'est quil faut bien faire attention à bien lier les valeurs avec leurs propriétés. Aussi il faut faire attention à la manière dont on définit les constantes et les imports car sinon le code ne marche pas.
 
 ####
 

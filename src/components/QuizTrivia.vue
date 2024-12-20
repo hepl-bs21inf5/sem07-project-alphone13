@@ -43,25 +43,27 @@ function fetchQuestions(): void {
   fetch('https://opentdb.com/api.php?amount=10&type=multiple')
     .then((response) => response.json())
     .then((data) => {
-      questions.value = data.results.map((question: { correct_answer: any; incorrect_answers: any[]; }) => {
-        const allAnswers = [
-          { value: question.correct_answer, text: question.correct_answer },
-          ...question.incorrect_answers.map((answer) => ({
-            value: answer,
-            text: answer,
-          })),
-        ]
-        return {
-          ...question,
-          shuffledAnswers: shuffleArray(allAnswers),
-        }
-      })
+      questions.value = data.results.map(
+        (question: { correct_answer: any; incorrect_answers: any[] }) => {
+          const allAnswers = [
+            { value: question.correct_answer, text: question.correct_answer },
+            ...question.incorrect_answers.map((answer) => ({
+              value: answer,
+              text: answer,
+            })),
+          ]
+          return {
+            ...question,
+            shuffledAnswers: shuffleArray(allAnswers),
+          }
+        },
+      )
       questionStates.value = new Array(questions.value.length).fill(QuestionState.Empty)
       Object.keys(answers).forEach((key) => (answers[key] = null)) // Réinitialise les réponses
     })
 }
 
-// Soumettre les réponses pour correction
+// Soumettre les réponses pour correction. les conditions servent à verifier si la réponse est juste
 function submit(event: Event): void {
   event.preventDefault()
   if (!filled.value) {
@@ -101,7 +103,7 @@ fetchQuestions()
       />
     </div>
 
-    <!-- Boutons -->
+    <!-- Boutons ne marchent pas correctement-->
     <button class="btn btn-primary" :disabled="!filled" @click="submit">Terminer</button>
     <button class="btn btn-secondary" @click="reset">Réinitialiser</button>
 
