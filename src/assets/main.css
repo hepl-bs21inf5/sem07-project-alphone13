@@ -1,18 +1,41 @@
 /* https://getbootstrap.com/docs/5.3/components/buttons/#variables */
-.btn-primary {
-  --bs-btn-color: #4b0082; /*Pour l'écriture du bouton réinitialiser (violet intense pastel)*/
-  --bs-btn-bg: #dda0dd; /*Change la couleur du bouton réinitialiser (lavande pastel)*/
-  --bs-btn-border-color: #e6e6fa; /*Couleur du bord du bouton réinitialiser (lavande très claire)*/
-  --bs-btn-hover-color: #8a2be2; /*Couleur de l'écriture lorsque l'on place la souris dessus le bouton réinitialiser (violet vif pastel)*/
-  --bs-btn-hover-bg: #e0bbe4; /*Change la couleur de "l'ombre" du bouton au survol (rose lavande pastel)*/
-  --bs-btn-hover-border-color: #b19cd9; /*Change la couleur du tour du bouton lors du survol (violet doux pastel)*/
-  --bs-btn-focus-shadow-rgb: 216, 191, 216; /*Ombre violette douce au focus élément actuellement séléctionné (tons lavande)*/
-  --bs-btn-active-color: #6a0dad; /*Couleur de l'écriture lorsqu'on clique sur le bouton (violet foncé pastel)*/
-  --bs-btn-active-bg: #d8bfd8; /*Change la couleur du bouton réinitialiser lorsqu'il est activé (violet orchidée pastel) mais pas besoin pour le quiz*/
-  --bs-btn-active-border-color: #c6a4c9; /*Bordure violet pastel clair pour les états actifs, le tour des touches*/
-  --bs-btn-active-shadow: inset 0 3px 5px rgba(186, 85, 211, 0.125); /*Ombre interne douce pour l'état actif (violet doux)*/
-  --bs-btn-disabled-color: #9370db; /*Change la couleur du texte du bouton terminer (violet pastel doux)*/
-  --bs-btn-disabled-bg: #e0e0f8; /*Changer la couleur du bouton terminer (bleu lavande pastel)*/
-  --bs-btn-disabled-border-color: #d1c4e9; /*Couleur de la bordure du bouton terminer (violet pâle pastel)*/
+/* Styles généraux pour tous les boutons */
+.btn {
+  --bs-btn-color: #4b0082; /* Couleur du texte (violet intense pastel) */
+  --bs-btn-border-color: #e6e6fa; /* Couleur de bordure par défaut (lavande très claire) */
+  --bs-btn-focus-shadow-rgb: 216, 191, 216; /* Ombre violette douce au focus (tons lavande) */
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(186, 85, 211, 0.125); /* Ombre interne douce (violet doux) */
 }
 
+/* Bouton "Terminer" (violet plus foncé) */
+.btn-primary {
+  --bs-btn-bg: #d291e6; /* Une teinte plus foncée de lavande pastel */
+  --bs-btn-hover-bg: #c77aeb; /* Violet légèrement plus foncé au survol */
+  --bs-btn-hover-color: #4b0082; /* Couleur de texte plus foncée au survol */
+  --bs-btn-active-bg: #b166d6; /* Violet foncé pastel au clic */
+  --bs-btn-active-border-color: #9c4fc1; /* Bordure plus foncée lors de l'activation */
+  --bs-btn-disabled-bg: #dcd6eb; /* Bleu lavande foncé pour l'état désactivé */
+  --bs-btn-disabled-color: #6a3cb0; /* Texte en violet plus foncé pour l'état désactivé */
+}
+
+/* Bouton "Réinitialiser" (lavande plus foncée) */
+.btn-secondary {
+  --bs-btn-bg: #d1c6e8; /* Lavande foncé plus doux pour le fond */
+  --bs-btn-hover-bg: #c4b7e0; /* Lavande plus foncée au survol */
+  --bs-btn-hover-color: #4b0082; /* Texte en violet plus foncé au survol */
+  --bs-btn-active-bg: #a9a0d9; /* Violet pastel foncé au clic */
+  --bs-btn-active-border-color: #b19cd9; /* Bordure violet foncé lors de l'activation */
+  --bs-btn-disabled-bg: #e8e8f3; /* Lavande très pâle lors du désactivé */
+  --bs-btn-disabled-color: #8a68b0; /* Texte désactivé en violet plus foncé */
+}
+
+/* Bouton "Nouvelles questions" (lavande foncée) */
+.btn-info {
+  --bs-btn-bg: #e1c5f0; /* Une teinte un peu plus foncée de lavande clair */
+  --bs-btn-hover-bg: #d2aef0; /* Survol un peu plus foncé */
+  --bs-btn-hover-color: #4b0082; /* Texte en violet foncé au survol */
+  --bs-btn-active-bg: #c79df0; /* Violet un peu plus foncé au clic */
+  --bs-btn-active-border-color: #b19cd9; /* Bordure violet foncé lors de l'activation */
+  --bs-btn-disabled-bg: #f1f0fa; /* Couleur plus claire pour l'état désactivé */
+  --bs-btn-disabled-color: #b19cd9; /* Texte désactivé en violet pastel foncé */
+}

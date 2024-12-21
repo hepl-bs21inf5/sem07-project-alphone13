@@ -465,6 +465,8 @@ fini ce qu'il fallait faire (en tous cas le minimum) à 11h20
 
 ## Améliorations des composants
 
+J'ai ajouté des espaces dans QuiForm.vue et QuizTrivia pour que ce soit mieux visuellement.
+
 #### Trivia.Vue
 
 J'ai commencé à améliorer Trivia.Vue et les boutons réinitialiser et terminer ne marchaient pas, alors que j'avais repris le code de QuizForm qui lui marchait. Il fallait que je puisse bien initialiser les constante et en plus adapter la logique des méthodes. Le reste restait pareil que dans QuizForm.
@@ -485,23 +487,30 @@ function reset(event: Event): void {
 ```
 
 Ce que je fais pour que ça marche :
-J'ai ajouté une ligne en plus dans la fonction Submit:
+J'ai ajouté des conditions en plus dans la fonction Submit qui vérifient que chaque question a été répondue:
 
 ```JS
-function submit(event: Event): void {
+// Soumettre le quiz
+function submitQuiz(event: Event): void {
   event.preventDefault()
-  questionStates.value = questions.value.map((question, index) => {
-    const userAnswer = answers[index]
-    if (userAnswer === question.correct_answer) {
-      return QuestionState.Correct
-    } else {
-      return QuestionState.Wrong
-    }
+  if (!filled.value) {
+    alert('Veuillez répondre à toutes les questions avant de soumettre.')
+    return
+  }
+    questionStates.value = questions.value.map((question, index) => {
+    const userAnswer =
+      questionStates.value[index] === QuestionState.Fill ? questionStates.value[index] : null
+    return userAnswer === question.correct_answer ? QuestionState.Correct : QuestionState.Wrong
   })
+}
+// Réinitialiser le quiz
+function resetQuiz(event: Event): void {
+  event.preventDefault()
+  questionStates.value = new Array(questions.value.length).fill(QuestionState.Empty) // Réinitialiser les états
 }
 ```
 
-En fait la version de QuizFrom de QuizTrivia ignoraient les réponses de l'utilisateur, car il n'y avait pas de constante 'utilisateur' (qui est ici userAnswer) et donc ne vérifiait pas les réponses inscites. Elle ne calculait pas non plus si la réponse était juste ou fausse. C'est la condition qui a été ajoutée dans les parenthèses de question.value.map(). map() vient créer un nouveau tableau en parcourant un tableau existant (ici c'est question.value) et en applicant un changement à chaque élément selon une logique prédéfinie.
+En fait la version de QuizFrom de QuizTrivia ignoraient les réponses de l'utilisateur, car il n'y avait pas de constante 'utilisateur' (qui est ici userAnswer) et donc ne vérifiait pas les réponses inscites. Elle ne calculait pas non plus si la réponse était juste ou fausse. C'est la condition qui a été ajoutée dans les parenthèses de question.value.map(). map() vient créer un nouveau tableau en parcourant un tableau existant (ici c'est question.value) et en appliquant un changement à chaque élément selon une logique prédéfinie.
 
 Ancien code fetch de QuizTrivia:
 
@@ -511,35 +520,52 @@ fetch('https://opentdb.com/api.php?amount=10&type=multiple')
   .then((data) => (questions.value = data.results))
 ```
 
-Nouveau code fetch de QuizTrivia:
+Nouveau code fetch de QuizTrivia qui est maintenant une fonction:
 
 ```JS
-fetch('https://opentdb.com/api.php?amount=10&type=multiple')
-  .then((response) => response.json())
-  .then((data) => {
-    questions.value = data.results
-    questionStates.value = data.results.map(() => QuestionState.Empty)
-  })
+function fetchQuestions(): void {
+  questions.value = []
+  questionStates.value = [] // Réinitialiser les états
+  fetch('https://opentdb.com/api.php?amount=10&type=multiple')
+    .then((response) => response.json())
+    .then((data) => {
+      questions.value = data.results.map((q: { correct_answer: any; incorrect_answers: any[]; }) => ({
+        ...q,
+        shuffledAnswers: shuffleArray([
+          { value: q.correct_answer, text: q.correct_answer },
+          ...q.incorrect_answers.map((answer: any) => ({
+            value: answer,
+            text: answer,
+          })),
+        ]),
+      }))
+      // Initialiser tous les états à "Empty"
+      questionStates.value = new Array(data.results.length).fill(QuestionState.Empty)
+    })
+}
 ```
+
+Cette version récupère comme la précédente les questions via l'API.
 
 L'ancienne version se contentait de récupérer les questions via l'API avec fetch et stockaient les variable dans question.value.
 
 La nouvelle version initialise question.value dans un tableau de questions (qui est ici data.results). Le data.results est lui initialisé à QuestionState.Empty qui fait que les réponses soient vides au début.
 
-Cette version récupère comme la précédente les questions via l'API.
+#### Problèmes rencontrés avec les boutons terminer et réinitialiser
 
-J'arrivais pas à faire fonctionner les boutons correctement. j'ai dû demander de l'aide car je ne trouvais pas l'erreur. En fait les boutons marchaient correctement que après avoir cliqueé sur 'réinitialiser', c-à-d que le bouton terminer marchait après avoir sélectionner toutes les réponses. Puis par la suite c'était le bouton réinitialiser qui ne marchait pas. Je suis restée bloquer dessus pendant un bon moment et j'ai demandé de l'aide au prof.
+J'arrivais pas à faire fonctionner les boutons correctement. J'ai dû demander de l'aide car je ne trouvais pas l'erreur. En fait, les boutons marchaient correctement que après avoir cliquer sur 'réinitialiser'. Puis par la suite c'était le bouton réinitialiser qui ne marchait pas. Je suis restée bloquer dessus pendant un bon moment et j'ai demandé de l'aide au prof.
 
-Ce dont j'ai compris avec ça c'est qu'il faut bien faire attention à bien lier les valeurs avec leurs propriétés. Aussi il faut faire attention à la manière dont on définit les constantes et les imports car sinon le code ne marche pas.Finalement, j'ai décidé de tout effacer et de recommencer.
+Ce dont j'ai compris avec ça c'est qu'il faut bien faire attention à bien lier les valeurs avec leurs propriétés. Aussi il faut faire attention à la manière dont on définit les constantes et les imports car sinon le code ne marche pas.Finalement, j'ai décidé de tout effacer et de recommencer afin de voir si le problème venait des imports ou bien des fonctions.
 
 Dans le nouveau code, j'ai enlevé ce qui n'était pas nécessaire pour le bon fonctionnement de Trivia. Comme par exemple:
 
-J'ai ensuite déclaré les constantes (étatas des question, score, total score, rempli, et envoyé) et c'était similaire à quizForm. Pour j'ai défini les différentes actions (méthodes) qui vont envoyer les résultats, réinitiliser les questions cochées, mélanger les questions (fetchQuestions) et qui mélange les réponses.
+J'ai ensuite déclaré les constantes (états des question, score, total score, rempli, et envoyé) et c'était similaire à quizForm. Pour j'ai défini les différentes actions (méthodes) qui vont envoyer les résultats, réinitiliser les questions cochées, mélanger les questions (fetchQuestions) et qui mélange les réponses.
 
 #### Explications des fonctions de QuizTrivia
 
 La fonction submit met à jour les états des questions en vérifiant si chaque réponse est correcte ou non (Correct ou Wrong). La fonction reset mets toutes les réponses à l'état "Empty".
-La fonction fetch: 
+La fonction fetch:
+
 ```JS
 function fetchQuestions(): void {
   submitted.value = false
@@ -562,10 +588,12 @@ function fetchQuestions(): void {
     })
 }
 ```
+
 Recharge de nouvelles questions depuis l’API et réinitialise les états et les réponses.
 
-Ce bout de code m'a été donné par ChatGPT car je n'avais initiliser les les états des réponses et des questions:
-```JS 
+Ce bout de code m'a été donné par ChatGPT car je n'avais initilisé les états des réponses et des questions:
+
+```JS
 // Définition des états possibles pour une question
 enum QuestionState {
   Empty = 'Empty', // Pas encore répondu
@@ -574,17 +602,24 @@ enum QuestionState {
   Wrong = 'Wrong', // Mauvaise réponse
 }
 ```
-la fonction enum permet de 
 
-####
+la fonction enum permet de
 
-Ensuite j'ai ajouté des espaces dans QuiForm.vue pour que visuellemnt ce soit mieux.
+#### Amélioration du style
+
+Dans QuizTrivia, j'ai modifié le styles de l'affichage du score pour qu'il soit plus gros.
 
 # Réponses aux questions
+
+Expliquer votre démarche pour les améliorations que vous avez choisies :
+
+Pourquoi avez-vous choisi ces améliorations ?
+J'ai choisi d'ajouter un calcul de score ainsi que des explications dans QuizTrivia car je me suis dis que les questions de Trivia étaient intéressantes et méritaient au moins de dire quelle était la bonne réponse.
+Comment les avez-vous implémentées ?
+Quels problèmes avez-vous rencontrés ?
+Quelles améliorations pourriez-vous encore apporter ?
+Vous devoir pouvoir expliquer votre code afin de valider une amélioration.
 
 # Lien GitHub
 
 https://hepl-bs21inf5.github.io/sem07-projet-{alphone13]/
-
-
-
