@@ -5,7 +5,6 @@ import QuestionText from './QuestionText.vue'
 import { QuestionState } from '@/utils/models'
 import QuestionCheckbox from './QuestionCheckbox.vue'
 
-const checkedNames = ref<string[]>([])
 const questionStates = ref<QuestionState[]>([])
 const filled = computed<boolean>(() =>
   questionStates.value.every((state) => state === QuestionState.Fill),

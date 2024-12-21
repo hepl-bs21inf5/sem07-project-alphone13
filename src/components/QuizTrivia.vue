@@ -1,9 +1,16 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import QuestionRadio from '@/components/QuestionRadio.vue'
-import { QuestionState } from '@/utils/models'
-import { reactive, ref, computed } from 'vue'
 
-// Définition des questions et réponses
+// Définition des états possibles pour une question
+enum QuestionState {
+  Empty = 'Empty', // Pas encore répondu
+  Fill = 'Fill', // Réponse donnée
+  Correct = 'Correct', // Bonne réponse
+  Wrong = 'Wrong', // Mauvaise réponse
+}
+
+// Questions et états des réponses
 const questions = ref<
   {
     question: string
@@ -12,59 +19,52 @@ const questions = ref<
     shuffledAnswers: { value: string; text: string }[]
   }[]
 >([])
-
-const answers = reactive<{ [key: number]: string | null }>({})
 const questionStates = ref<QuestionState[]>([])
 
-// Calculs réactifs
-const submitted = computed<boolean>(() =>
+// Gestion des boutons
+const filled = computed(() => questionStates.value.every((state) => state === QuestionState.Fill))
+
+const submitted = computed(() =>
   questionStates.value.every(
     (state) => state === QuestionState.Correct || state === QuestionState.Wrong,
   ),
 )
-const filled = computed<boolean>(
-  () =>
-    questions.value.length > 0 && // Toutes les questions doivent être disponibles
-    Object.keys(answers).length === questions.value.length && // Toutes les réponses doivent être dans le tableau
-    Object.values(answers).every((answer) => answer !== null), // Toutes les réponses doivent être remplies
-)
+
+// Calcul du score
 const score = computed<number>(
   () => questionStates.value.filter((state) => state === QuestionState.Correct).length,
 )
-const totalScore = computed<number>(() => questions.value.length)
+const totalScore = computed<number>(() => questionStates.value.length)
 
-// Mélanger un tableau
+// Mélanger les réponses
 function shuffleArray<T>(array: T[]): T[] {
   return array.sort(() => Math.random() - 0.5)
 }
 
-// Récupérer les questions depuis l'API
+// Charger de nouvelles questions
 function fetchQuestions(): void {
+  questions.value = []
+  questionStates.value = [] // Réinitialiser les états
   fetch('https://opentdb.com/api.php?amount=10&type=multiple')
     .then((response) => response.json())
     .then((data) => {
-      questions.value = data.results.map(
-        (question: { correct_answer: any; incorrect_answers: any[] }) => {
-          const allAnswers = [
-            { value: question.correct_answer, text: question.correct_answer },
-            ...question.incorrect_answers.map((answer) => ({
-              value: answer,
-              text: answer,
-            })),
-          ]
-          return {
-            ...question,
-            shuffledAnswers: shuffleArray(allAnswers),
-          }
-        },
-      )
-      questionStates.value = new Array(questions.value.length).fill(QuestionState.Empty)
-      Object.keys(answers).forEach((key) => (answers[key] = null)) // Réinitialise les réponses
+      questions.value = data.results.map((q: { correct_answer: any; incorrect_answers: any[]; }) => ({
+        ...q,
+        shuffledAnswers: shuffleArray([
+          { value: q.correct_answer, text: q.correct_answer },
+          ...q.incorrect_answers.map((answer: any) => ({
+            value: answer,
+            text: answer,
+          })),
+        ]),
+      }))
+      // Initialiser tous les états à "Empty"
+      questionStates.value = new Array(data.results.length).fill(QuestionState.Empty)
     })
 }
 
-// Soumettre les réponses pour correction. les conditions servent à verifier si la réponse est juste
-function submit(event: Event): void {
+// Soumettre le quiz
+function submitQuiz(event: Event): void {
   event.preventDefault()
   if (!filled.value) {
     alert('Veuillez répondre à toutes les questions avant de soumettre.')
@@ -72,45 +72,66 @@ function submit(event: Event): void {
   }
 
   questionStates.value = questions.value.map((question, index) => {
-    const userAnswer = answers[index]
-    if (userAnswer === question.correct_answer) {
-      return QuestionState.Correct
-    } else {
-      return QuestionState.Wrong
-    }
+    const userAnswer =
+      questionStates.value[index] === QuestionState.Fill ? questionStates.value[index] : null
+    return userAnswer === question.correct_answer ? QuestionState.Correct : QuestionState.Wrong
   })
 }
 
-// Réinitialiser uniquement les réponses utilisateur
-function reset(event: Event): void {
+// Réinitialiser le quiz
+function resetQuiz(event: Event): void {
   event.preventDefault()
-  Object.keys(answers).forEach((key) => (answers[key] = null)) // Effacer toutes les réponses
-  questionStates.value = new Array(questions.value.length).fill(QuestionState.Empty) // Remettre à vide
+  questionStates.value = new Array(questions.value.length).fill(QuestionState.Empty) // Réinitialiser les états
 }
 
+// Charger les questions au démarrage
 fetchQuestions()
 </script>
 
 <template>
-  <form @submit.prevent="submit">
-    <div v-for="(question, index) in questions" :key="index">
-      <QuestionRadio
-        :id="index.toString()"
-        :submitted="submitted"
-        v-model="answers[index]"
-        :text="question.question"
-        :options="question.shuffledAnswers"
-      />
+  <form>
+    <!-- Affichage des questions -->
+    <QuestionRadio
+      v-for="(question, index) in questions"
+      :id="index.toString()"
+      v-model="questionStates[index]"
+      :text="question.question"
+      :options="question.shuffledAnswers"
+      :key="index"
+    />
+
+    <div class="buttons">
+      <!-- Bouton Terminer -->
+      <button class="btn btn-primary" :disabled="!filled" type="button" @click="submitQuiz">
+        Terminer
+      </button>
+
+      <!-- Bouton Réinitialiser -->
+      <button class="btn btn-secondary" type="button" @click="resetQuiz">Réinitialiser</button>
+
+      <!-- Bouton Nouvelles questions -->
+      <button class="btn btn-info" type="button" @click="fetchQuestions">
+        Nouvelles questions
+      </button>
     </div>
 
-    <!-- Boutons ne marchent pas correctement-->
-    <button class="btn btn-primary" :disabled="!filled" @click="submit">Terminer</button>
-    <button class="btn btn-secondary" @click="reset">Réinitialiser</button>
-
     <!-- Affichage du score -->
-    <div v-if="submitted">
-      <p>Score : {{ score }} / {{ totalScore }}</p>
-      <p>Bravo ! Vous avez terminé le quiz.</p>
+    <div v-if="submitted" class="score">
+      <p>Votre score : {{ score }} / {{ totalScore }}</p>
     </div>
   </form>
 </template>
+
+<style>
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.score {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+</style>

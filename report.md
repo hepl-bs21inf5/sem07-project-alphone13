@@ -526,11 +526,55 @@ L'ancienne version se contentait de récupérer les questions via l'API avec fet
 
 La nouvelle version initialise question.value dans un tableau de questions (qui est ici data.results). Le data.results est lui initialisé à QuestionState.Empty qui fait que les réponses soient vides au début.
 
-Cette version récupère comme la précédente, les questions via l'API.
+Cette version récupère comme la précédente les questions via l'API.
 
 J'arrivais pas à faire fonctionner les boutons correctement. j'ai dû demander de l'aide car je ne trouvais pas l'erreur. En fait les boutons marchaient correctement que après avoir cliqueé sur 'réinitialiser', c-à-d que le bouton terminer marchait après avoir sélectionner toutes les réponses. Puis par la suite c'était le bouton réinitialiser qui ne marchait pas. Je suis restée bloquer dessus pendant un bon moment et j'ai demandé de l'aide au prof.
 
-Ce dont j'ai compris avec ça c'est quil faut bien faire attention à bien lier les valeurs avec leurs propriétés. Aussi il faut faire attention à la manière dont on définit les constantes et les imports car sinon le code ne marche pas.
+Ce dont j'ai compris avec ça c'est qu'il faut bien faire attention à bien lier les valeurs avec leurs propriétés. Aussi il faut faire attention à la manière dont on définit les constantes et les imports car sinon le code ne marche pas.Finalement, j'ai décidé de tout effacer et de recommencer.
+
+Dans le nouveau code, j'ai enlevé ce qui n'était pas nécessaire pour le bon fonctionnement de Trivia. Comme par exemple:
+
+J'ai ensuite déclaré les constantes (étatas des question, score, total score, rempli, et envoyé) et c'était similaire à quizForm. Pour j'ai défini les différentes actions (méthodes) qui vont envoyer les résultats, réinitiliser les questions cochées, mélanger les questions (fetchQuestions) et qui mélange les réponses.
+
+#### Explications des fonctions de QuizTrivia
+
+La fonction submit met à jour les états des questions en vérifiant si chaque réponse est correcte ou non (Correct ou Wrong). La fonction reset mets toutes les réponses à l'état "Empty".
+La fonction fetch: 
+```JS
+function fetchQuestions(): void {
+  submitted.value = false
+  questions.value = []
+  Object.keys(answers).forEach((key) => (answers[key] = null))
+  fetch('https://opentdb.com/api.php?amount=10&type=multiple')
+    .then((response) => response.json())
+    .then((data) => {
+      questions.value = data.results.map((q) => ({
+        ...q,
+        shuffledAnswers: shuffleArray([
+          { value: q.correct_answer, text: q.correct_answer },
+          ...q.incorrect_answers.map((answer) => ({
+            value: answer,
+            text: answer,
+          })),
+        ]),
+      }))
+      questionStates.value = new Array(questions.value.length).fill(QuestionState.Empty)
+    })
+}
+```
+Recharge de nouvelles questions depuis l’API et réinitialise les états et les réponses.
+
+Ce bout de code m'a été donné par ChatGPT car je n'avais initiliser les les états des réponses et des questions:
+```JS 
+// Définition des états possibles pour une question
+enum QuestionState {
+  Empty = 'Empty', // Pas encore répondu
+  Fill = 'Fill', // Réponse donnée
+  Correct = 'Correct', // Bonne réponse
+  Wrong = 'Wrong', // Mauvaise réponse
+}
+```
+la fonction enum permet de 
 
 ####
 
@@ -544,13 +588,3 @@ https://hepl-bs21inf5.github.io/sem07-projet-{alphone13]/
 
 
 
-code à remmetre why not
-trivia
-fetch('https://opentdb.com/api.php?amount=10&type=multiple')
-  .then((response) => response.json())
-  .then((data) => {
-    questions.value = data.results
-    if (questions.value.length) {
-      questionStates.value = questions.value.map(() => QuestionState.Empty)
-    }
-  })
