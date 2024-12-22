@@ -32,7 +32,7 @@ const submitted = computed(() =>
 
 // Calcul du score
 //const score = computed<number>(
-  //() => questionStates.value.filter((state) => state === QuestionState.Correct).length,
+//() => questionStates.value.filter((state) => state === QuestionState.Correct).length,
 //)
 //const totalScore = computed<number>(() => questionStates.value.length)
 
@@ -48,16 +48,18 @@ function fetchQuestions(): void {
   fetch('https://opentdb.com/api.php?amount=10&type=multiple')
     .then((response) => response.json())
     .then((data) => {
-      questions.value = data.results.map((q: { correct_answer: any; incorrect_answers: any[]; }) => ({
-        ...q,
-        shuffledAnswers: shuffleArray([
-          { value: q.correct_answer, text: q.correct_answer },
-          ...q.incorrect_answers.map((answer: any) => ({
-            value: answer,
-            text: answer,
-          })),
-        ]),
-      }))
+      questions.value = data.results.map(
+        (q: { correct_answer: any; incorrect_answers: any[] }) => ({
+          ...q,
+          shuffledAnswers: shuffleArray([
+            { value: q.correct_answer, text: q.correct_answer },
+            ...q.incorrect_answers.map((answer: any) => ({
+              value: answer,
+              text: answer,
+            })),
+          ]),
+        }),
+      )
       // Initialiser tous les états à "Empty"
       questionStates.value = new Array(data.results.length).fill(QuestionState.Empty)
     })
@@ -114,10 +116,10 @@ fetchQuestions()
         Nouvelles questions
       </button>
     </div>
-
+    <div>Debug états : {{ questionStates }}</div>
     <!-- Affichage du score -->
     <div v-if="submitted" class="score">
-     <!-- <p>Votre score : {{ score }} / {{ totalScore }}</p>-->
+      <!-- <p>Votre score : {{ score }} / {{ totalScore }}</p>-->
     </div>
   </form>
 </template>
