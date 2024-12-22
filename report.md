@@ -557,8 +557,6 @@ J'arrivais pas à faire fonctionner les boutons correctement. J'ai dû demander 
 
 Ce dont j'ai compris avec ça c'est qu'il faut bien faire attention à bien lier les valeurs avec leurs propriétés. Aussi il faut faire attention à la manière dont on définit les constantes et les imports car sinon le code ne marche pas.Finalement, j'ai décidé de tout effacer et de recommencer afin de voir si le problème venait des imports ou bien des fonctions.
 
-Dans le nouveau code, j'ai enlevé ce qui n'était pas nécessaire pour le bon fonctionnement de Trivia. Comme par exemple:
-
 J'ai ensuite déclaré les constantes (états des question, score, total score, rempli, et envoyé) et c'était similaire à quizForm. Pour j'ai défini les différentes actions (méthodes) qui vont envoyer les résultats, réinitiliser les questions cochées, mélanger les questions (fetchQuestions) et qui mélange les réponses.
 
 #### Explications des fonctions de QuizTrivia
@@ -617,6 +615,7 @@ Pourquoi avez-vous choisi ces améliorations ?
 J'ai choisi d'ajouter un calcul de score ainsi que des explications dans QuizTrivia car je me suis dis que les questions de Trivia étaient intéressantes et méritaient au moins de dire quelle était la bonne réponse.
 Comment les avez-vous implémentées ?
 Quels problèmes avez-vous rencontrés ?
+J'ai rencontré des problèmes au niveau de l'implémentation des boutons aisni que pour le calcul du score. Le code ne marchait pas comme voulu.
 Quelles améliorations pourriez-vous encore apporter ?
 Vous devoir pouvoir expliquer votre code afin de valider une amélioration.
 

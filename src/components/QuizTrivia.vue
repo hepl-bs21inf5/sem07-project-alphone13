@@ -31,10 +31,10 @@ const submitted = computed(() =>
 )
 
 // Calcul du score
-//const score = computed<number>(
-//() => questionStates.value.filter((state) => state === QuestionState.Correct).length,
-//)
-//const totalScore = computed<number>(() => questionStates.value.length)
+const score = computed<number>(
+  () => questionStates.value.filter((state) => state === QuestionState.Correct).length,
+)
+const totalScore = computed<number>(() => questionStates.value.length)
 
 // Mélanger les réponses
 function shuffleArray<T>(array: T[]): T[] {
@@ -119,7 +119,7 @@ fetchQuestions()
     <div>Debug états : {{ questionStates }}</div>
     <!-- Affichage du score -->
     <div v-if="submitted" class="score">
-      <!-- <p>Votre score : {{ score }} / {{ totalScore }}</p>-->
+      <p>Votre score : {{ score }} / {{ totalScore }}</p>
     </div>
   </form>
 </template>
