@@ -31,10 +31,10 @@ const submitted = computed(() =>
 )
 
 // Calcul du score
-const score = computed<number>(
-  () => questionStates.value.filter((state) => state === QuestionState.Correct).length,
-)
-const totalScore = computed<number>(() => questionStates.value.length)
+//const score = computed<number>(
+  //() => questionStates.value.filter((state) => state === QuestionState.Correct).length,
+//)
+//const totalScore = computed<number>(() => questionStates.value.length)
 
 // Mélanger les réponses
 function shuffleArray<T>(array: T[]): T[] {
@@ -90,15 +90,15 @@ fetchQuestions()
 
 <template>
   <form>
-    <!-- Affichage des questions -->
-    <QuestionRadio
-      v-for="(question, index) in questions"
-      :id="index.toString()"
-      v-model="questionStates[index]"
-      :text="question.question"
-      :options="question.shuffledAnswers"
-      :key="index"
-    />
+    <div v-for="(question, index) in questions" :key="index">
+      <QuestionRadio
+        :id="index.toString()"
+        v-model="questionStates[index]"
+        :text="question.question"
+        :answer="question.correct_answer"
+        :options="question.shuffledAnswers"
+      />
+    </div>
 
     <div class="buttons">
       <!-- Bouton Terminer -->
@@ -117,7 +117,7 @@ fetchQuestions()
 
     <!-- Affichage du score -->
     <div v-if="submitted" class="score">
-      <p>Votre score : {{ score }} / {{ totalScore }}</p>
+     <!-- <p>Votre score : {{ score }} / {{ totalScore }}</p>-->
     </div>
   </form>
 </template>
