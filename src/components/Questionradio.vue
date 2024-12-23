@@ -14,6 +14,16 @@ const props = defineProps({
     required: true,
   },
 })
+// Fonction pour mélanger un tableau
+function shuffleArray<T>(array: T[]): T[] {
+  return array
+    .map((item) => ({ item, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ item }) => item)
+}
+
+// Mélanger les options au montage
+const shuffledOptions = computed(() => shuffleArray(props.options))
 
 const answerText = computed<string>(
   () => props.options.find((option) => option.value === props.answer)?.text ?? props.answer,
@@ -47,7 +57,7 @@ watch(model, (newModel) => {
 <template>
   <!--Fait appel au question de quizform et remplace les valeur des questions -->
   {{ props.text }}
-  <div v-for="option in props.options" :key="option.value" class="form-check">
+  <div v-for="option in shuffledOptions" :key="option.value" class="form-check">
     <input
       :id="`${props.id}-${option.value}`"
       v-model="value"

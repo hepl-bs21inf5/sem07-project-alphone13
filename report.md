@@ -465,7 +465,39 @@ fini ce qu'il fallait faire (en tous cas le minimum) à 11h20
 
 ## Améliorations des composants
 
-J'ai ajouté des espaces dans QuiForm.vue et QuizTrivia pour que ce soit mieux visuellement.
+#### QuestionRadio.Vue et QuestionCheckbox.Vue
+
+j'ai ajouté une fonction et une constante qui viennent mettre un ordre aléatoire dans les questions:
+
+```JS
+function shuffleArray<T>(array: T[]): T[] {
+  return array
+    .map((item) => ({ item, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ item }) => item)
+}
+
+// Mélange les options au montage
+const shuffledOptions = computed(() => shuffleArray(props.options))
+```
+
+puis dans le template j'ai remplacé ça:
+
+```HTML
+<div v-for="option in props.options" :key="option.value" class="form-check">
+```
+
+par ça:
+
+```HTML
+<div v-for="option in shuffledOptions" :key="option.value" class="form-check">
+```
+
+Qui utlise les options dans shuffledOptions au lieu de props.options. Shuffled.options est une versioj mélangée de props.options.
+
+en fait la différence entre props.options et ShuffledOptions est :
+props.options reste intact et garde l'ordre initial définit.
+shuffledOptions est une version mélangée de props.options. Elle est générée à l'aide de la fonction shuffleArray dans le composant et utilisée uniquement dans le v-for du template
 
 #### Trivia.Vue
 
@@ -486,7 +518,7 @@ function reset(event: Event): void {
 }
 ```
 
-Ce que je fais pour que ça marche :
+Ce que je fais pour que ça marche dans QuizTrivia:
 J'ai ajouté des conditions en plus dans la fonction Submit qui vérifient que chaque question a été répondue:
 
 ```JS
@@ -510,7 +542,8 @@ function resetQuiz(event: Event): void {
 }
 ```
 
-En fait la version de QuizFrom de QuizTrivia ignoraient les réponses de l'utilisateur, car il n'y avait pas de constante 'utilisateur' (qui est ici userAnswer) et donc ne vérifiait pas les réponses inscites. Elle ne calculait pas non plus si la réponse était juste ou fausse. C'est la condition qui a été ajoutée dans les parenthèses de question.value.map(). map() vient créer un nouveau tableau en parcourant un tableau existant (ici c'est question.value) et en appliquant un changement à chaque élément selon une logique prédéfinie.
+La fonction submit met à jour les états des questions en vérifiant si chaque réponse est correcte ou non (Correct ou Wrong). La fonction reset met toutes les réponses à l'état "Empty".
+En fait la version de QuizFrom de QuizTrivia ignoraient les réponses de l'utilisateur, car il n'y avait pas de constante 'utilisateur' (qui est ici userAnswer) et donc ne vérifiait pas les réponses inscites. Elle ne calculait pas non plus si la réponse était juste ou fausse. C'est la condition qui a été ajoutée dans les parenthèses de question.value.map(). Map() vient créer un nouveau tableau en parcourant un tableau existant (ici c'est question.value) et en appliquant un changement à chaque élément selon une logique prédéfinie.
 
 Ancien code fetch de QuizTrivia:
 
@@ -549,47 +582,42 @@ Cette version récupère comme la précédente les questions via l'API.
 
 L'ancienne version se contentait de récupérer les questions via l'API avec fetch et stockaient les variable dans question.value.
 
-La nouvelle version initialise question.value dans un tableau de questions (qui est ici data.results). Le data.results est lui initialisé à QuestionState.Empty qui fait que les réponses soient vides au début.
-
-#### Problèmes rencontrés avec les boutons terminer et réinitialiser
-
-J'arrivais pas à faire fonctionner les boutons correctement. J'ai dû demander de l'aide car je ne trouvais pas l'erreur. En fait, les boutons marchaient correctement que après avoir cliquer sur 'réinitialiser'. Puis par la suite c'était le bouton réinitialiser qui ne marchait pas. Je suis restée bloquer dessus pendant un bon moment et j'ai demandé de l'aide au prof.
-
-Ce dont j'ai compris avec ça c'est qu'il faut bien faire attention à bien lier les valeurs avec leurs propriétés. Aussi il faut faire attention à la manière dont on définit les constantes et les imports car sinon le code ne marche pas.Finalement, j'ai décidé de tout effacer et de recommencer afin de voir si le problème venait des imports ou bien des fonctions.
-
-J'ai ensuite déclaré les constantes (états des question, score, total score, rempli, et envoyé) et c'était similaire à quizForm. Pour j'ai défini les différentes actions (méthodes) qui vont envoyer les résultats, réinitiliser les questions cochées, mélanger les questions (fetchQuestions) et qui mélange les réponses.
-
-#### Explications des fonctions de QuizTrivia
-
-La fonction submit met à jour les états des questions en vérifiant si chaque réponse est correcte ou non (Correct ou Wrong). La fonction reset mets toutes les réponses à l'état "Empty".
-La fonction fetch:
+Jai également ajouté cette méthode:
 
 ```JS
-function fetchQuestions(): void {
-  submitted.value = false
-  questions.value = []
-  Object.keys(answers).forEach((key) => (answers[key] = null))
-  fetch('https://opentdb.com/api.php?amount=10&type=multiple')
-    .then((response) => response.json())
-    .then((data) => {
-      questions.value = data.results.map((q) => ({
-        ...q,
-        shuffledAnswers: shuffleArray([
-          { value: q.correct_answer, text: q.correct_answer },
-          ...q.incorrect_answers.map((answer) => ({
-            value: answer,
-            text: answer,
-          })),
-        ]),
-      }))
-      questionStates.value = new Array(questions.value.length).fill(QuestionState.Empty)
-    })
+// Charger les questions au démarrage
+fetchQuestions()
+```
+
+Qui permet de charger les questions au démarrage.
+La nouvelle version initialise question.value dans un tableau de questions (qui est ici data.results). Le data.results est lui initialisé à QuestionState.Empty qui fait que les réponses soient vides au début.
+
+La fonction submitQuiz et resetQuiz:
+
+```JS
+// Soumettre le quiz
+function submitQuiz(event: Event): void {
+  event.preventDefault()
+  if (!filled.value) {
+    alert('Veuillez répondre à toutes les questions avant de soumettre.')
+    return
+  }
+
+  questionStates.value = questions.value.map((question, index) => {
+    const userAnswer =
+      questionStates.value[index] === QuestionState.Fill ? questionStates.value[index] : null
+    return userAnswer === question.correct_answer ? QuestionState.Correct : QuestionState.Wrong
+  })
 }
 ```
 
-Recharge de nouvelles questions depuis l’API et réinitialise les états et les réponses.
-
-Ce bout de code m'a été donné par ChatGPT car je n'avais initilisé les états des réponses et des questions:
+```JS
+// Réinitialiser le quiz
+function resetQuiz(event: Event): void {
+  event.preventDefault()
+  questionStates.value = new Array(questions.value.length).fill(QuestionState.Empty) // Réinitialiser les états
+}
+```
 
 ```JS
 // Définition des états possibles pour une question
@@ -601,11 +629,52 @@ enum QuestionState {
 }
 ```
 
-la fonction enum permet de
+la fonction enum permet d'énumérer les différents états possibles de QuestionState. Là dans ce cas-là il est possible de le faire car on a pas une inité d'états différents. Mais si on avait un plus grand nombre d'état différents et bien il faudrait réfléchir à un autre type de définition pour QuestionState.
 
-#### Amélioration du style
+#### Problèmes rencontrés avec les boutons terminer et réinitialiser
 
-Dans QuizTrivia, j'ai modifié le styles de l'affichage du score pour qu'il soit plus gros.
+J'arrivais pas à faire fonctionner les boutons correctement. J'ai dû demander de l'aide car je ne trouvais pas l'erreur. En fait, les boutons marchaient correctement que après avoir cliquer sur 'réinitialiser'. Puis par la suite c'était le bouton réinitialiser qui ne marchait pas. Je suis restée bloquer dessus pendant un bon moment et j'ai demandé de l'aide au prof.
+
+Ce dont j'ai compris avec ça c'est qu'il faut bien faire attention à bien lier les valeurs avec leurs propriétés. Aussi il faut faire attention à la manière dont on définit les constantes et les imports car sinon le code ne marche pas. Finalement, j'ai décidé de tout effacer et de recommencer afin de voir si le problème venait des imports ou bien des fonctions. J'ai vu que le problème venait de la synchronisation et de la gestion associées aux boutons.
+
+La gestion des états des boutons était compliquée dans le premier code car les bouton n'appelaient pas de méthodes bien définies. En fait, la gestion des boutons se fait avec questionState. Et dans le premier code j'ai mal lié les états de questionState et c'est pour ça qu'il y avait des incohérences.
+
+Avant:
+
+```JS
+const filled = computed<boolean>(() =>
+  questions.value.length > 0 &&
+  Object.keys(answers).length === questions.value.length &&
+  Object.values(answers).every((answer) => answer !== null)
+);
+//pas lié avec questionState
+
+<button class="btn btn-primary" :disabled="!filled" @click="submit">
+```
+
+Le bouton "Terminer" utilise filled pour contrôler son état activé/désactivé. Mais filled n'était pas bien lié avec questionState
+
+Maintenant:
+
+```JS
+const filled = computed(() => questionStates.value.every((state) => state === QuestionState.Fill));
+
+  <button class="btn btn-primary" :disabled="!filled" type="button" @click="submitQuiz">
+        Terminer
+      </button>
+```
+
+Le bouton "Terminer" utilise la constante filled, mais celui-ci est directement basé sur questionState.
+
+J'ai aussi décidé de mettre les boutons en 'hiérarchie' pour pouvoir appliquer un style de couleur différent.
+
+J'ai ensuite déclaré les constantes (états des question, score, total score, rempli, et envoyé) et c'était similaire à quizForm. Pour j'ai défini les différentes actions (méthodes) qui vont envoyer les résultats, réinitiliser les questions cochées, mélanger les questions (fetchQuestions) et qui mélange les réponses.
+
+#### QuestionSelect.Vue
+
+J'ai implémenté une question avec une sélection multiple dans **QuizForm.Vue**:
+
+et j'ai également mis dans **QuizForm.Vue** une question type déroulant.
 
 # Réponses aux questions
 

@@ -1,6 +1,6 @@
 <!-- A presque les même propriétés que QuestionRadio.vue -->
 <script setup lang="ts">
-import { ref, watch, defineModel, defineProps, type PropType } from 'vue'
+import { ref, watch, defineModel, defineProps, type PropType, computed } from 'vue'
 import { QuestionState } from '@/utils/models'
 
 const model = defineModel<QuestionState>()
@@ -16,7 +16,15 @@ const props = defineProps({
     required: true,
   },
 })
+function shuffleArray<T>(array: T[]): T[] {
+  return array
+    .map((item) => ({ item, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ item }) => item)
+}
 
+// Mélanger les options au montage
+const shuffledOptions = computed(() => shuffleArray(props.options))
 const value = ref<string[]>([])
 
 watch(
@@ -45,7 +53,7 @@ watch(model, (newModel) => {
 
 <template>
   <p>{{ props.text }}</p>
-  <div v-for="option in props.options" :key="option.value" class="form-check">
+  <div v-for="option in shuffledOptions" :key="option.value" class="form-check">
     <input
       :id="`${props.id}-${option.value}`"
       v-model="value"

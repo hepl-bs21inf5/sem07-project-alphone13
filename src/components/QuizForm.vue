@@ -4,6 +4,7 @@ import QuestionRadio from '@/components/QuestionRadio.vue'
 import QuestionText from './QuestionText.vue'
 import { QuestionState } from '@/utils/models'
 import QuestionCheckbox from './QuestionCheckbox.vue'
+import QuestionSelect from './QuestionSelect.vue'
 
 const questionStates = ref<QuestionState[]>([])
 const filled = computed<boolean>(() =>
@@ -47,6 +48,19 @@ function reset(event: Event): void {
         { value: 'brun', text: 'Brun' },
         { value: 'noir', text: 'Noir' },
       ]"
+    />
+    <p>&nbsp;</p>
+    <QuestionSelect
+      id="Jojo's Bizarre Adventure"
+      text="Qui est le principal protagoniste de 'JoJo's Bizarre Adventure: Stardust Crusaders' ?"
+      :options="[
+        { value: 'jotaro', text: 'Jotaro Kujo' },
+        { value: 'joseph', text: 'Joseph Joestar' },
+        { value: 'dio', text: 'Dio Brando' },
+        { value: 'joseph', text: 'Jonathan Joestar' },
+      ]"
+      answer="jotaro"
+      answer-detail="Jotaro Kujo est le protagoniste principal de Stardust Crusaders. Son Stand est Star Platinum."
     />
     <p>&nbsp;</p>
     <!--ça importe ce qu'il y a dans le questiontext. permet de faire une réponse libre-->
