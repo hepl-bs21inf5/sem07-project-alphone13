@@ -429,6 +429,30 @@ là il faut que la string soit un élément contenu dans la liste
 
 Que se passe-t-il lorsqu'on ne met pas de valeur à answer-detail ? Est-ce satisfaisant ? Si ce n'est pas le cas, proposer une amélioration.
 
+Question rapport
+Ajouter ce computed dans QuestionRadio.vue :
+
+const answerText = computed<string>(
+() =>
+props.options.find((option) => option.value === props.answer)?.text ??
+props.answer,
+);
+
+Remplacer {{ props.answer }} par {{ answerText }} dans le template.
+
+Expliquer pourquoi on a fait ce changement ainsi que le code du computed.
+
+Le changement permet d’afficher le texte associé à la réponse (option.text) au lieu de sa valeur brute (props.answer), rendant l’affichage plus lisible pour l’utilisateur. Si aucune correspondance n’est trouvée, on affiche la valeur brute comme solution de secours.
+
+const answerText = computed<string>(
+() => props.options.find((o) => o.value === props.answer)?.text ?? props.answer
+);
+
+en fait, computed cherche dans les options celle correspondant à props.answer et retourne son texte (option.text).
+Utilise ?? props.answer pour afficher la valeur brute si aucune correspondance n’existe.
+Pourquoi remplacer dans le template ?
+Afficher {{ answerText }} au lieu de {{ props.answer }} rend l’affichage plus clair et compréhensible pour le lecteur.
+
 # Prise de notes et quelques explications de ce que j'ai fait dans le Checkbox
 
 Dans QuestionCheckbox:
@@ -611,26 +635,6 @@ function submitQuiz(event: Event): void {
 }
 ```
 
-```JS
-// Réinitialiser le quiz
-function resetQuiz(event: Event): void {
-  event.preventDefault()
-  questionStates.value = new Array(questions.value.length).fill(QuestionState.Empty) // Réinitialiser les états
-}
-```
-
-```JS
-// Définition des états possibles pour une question
-enum QuestionState {
-  Empty = 'Empty', // Pas encore répondu
-  Fill = 'Fill', // Réponse donnée
-  Correct = 'Correct', // Bonne réponse
-  Wrong = 'Wrong', // Mauvaise réponse
-}
-```
-
-la fonction enum permet d'énumérer les différents états possibles de QuestionState. Là dans ce cas-là il est possible de le faire car on a pas une inité d'états différents. Mais si on avait un plus grand nombre d'état différents et bien il faudrait réfléchir à un autre type de définition pour QuestionState.
-
 #### Problèmes rencontrés avec les boutons terminer et réinitialiser
 
 J'arrivais pas à faire fonctionner les boutons correctement. J'ai dû demander de l'aide car je ne trouvais pas l'erreur. En fait, les boutons marchaient correctement que après avoir cliquer sur 'réinitialiser'. Puis par la suite c'était le bouton réinitialiser qui ne marchait pas. Je suis restée bloquer dessus pendant un bon moment et j'ai demandé de l'aide au prof.
@@ -675,6 +679,21 @@ J'ai ensuite déclaré les constantes (états des question, score, total score, 
 J'ai implémenté une question avec une sélection multiple dans **QuizForm.Vue**:
 
 et j'ai également mis dans **QuizForm.Vue** une question type déroulant.
+Pour que la logique du code puisse toujours marcher, j'ai transformé certaines parties.
+
+const questionStates = ref<QuestionState[]>([])
+
+en
+const questionStates = ref<QuestionState[]>(new Array(questions.value.length).fill(QuestionState.Empty));
+
+Pour que n'importe quel type de questions puisse être pris en compte dans la constante.
+puis j'ai changé la logique du calcul du score
+en passant de ça :
+const score = computed<number>(
+() => questionStates.value.filter((state) => state === QuestionState.Correct).length,
+)
+
+à:
 
 # Réponses aux questions
 
@@ -688,6 +707,100 @@ J'ai rencontré des problèmes au niveau de l'implémentation des boutons aisni 
 Quelles améliorations pourriez-vous encore apporter ?
 Vous devoir pouvoir expliquer votre code afin de valider une amélioration.
 
-# Lien GitHub
+#### Lien GitHub
 
-https://hepl-bs21inf5.github.io/sem07-projet-{alphone13]/
+https://hepl-bs21inf5.github.io/sem07-projet-alphone13/
+
+# Améliorations
+
+### QuizForm
+
+J'ai fait en sorte que les questions ne soient jamais dans le même ordre. Tout d'abord j'ai déclaré les ques
+
+```JS
+// Déclarer les questions comme un tableau réactif
+const questions = ref([
+  {
+    text: 'De quelle couleur est le cheval blanc de Napoléon ?',
+    options: [
+      { value: 'blanc', text: 'Blanc' },
+      { value: 'brun', text: 'Brun' },
+      { value: 'noir', text: 'Noir' },
+    ],
+    answer: 'blanc',
+  },
+  {
+    text: "Qui est le principal protagoniste de 'JoJo's Bizarre Adventure: Stardust Crusader's ?",
+    options: [
+      { value: 'jotaro', text: 'Jotaro Kujo' },
+      { value: 'joseph', text: 'Joseph Joestar' },
+      { value: 'dio', text: 'Dio Brando' },
+      { value: 'joseph', text: 'Jonathan Joestar' },
+    ],
+    answer: 'jotaro',
+  },
+  {
+    text: 'Combien de pattes a un chat ?',
+    options: [
+      { value: '4', text: '4' },
+      { value: '3', text: '3' },
+      { value: '5', text: '5' },
+    ],
+    answer: '4',
+  },
+  {
+    text: 'Combien font 2+3+5 ?',
+    options: [
+      { value: '10', text: '10' },
+      { value: '9', text: '9' },
+      { value: '12', text: '12' },
+    ],
+    answer: '10',
+  },
+  {
+    text: 'Où se trouve la Tour-Eiffel ?',
+    options: [
+      { value: 'Oslo', text: 'Oslo' },
+      { value: 'Sydney', text: 'Sydney' },
+      { value: 'Paris', text: 'Paris' },
+    ],
+    answer: 'Paris',
+  },
+  {
+    text: 'Lesquels parmi ces jeux ne se jouent pas sur Nintendo ?',
+    options: [
+      { value: 'Mario Galaxy 2', text: 'Mario Galaxy 2' },
+      { value: 'Pou', text: 'Pou' },
+      { value: 'Talking with Tom', text: 'Talking with Tom' },
+      { value: 'Paper Mario - Origami King', text: 'Paper Mario - Origami King' },
+    ],
+    answer: ['Pou', 'Talking with Tom'],
+  },
+])
+```
+
+Cela me permet d'utiliser la fonction shuffleArray
+
+la fonction pour mélanger le tableau de questions:
+
+```JS
+function shuffleArray<T>(array: T[]): T[] {
+  return array.sort(() => Math.random() - 0.5)
+}
+
+// Mélanger les questions une seule fois au montage
+onMounted(() => {
+  questions.value = shuffleArray(questions.value)
+})
+```
+
+Jai aussi mis la même fonction reset qu'il y avait dans QuizTrivia:
+
+```JS
+function reset(event: Event): void {
+  event.preventDefault();
+  questionStates.value = new Array(questions.value.length).fill(QuestionState.Empty); // réinitialisation complète
+}
+```
+
+J'ai ajouté deux images

@@ -1,15 +1,77 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import QuestionRadio from '@/components/QuestionRadio.vue'
 import QuestionText from './QuestionText.vue'
 import { QuestionState } from '@/utils/models'
 import QuestionCheckbox from './QuestionCheckbox.vue'
 import QuestionSelect from './QuestionSelect.vue'
 
-const questionStates = ref<QuestionState[]>([])
+// Déclarer les questions comme un tableau réactif
+const questions = ref([
+{
+    text: 'De quelle couleur est le cheval blanc de Napoléon ?',
+    options: [
+      { value: 'blanc', text: 'Blanc' },
+      { value: 'brun', text: 'Brun' },
+      { value: 'noir', text: 'Noir' },
+    ],
+    answer: 'blanc',
+    type: 'radio',
+  },
+  {
+    text: "Qui est le principal protagoniste de 'JoJo's Bizarre Adventure: Stardust Crusader's ?",
+    options: [
+      { value: 'jotaro', text: 'Jotaro Kujo' },
+      { value: 'joseph', text: 'Joseph Joestar' },
+      { value: 'dio', text: 'Dio Brando' },
+      { value: 'joseph', text: 'Jonathan Joestar' },
+    ],
+    answer: 'jotaro',
+    type: 'select',
+  },
+  {
+    text: 'Combien de pattes a un chat ?',
+    options: [],
+    answer: '4',
+    type: 'text',
+  },
+  {
+    text: 'Combien font 2+3+5 ?',
+    options: [
+      { value: '10', text: '10' },
+      { value: '9', text: '9' },
+      { value: '12', text: '12' },
+    ],
+    answer: '10',
+    type: 'radio',
+  },
+  {
+    text: 'Où se trouve la Tour-Eiffel ?',
+    options: [
+      { value: 'Oslo', text: 'Oslo' },
+      { value: 'Sydney', text: 'Sydney' },
+      { value: 'Paris', text: 'Paris' },
+    ],
+    answer: 'Paris',
+    type: 'radio',
+  },
+  {
+    text: 'Lesquels parmi ces jeux ne se jouent pas sur Nintendo ?',
+    options: [
+      { value: 'Mario Galaxy 2', text: 'Mario Galaxy 2' },
+      { value: 'Pou', text: 'Pou' },
+      { value: 'Talking with Tom', text: 'Talking with Tom' },
+      { value: 'Paper Mario - Origami King', text: 'Paper Mario - Origami King' },
+    ],
+    answer: ['Pou', 'Talking with Tom'],
+    type: 'checkbox',
+  },
+])
+
+const questionStates = ref<QuestionState[]>(new Array(questions.value.length).fill(QuestionState.Empty));
 const filled = computed<boolean>(() =>
   questionStates.value.every((state) => state === QuestionState.Fill),
-)
+);
 
 const submitted = computed<boolean>(() =>
   questionStates.value.every(
@@ -20,6 +82,8 @@ const submitted = computed<boolean>(() =>
 const score = computed<number>(
   () => questionStates.value.filter((state) => state === QuestionState.Correct).length,
 )
+
+
 const totalScore = computed<number>(() => questionStates.value.length)
 
 function submit(event: Event): void {
@@ -28,9 +92,11 @@ function submit(event: Event): void {
 }
 
 function reset(event: Event): void {
-  event.preventDefault()
-  questionStates.value = questionStates.value.map(() => QuestionState.Empty) //on met l'état des réponses à vide.
+  event.preventDefault();
+  questionStates.value = new Array(questions.value.length).fill(QuestionState.Empty); //on met l'état des réponses à vide.
 }
+
+
 </script>
 
 <template>
@@ -52,7 +118,8 @@ function reset(event: Event): void {
     <p>&nbsp;</p>
     <QuestionSelect
       id="Jojo's Bizarre Adventure"
-      text="Qui est le principal protagoniste de 'JoJo's Bizarre Adventure: Stardust Crusaders' ?"
+      v-model="questionStates[5]"
+      text="Qui est le principal protagoniste de 'JoJo's Bizarre Adventure: Stardust Crusader's ?"
       :options="[
         { value: 'jotaro', text: 'Jotaro Kujo' },
         { value: 'joseph', text: 'Joseph Joestar' },
@@ -121,6 +188,13 @@ function reset(event: Event): void {
 
   <button class="btn btn-primary" @click="reset">Réinitialiser</button>
 
-  <div>Score : {{ score }} / {{ totalScore }}</div>
-  <div>Debug états : {{ questionStates }}</div>
+  Score : {{ score }} / {{ questions.length }}
 </template>
+<style scoped>
+.text-danger {
+  color: rgb(128, 0, 0) !important;
+}
+.text-success {
+  color: rgb(196, 34, 196) !important;
+}
+</style>

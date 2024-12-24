@@ -7,7 +7,8 @@ enum QuestionState {
   Empty = 'Empty', // Pas encore répondu
   Fill = 'Fill', // Réponse donnée
   Correct = 'Correct', // Bonne réponse
-  Wrong = 'Wrong', // Mauvaise réponse
+  Wrong = 'Wrong',
+  Submit = "Submit", // Mauvaise réponse
 }
 
 // Questions et états des réponses
@@ -41,6 +42,9 @@ function shuffleArray<T>(array: T[]): T[] {
   return array.sort(() => Math.random() - 0.5)
 }
 
+// Charger les questions au démarrage
+fetchQuestions()
+
 // Charger de nouvelles questions
 function fetchQuestions(): void {
   questions.value = []
@@ -66,28 +70,19 @@ function fetchQuestions(): void {
 }
 
 // Soumettre le quiz
-function submitQuiz(event: Event): void {
-  event.preventDefault()
-  if (!filled.value) {
-    alert('Veuillez répondre à toutes les questions avant de soumettre.')
-    return
-  }
 
-  questionStates.value = questions.value.map((question, index) => {
-    const userAnswer =
-      questionStates.value[index] === QuestionState.Fill ? questionStates.value[index] : null
-    return userAnswer === question.correct_answer ? QuestionState.Correct : QuestionState.Wrong
-  })
+function reset(event: Event): void {
+  event.preventDefault();
+  questionStates.value = questionStates.value.map(() => QuestionState.Empty);
 }
 
-// Réinitialiser le quiz
-function resetQuiz(event: Event): void {
-  event.preventDefault()
-  questionStates.value = new Array(questions.value.length).fill(QuestionState.Empty) // Réinitialiser les états
+function submit(event: Event): void {
+  event.preventDefault();
+  questionStates.value = questionStates.value.map(() => QuestionState.Submit);
 }
 
-// Charger les questions au démarrage
-fetchQuestions()
+
+
 </script>
 
 <template>
@@ -104,12 +99,12 @@ fetchQuestions()
 
     <div class="buttons">
       <!-- Bouton Terminer -->
-      <button class="btn btn-primary" :disabled="!filled" type="button" @click="submitQuiz">
+      <button class="btn btn-primary" :disabled="!filled" type="button" @click="submit">
         Terminer
       </button>
 
       <!-- Bouton Réinitialiser -->
-      <button class="btn btn-secondary" type="button" @click="resetQuiz">Réinitialiser</button>
+      <button class="btn btn-secondary" type="button" @click="reset">Réinitialiser</button>
 
       <!-- Bouton Nouvelles questions -->
       <button class="btn btn-info" type="button" @click="fetchQuestions">
