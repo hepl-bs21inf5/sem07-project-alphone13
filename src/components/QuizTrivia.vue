@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import QuestionRadio from '@/components/QuestionRadio.vue'
+import QuestionRadio from './Questionradio.vue'
 
 // Définition des états possibles pour une question
 enum QuestionState {
@@ -53,11 +53,11 @@ function fetchQuestions(): void {
     .then((response) => response.json())
     .then((data) => {
       questions.value = data.results.map(
-        (q: { correct_answer: any; incorrect_answers: any[] }) => ({
+        (q: { correct_answer: unknown; incorrect_answers: unknown[] }) => ({
           ...q,
           shuffledAnswers: shuffleArray([
             { value: q.correct_answer, text: q.correct_answer },
-            ...q.incorrect_answers.map((answer: any) => ({
+            ...q.incorrect_answers.map((answer: unknown) => ({
               value: answer,
               text: answer,
             })),
@@ -80,8 +80,6 @@ function submit(event: Event): void {
   event.preventDefault();
   questionStates.value = questionStates.value.map(() => QuestionState.Submit);
 }
-
-
 
 </script>
 
@@ -130,5 +128,13 @@ function submit(event: Event): void {
   margin-top: 20px;
   font-size: 1.2rem;
   font-weight: bold;
+}
+</style>
+<style scoped>
+.text-danger {
+  color: rgb(128, 0, 0) !important;
+}
+.text-success {
+  color: rgb(196, 34, 196) !important;
 }
 </style>

@@ -66,3 +66,11 @@ watch(model, (newModel) => {
     <p class="blockquote-footer">{{ props.answerDetail }}</p>
   </div>
 </template>
+<style scoped>
+.text-danger {
+  color: rgb(128, 0, 0) !important;
+}
+.text-success {
+  color: rgb(196, 34, 196) !important;
+}
+</style>

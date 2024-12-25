@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue'
-import QuestionRadio from '@/components/QuestionRadio.vue'
+import { computed, ref } from 'vue'
+import QuestionRadio from './Questionradio.vue'
 import QuestionText from './QuestionText.vue'
 import { QuestionState } from '@/utils/models'
 import QuestionCheckbox from './QuestionCheckbox.vue'
@@ -8,7 +8,7 @@ import QuestionSelect from './QuestionSelect.vue'
 
 // Déclarer les questions comme un tableau réactif
 const questions = ref([
-{
+  {
     text: 'De quelle couleur est le cheval blanc de Napoléon ?',
     options: [
       { value: 'blanc', text: 'Blanc' },
@@ -19,16 +19,17 @@ const questions = ref([
     type: 'radio',
   },
   {
-    text: "Qui est le principal protagoniste de 'JoJo's Bizarre Adventure: Stardust Crusader's ?",
+    text: "Qui est le principal antagoniste de 'JoJo's Bizarre Adventure: Stardust Crusaders' ?",
     options: [
       { value: 'jotaro', text: 'Jotaro Kujo' },
       { value: 'joseph', text: 'Joseph Joestar' },
       { value: 'dio', text: 'Dio Brando' },
       { value: 'joseph', text: 'Jonathan Joestar' },
     ],
-    answer: 'jotaro',
+    answer: 'dio',
     type: 'select',
   },
+
   {
     text: 'Combien de pattes a un chat ?',
     options: [],
@@ -55,6 +56,18 @@ const questions = ref([
     answer: 'Paris',
     type: 'radio',
   },
+
+  {
+    text: "Comment s'appelle le Stand de Jotaro Kujo ?",
+    options: [
+      { value: 'StarPlatinum', text: 'Star Platinum' },
+      { value: 'CrazyDiamond', text: 'Crazy Diamond' },
+      { value: 'TheWorld', text: 'The World' },
+    ],
+    answer: 'StarPlatinum',
+    type: 'select',
+  },
+
   {
     text: 'Lesquels parmi ces jeux ne se jouent pas sur Nintendo ?',
     options: [
@@ -68,10 +81,13 @@ const questions = ref([
   },
 ])
 
-const questionStates = ref<QuestionState[]>(new Array(questions.value.length).fill(QuestionState.Empty));
+const questionStates = ref<QuestionState[]>(
+  new Array(questions.value.length).fill(QuestionState.Empty),
+)
+
 const filled = computed<boolean>(() =>
   questionStates.value.every((state) => state === QuestionState.Fill),
-);
+)
 
 const submitted = computed<boolean>(() =>
   questionStates.value.every(
@@ -82,8 +98,6 @@ const submitted = computed<boolean>(() =>
 const score = computed<number>(
   () => questionStates.value.filter((state) => state === QuestionState.Correct).length,
 )
-
-
 const totalScore = computed<number>(() => questionStates.value.length)
 
 function submit(event: Event): void {
@@ -92,11 +106,9 @@ function submit(event: Event): void {
 }
 
 function reset(event: Event): void {
-  event.preventDefault();
-  questionStates.value = new Array(questions.value.length).fill(QuestionState.Empty); //on met l'état des réponses à vide.
+  event.preventDefault()
+  questionStates.value = questionStates.value.map(() => QuestionState.Empty) //on met l'état des réponses à vide.
 }
-
-
 </script>
 
 <template>
@@ -115,34 +127,34 @@ function reset(event: Event): void {
         { value: 'noir', text: 'Noir' },
       ]"
     />
-    <p>&nbsp;</p>
+    &nbsp;
     <QuestionSelect
-      id="Jojo's Bizarre Adventure"
-      v-model="questionStates[5]"
-      text="Qui est le principal protagoniste de 'JoJo's Bizarre Adventure: Stardust Crusader's ?"
+      id="question-select-jojo"
+      v-model="questionStates[1]"
+      text="Comment s'appelle le Stand de Jotaro Kujo ?"
       :options="[
-        { value: 'jotaro', text: 'Jotaro Kujo' },
-        { value: 'joseph', text: 'Joseph Joestar' },
-        { value: 'dio', text: 'Dio Brando' },
-        { value: 'joseph', text: 'Jonathan Joestar' },
+        { value: 'StarPlatinum', text: 'Star Platinum' },
+        { value: 'CrazyDiamond', text: 'Crazy Diamond' },
+        { value: 'TheWorld', text: 'The World' },
       ]"
-      answer="jotaro"
-      answer-detail="Jotaro Kujo est le protagoniste principal de Stardust Crusaders. Son Stand est Star Platinum."
+      answer="StarPlatinum"
+      answer-detail="Le Stand de Jotaro Kujo s'appelle Star Platinum, connu pour sa vitesse et sa force exceptionnelles."
     />
-    <p>&nbsp;</p>
+
+    &nbsp;
     <!--ça importe ce qu'il y a dans le questiontext. permet de faire une réponse libre-->
     <QuestionText
       id="exampleFormControlInput"
-      v-model="questionStates[1]"
+      v-model="questionStates[2]"
       text=" Combien de pattes a un chat ?"
       placeholder="Veuillez saisir une réponse"
       answer-detail="Le chat est un mammifère quadrupède, donc un animal à quatre pattes."
       :answer="['4', 'quatre', 'Quatre', 'Un quadripède']"
     />
-    <p>&nbsp;</p>
+    &nbsp;
     <QuestionRadio
       id="calcul"
-      v-model="questionStates[2]"
+      v-model="questionStates[3]"
       answer="10"
       answer-detail="Il suffit d'additionner 2+3=5, puis de faire 5+5 et on trouve 10."
       text=" Combien font 2+3+5 ?"
@@ -152,7 +164,7 @@ function reset(event: Event): void {
         { value: '12', text: '12' },
       ]"
     />
-    <p>&nbsp;</p>
+    &nbsp;
     <QuestionCheckbox
       id="games"
       v-model="questionStates[4]"
@@ -168,11 +180,9 @@ function reset(event: Event): void {
       answer-detail="['Pou et Talking with Tom ne sont pas des licences Nintendo.']"
     />
     <p>&nbsp;</p>
-    <!-- Ajoute une ligne vide -->
-
     <QuestionRadio
       id="eiffel"
-      v-model="questionStates[3]"
+      v-model="questionStates[5]"
       answer="Paris"
       answer-detail="La Tour-Eiffel se trouve dans le 7ᵉ arrondissement, sur le Champ-de-Mars, près de la Seine."
       text=" Où se trouve la Tour-Eiffel ?"
@@ -182,19 +192,47 @@ function reset(event: Event): void {
         { value: 'Paris', text: 'Paris' },
       ]"
     />
-    <div>Réponses correctes : {{ questionStates }}</div>
+    &nbsp;
+    <QuestionSelect
+      id="Jojo's Bizarre Adventure"
+      v-model="questionStates[6]"
+      text="Qui est le principal antagoniste de 'JoJo's Bizarre Adventure: Stardust Crusaders' ?"
+      :options="[
+        { value: 'jotaro', text: 'Jotaro Kujo' },
+        { value: 'joseph', text: 'Joseph Joestar' },
+        { value: 'dio', text: 'Dio Brando' },
+        { value: 'joseph', text: 'Jonathan Joestar' },
+      ]"
+      answer="dio"
+      answer-detail="Dio Brando est l'antagoniste principal de Stardust Crusaders. Son Stand est Tha Warudo."
+    />
   </form>
+  <div>Réponses correctes : {{ questionStates }}</div>
+  &nbsp;
   <button class="btn btn-primary" :class="{ disabled: !filled }" @click="submit">Terminer</button>
-
+  &nbsp;
   <button class="btn btn-primary" @click="reset">Réinitialiser</button>
-
-  Score : {{ score }} / {{ questions.length }}
+  <div>Score : {{ score }} / {{ totalScore }}</div>
 </template>
+
 <style scoped>
 .text-danger {
   color: rgb(128, 0, 0) !important;
 }
 .text-success {
   color: rgb(196, 34, 196) !important;
+}
+</style>
+<style>
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.score {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 </style>

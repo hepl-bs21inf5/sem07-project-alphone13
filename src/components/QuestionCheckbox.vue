@@ -1,6 +1,6 @@
 <!-- A presque les même propriétés que QuestionRadio.vue -->
 <script setup lang="ts">
-import { ref, watch, defineModel, defineProps, type PropType, computed } from 'vue'
+import { ref, watch, defineModel, defineProps, type PropType } from 'vue'
 import { QuestionState } from '@/utils/models'
 
 const model = defineModel<QuestionState>()
