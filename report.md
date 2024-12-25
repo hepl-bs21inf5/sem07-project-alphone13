@@ -39,10 +39,6 @@ Aboutview.vue: Affiche le texte de l'index 'À propos'
 HomeView.vue : document HTML contenant le titre et affiche le titre
 QuizForm.vue : Permet de créer la page de quiz avec les question et réponses en HTML et Javascript
 
-Dans le fichier QuizForm.vue :
-Quelles sont les similarités et les différences entre ref et computed ?
-
-Que se passe-t-il lorsqu'on clique sur le bouton "Terminer" ?
 
 Qu'est-ce qu'un v-model ?
 
