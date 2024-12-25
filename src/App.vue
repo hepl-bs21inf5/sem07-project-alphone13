@@ -42,5 +42,3 @@ import { RouterLink, RouterView } from 'vue-router'
 
   <RouterView />
 </template>
-
-faire les bootstrap dans cette fenêtre

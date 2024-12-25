@@ -28,6 +28,7 @@ const questions = ref([
     ],
     answer: 'dio',
     type: 'select',
+
   },
 
   {
@@ -109,6 +110,7 @@ function reset(event: Event): void {
   event.preventDefault()
   questionStates.value = questionStates.value.map(() => QuestionState.Empty) //on met l'état des réponses à vide.
 }
+
 </script>
 
 <template>
@@ -193,6 +195,7 @@ function reset(event: Event): void {
       ]"
     />
     &nbsp;
+
     <QuestionSelect
       id="Jojo's Bizarre Adventure"
       v-model="questionStates[6]"
