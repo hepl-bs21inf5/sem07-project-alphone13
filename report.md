@@ -1,22 +1,5 @@
 # JOURNAL DE BORD
 
-## 7.11.2024: Semaine 1
-
-## 14.11.2024 : Semaine 2
-
-Les heures passées à faire le projet
-temps destimation : 40 min
-temps réel: 72 min
-
-## 21.11.2024
-
-## Temps
-
-temps destimation : 75 min
-temps réel: 65 min
-
-#### Tâches réalisées :
-
 ## Réponses aux questions avec mes propres mots
 
 un watch est un handler. Il observe une donnée et quand la donnée change le watch s'exécute.
@@ -24,17 +7,6 @@ un watch est un handler. Il observe une donnée et quand la donnée change le wa
 Un handler (ou gestionnaire en français) est une fonction ou un bloc de code que vous définissez pour répondre à un événement ou à une situation particulière (pris de Chat)
 
 Proposer une autre manière de calculer le score et comparer les deux méthodes.
-
-## 28.11.2024
-
-# Temps
-
-temps estimé : 45 min
-temps réellement passé : 60 min
-
-## 5.12.2024
-
-# Commentaires
 
 # Temps
 
@@ -1148,18 +1120,26 @@ j'ai hiérarchisé pour appliquer un style différent à chaque bouton, mais le 
 
 # Choix des Améliorations
 
-Pourquoi avez-vous choisi ces améliorations ?
+**Pourquoi avez-vous choisi ces améliorations ?**
 
 Comment les avez-vous implémentées ?
 J'ai implémenté les différentes améliorations en m'inspirant principalement du code des composants réalisés en classe (en m'inspirant par exemple de Questionradio pour faire QuestionSelect). Je me suis également documentée sur Vue.js pour approfondir mes connaissances.
 
-Quels problèmes avez-vous rencontrés ?
+**Quels problèmes avez-vous rencontrés ?**
 Pendant que je faisais le projet j'avais perdu de vue que QuizForm était le composant principal (parent) et que pour créer d'autres composants, il ne fallait pas s'inspirer de lui pour faire les autres composants.
 
 #### Quelles améliorations pourrais-je encore apporter ?
 
+Pour **QuizForm**:
+je pense que j'aurais pu éviter de faire des répétitions dans le code. Aussi j'aurais pu ajouter des messages et des images qui s'affichent quand toutes les qestions n'ont pas été répondues. Ou encore j'aurais pu ajouter des messages et des images qui s'affichent quand on répond aux questions.
+
 Pour **Ordre aléatoire des choix dans QuestionRadio.vue.**;
 J'aurais pu faire en sorte que quand on clique sur le bouton réinitialiser, les options des réponses se mélangent.
+
+Pour \*\*\*\*
+J'aurais pu par exemple intégrer une barre de progression pour visualiser l’avancement lors du remplissage du quiz.
+
+- Simplifier les transitions pour les rendre plus intuitives.
 
 ### Notes de compréhension
 

@@ -1,25 +1,10 @@
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref } from 'vue'
 import QuestionRadio from './Questionradio.vue'
 import QuestionText from './QuestionText.vue'
 import { QuestionState } from '@/utils/models'
 import QuestionCheckbox from './QuestionCheckbox.vue'
 import QuestionSelect from './QuestionSelect.vue'
-
-// Mélanger un tableau
-function shuffleArray<T>(array: T[]): T[] {
-  const shuffled = [...array] // Crée une copie du tableau
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]] // Echange les éléments
-  }
-  return shuffled
-}
-
-onMounted(() => {
-  // Mélanger les questions au moment de l'initialisation
-  questions.value = shuffleArray(questions.value)
-})
 
 // Déclarer les questions comme un tableau réactif
 const questions = ref([
@@ -124,11 +109,6 @@ function reset(event: Event): void {
   event.preventDefault()
   questionStates.value = questionStates.value.map(() => QuestionState.Empty) //on met l'état des réponses à vide.
 }
-
-// Mélange des questions après le montage
-onMounted(() => {
-  questions.value = shuffleArray(questions.value)
-})
 </script>
 
 <template>
