@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { QuestionState } from '@/utils/models'
-import { computed, ref, watch, type PropType } from 'vue'
+import { computed, onMounted, ref, watch, type PropType } from 'vue'
 
 const model = defineModel<QuestionState>()
 const props = defineProps({
@@ -15,6 +15,22 @@ const props = defineProps({
 })
 
 const value = ref<string | null>(null)
+// Mélanger un tableau
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+// Stocker les options mélangées au moment de l'initialisation
+const shuffledOptions = ref<{ value: string; text: string }[]>([]);
+
+onMounted(() => {
+  shuffledOptions.value = shuffleArray(props.options);
+});
 const answerText = computed<string>(
   () => props.options.find((option) => option.value === props.answer)?.text ?? props.answer,
 )
@@ -41,8 +57,8 @@ watch(model, (newModel) => {
 </script>
 
 <template>
-  {{ props.text }}
-  <div v-for="option in props.options" :key="option.value" class="form-check">
+  <p>{{ props.text }}</p>
+  <div v-for="option in shuffledOptions" :key="option.value" class="form-check">
     <input
       :id="`${props.id}-${option.value}`"
       v-model="value"
@@ -66,6 +82,7 @@ watch(model, (newModel) => {
     <p class="blockquote-footer">{{ props.answerDetail }}</p>
   </div>
 </template>
+
 <style scoped>
 .text-danger {
   color: rgb(128, 0, 0) !important;

@@ -117,19 +117,6 @@ function submit(event: Event): void {
   </form>
 </template>
 
-<style>
-.buttons {
-  margin-top: 20px;
-  display: flex;
-  gap: 10px;
-}
-
-.score {
-  margin-top: 20px;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-</style>
 <style scoped>
 .text-danger {
   color: rgb(128, 0, 0) !important;
@@ -137,4 +124,5 @@ function submit(event: Event): void {
 .text-success {
   color: rgb(196, 34, 196) !important;
 }
+
 </style>

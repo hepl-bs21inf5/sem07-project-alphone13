@@ -3,10 +3,6 @@ import { defineModel, type PropType } from 'vue'
 import { ref, watch } from 'vue'
 import { QuestionState } from '@/utils/models'
 
-//const model = defineModel<string | null>(), on enlève car on le prend depuis le questionsate
-//composant similaire à Radio.
-//const model = defineModel<boolean>(), ce n'est plus un booléen on doit le mettre sous forme de question state
-
 const model = defineModel<QuestionState>()
 const props = defineProps({
   id: { type: String, required: true },
@@ -58,9 +54,6 @@ watch(model, (newModel) => {
     <p v-else class="text-danger">Faux ! La réponse était : {{ props.answer }}</p>
     <p class="blockquote-footer">{{ props.answerDetail }}</p>
   </div>
-  <!--là on doit faire comme dans Question radio pour faire ce document
-  Le placeholder permet de faire apparaître du texte dans le champ de saisie
-  là on fait un composant pour tous les types de questions-->
 </template>
 <style scoped>
 .text-danger {

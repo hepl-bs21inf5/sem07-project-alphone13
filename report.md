@@ -64,18 +64,6 @@ const questionStates = ref<QuestionState[]>([])
 en
 const questionStates = ref<QuestionState[]>(new Array(questions.value.length).fill(QuestionState.Empty));
 
-# Améliorations
-
-Expliquer votre démarche pour les améliorations que vous avez choisies :
-
-Pourquoi avez-vous choisi ces améliorations ?
-
-Comment les avez-vous implémentées ?
-Quels problèmes avez-vous rencontrés ?
-J'ai rencontré des problèmes au niveau de l'implémentation des boutons aisni que pour le calcul du score. Le code ne marchait pas comme voulu.
-Quelles améliorations pourriez-vous encore apporter ?
-Vous devoir pouvoir expliquer votre code afin de valider une amélioration.
-
 1. **Validation et retour utilisateur** :
    - Ajouter des boutons de validation et de réinitialisation des réponses.
    - Améliorer le feedback utilisateur avec des messages clairs et des animations.
@@ -104,8 +92,6 @@ Vous devoir pouvoir expliquer votre code afin de valider une amélioration.
 ```JS
 
 ```
-
-# Chat Rapport
 
 # Rapport de Projet - Semaine 1
 
@@ -234,7 +220,7 @@ je me suis aidé de npm run dev et npm run build pour voir si mon code marchait,
   - Assure une liaison bidirectionnelle entre le parent et l'enfant.
   - Permet à l'enfant de modifier les données reçues.
 
-  Un **prop**, c'est comme passer une information à un composant enfant pour qu'il l'utilise, mais sans qu'il puisse la modifier (npn muable). En revanche, un **v-model** permet de partager une donnée entre le parent et l'enfant, où chacun peut la mettre à jour, et les deux voient les changements en même temps.
+  Un **prop**, c'est comme passer une information à un composant enfant pour qu'il l'utilise, mais sans qu'il puisse la modifier (non muable). En revanche, un **v-model** permet de partager une donnée entre le parent et l'enfant, où chacun peut la mettre à jour, et les deux voient les changements en même temps.
 
 ### Comment rendre la propriété placeholder optionnelle ?
 
@@ -793,7 +779,7 @@ La nouvelle verison est plus dynamique et plus compacte. Elle contient égalemen
 3. **Pourquoi utiliser des styles scoped dans Vue ?**
    - L'utilisation de `scoped` permet de limiter l'application des styles uniquement au composant en question, ce qui évite les conflits de styles avec d'autres parties de l'application.
 
-# Réponses aux questions
+## Réponses aux questions
 
 **Que se passe-t-il lorsqu'on ne met pas de valeur à answer-detail ?**
 
@@ -836,7 +822,7 @@ function reset(event: Event): void {
 }
 ```
 
-Alors QuizForm est un compusant (parent ou enfants?) où il y a toutes les importations.
+Alors QuizForm est un composant parent où il y a toutes les importations.
 Je voulais implémenter des functions dans `QuestionSelect.vue` comme QuiForm et ça créait des conflits lors des importations.
 
 J'ai donc corrigé en prenant le code de depuis `QuestionCheckbox.vue`:
@@ -912,19 +898,23 @@ watch(model, (newModel) => {
 Les 3 lignes props.answer.length === value.value.length && props.answer.every((val) => value.value. et model.value = isCorrect ? QuestionState.Correct : QuestionState.Wrongincludes(val)) ont été faite avec ChatGPT,car je n'avais pas compris qu'il fallait comparer les valeurs entre elles et les écrire de la sorte.
 
 1. **Pourquoi avoir choisi l'amélioration de `QuestionCheckbox.vue` ?**
+
    - L'amélioration de `QuestionCheckbox.vue` permet de gérer des questions où plusieurs réponses sont possibles. Cela rend le quiz plus flexible et plus proche de certaines questions de type "vrai/faux" ou "plusieurs bonnes réponses", ce qui est souvent utilisé dans des quiz plus complexes.
 
 2. **Comment avez-vous implémenté cette amélioration ?**
+
    - J'ai modifié le composant `QuestionCheckbox.vue` en m'inspirant de `QuestionRadio.vue` pour que l'utilisateur puisse sélectionner plusieurs cases au lieu d'une seule. J'ai ajusté le modèle de données et la logique de validation pour accepter plusieurs réponses, puis j'ai testé le composant pour m'assurer qu'il fonctionnait comme prévu.
 
 3. **Quels problèmes avez-vous rencontrés lors de l'implémentation de cette amélioration ?**
+
    - L'un des problèmes majeurs a été de m'assurer que le composant gérait correctement la sélection de plusieurs cases et que la validation était bien faite sur toutes les réponses sélectionnées. J'ai dû passer un peu de temps à tester différents cas pour garantir qu'aucune réponse incorrecte ne passait. Aussi je devais m'assurer que ce type de question était pris en compte dans le score.
 
 4. **Quelles améliorations pourriez-vous encore apporter dans `QuestionCheckbox.vue` ?**
+
    - Je pourrais améliorer le code pour avoir une meilleure gestion des erreurs utilisateur (par exemple, prévenir l'utilisateur si aucune réponse n'est sélectionnée) pourrait être ajoutée.
 
-4. **Amélioration de QuizTrivia**
-Ancien code fetch de QuizTrivia:
+5. **Amélioration de QuizTrivia**
+   Ancien code fetch de QuizTrivia:
 
 ```JS
 fetch('https://opentdb.com/api.php?amount=10&type=multiple')
@@ -956,6 +946,7 @@ function fetchQuestions(): void {
     })
 }
 ```
+
 Cette version récupère comme la précédente les questions via l'API.
 
 L'ancienne version se contentait de récupérer les questions via l'API avec fetch et stockaient les variable dans question.value.
@@ -966,6 +957,7 @@ J'ai également ajouté cette méthode:
 // Charger les questions au démarrage
 fetchQuestions()
 ```
+
 Qui permet de charger les questions au démarrage.
 
 La nouvelle version initialise question.value dans un tableau de questions (qui est ici data.results). Le data.results est lui initialisé à QuestionState.Empty qui fait que les réponses soient vides au début.
@@ -1028,16 +1020,150 @@ L'un des défis majeurs a été de m'assurer que le composant `QuestionSelect.vu
 
 - **Difficulté avec l'intégration du composant :** Quand j'ai intégré le composant dans `QuizForm`, je me suis rendu compte qu'il y avait quelques soucis avec les props, notamment avec la gestion des options et des réponses. J'ai résolu ce problème en m'assurant que les données passées au composant étaient bien formatées et en vérifiant que les bonnes valeurs étaient liées aux réponses dans `v-model`.
 
+**Ordre aléatoire des choix dans QuestionRadio.vue.**
+
+J'ai ajouté une fonction shuffleArray qui mélange aléatoirement les options une seule fois, et ce, au moment où le composant est monté.
+
+Voici le code que j'ai ajouté:
+
+```JS
+// Mélanger un tableau
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];  // échange
+  }
+  return shuffled;
+}
+
+```
+
+Cette fonction mélange un tableau aléatoirement. Elle fonctionne en parcourant le tableau de la fin vers le début, en échangeant chaque élément avec un autre élément choisi aléatoirement avant lui.
+
+cette fonction va avec:
+
+```JS
+onMounted(() => {
+  shuffledOptions.value = shuffleArray(props.options);  // Mélange une seule fois les options
+});
+```
+
+Cette fonction garantit que l'ordre des options est mélangé une seule fois au début, et qu'il reste fixe pendant que l'on effectue le quiz.
+
+Pour pouvoir utiliser ces deux fonctions il faut d'abord initialiser ShuffledOptions:
+
+```JS
+const shuffledOptions = ref<{ value: string; text: string }[]>([]);
+```
+
+je l'ai initialisé en la mettant comme une référence réactive qui stocke les options mélangées.
+
+Puis dans le `template`, j'ai remplacé ça :
+
+```JS
+<div v-for="option in props.options" :key="option.value" class="form-check">
+```
+
+par:
+
+```JS
+<div v-for="option in shuffledOptions" :key="option.value" class="form-check">
+
+```
+
+Cela fait en sorte que les options affichées soient issues de la variable qui contient l'ordre mélangé et garanti qu'elles restent dans cet ordre pendant l'interaction.
+
+### Améliorations de style
+
+Il y a deux façons de changer de style :
+
+1. Depuis main.css
+
+2. avec <style scoped>
+
+   - se fait directement dans le composant
+
+La différence est qu'avec main.css, il faut ajouter 'class=""', avec le nom du style. Par exemple:
+
+```HTML
+<p class="question-title">Question 6</p>
+```
+
+et class fait appel à:
+
+```CSS
+.question-title {
+  font-family: 'Arial', sans-serif; /* Choisir une police de caractères */
+  font-size: 1.5rem; /* Taille du texte */
+  font-weight: bold; /* Mettre en gras */
+  color: #ff66b2; /* Couleur du texte */
+  margin-bottom: 10px; /* Espacement en bas */
+}
+```
+
+qui se situe dans main.css. L'avantage avec main.css est qu'on modifie directement le style et il s'applique à toutes les pages souhaitées. Avec style scoped, l'avantage est que si on veut appliquer un style différent à chaque page on peut. Le problème est plus dans l'organisation du code où ça ajoute des lignes de code en plus.
+
+#### Explications de main.css
+
+```CSS
+.container {
+  background-color: #f6e1f2; /* Fond rose clair très doux */
+  padding: 25px; /*Ajoute des espaces sur les bords latéraux*/
+  border-radius: 12px; /*Arrondis*/
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1); /*effet ombre*/
+}
+```
+
+définit le style général du conteneur du quiz, donc la zone qui entoure tout le contenu du quiz.
+
+Le code de l'écriture du titre:
+
+```CSS
+.quiz-title {
+  font-family: 'Arial', sans-serif;
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #862d7e; /* Violet foncé */
+  text-align: center;
+  margin-bottom: 15px;
+}
+```
+
+personnalise l'apparence du texte ayant la classe `.quiz-title` : il lui donne une police spécifique, une taille de texte assez grande, la rend en gras, change la couleur et centre le texte.
+
+Pour les boutons :
+
+```CSS
+.btn {
+  --bs-btn-color: #a83b9e; /* Texte violet foncé */
+  --bs-btn-border-color: #ff66b2; /* Bordure rose vif */
+  --bs-btn-focus-shadow-rgb: 255, 153, 204; /* Ombre rose doux au focus */
+  --bs-btn-active-shadow: inset 0 3px 6px rgba(255, 102, 178, 0.2); /* Ombre interne légère rose */
+}
+```
+
+Ce bout de code personnalise l'apparence d'un bouton en définissant des couleurs pour le texte, la bordure, l'ombre au focus et l'ombre interne active avec des tons de violet et de rose.
+j'ai hiérarchisé pour appliquer un style différent à chaque bouton, mais le fonctionnment est le même pour les boutons info, primary et secondary.
+
+# Choix des Améliorations
+
+Pourquoi avez-vous choisi ces améliorations ?
+
+Comment les avez-vous implémentées ?
+J'ai implémenté les différentes améliorations en m'inspirant principalement du code des composants réalisés en classe (en m'inspirant par exemple de Questionradio pour faire QuestionSelect). Je me suis également documentée sur Vue.js pour approfondir mes connaissances.
+
+Quels problèmes avez-vous rencontrés ?
+Pendant que je faisais le projet j'avais perdu de vue que QuizForm était le composant principal (parent) et que pour créer d'autres composants, il ne fallait pas s'inspirer de lui pour faire les autres composants.
+
 #### Quelles améliorations pourrais-je encore apporter ?
 
-Bien que cette fonctionnalité soit déjà fonctionnelle, il existe encore quelques améliorations possibles :
-
-- **Amélioration de l'interface utilisateur :** Ajouter des styles personnalisés pour rendre le sélecteur plus agréable visuellement et mieux intégré au design global de l'application.
-- **Ajout de la validation pour plusieurs réponses possibles :** Actuellement, le système ne permet de valider qu'une seule réponse. Si la question peut avoir plusieurs bonnes réponses, il serait intéressant de permettre à l'utilisateur de sélectionner plusieurs options et de les valider simultanément.
-- **Feedback utilisateur amélioré :** Lors de la sélection de la réponse, afficher immédiatement si la réponse est correcte ou non (par exemple, en changeant la couleur du texte ou du fond du sélecteur).
+Pour **Ordre aléatoire des choix dans QuestionRadio.vue.**;
+J'aurais pu faire en sorte que quand on clique sur le bouton réinitialiser, les options des réponses se mélangent.
 
 ### Notes de compréhension
 
 Que veut dire qu'un code est plus dynamique?:
 
-Un code est plus dynamique lorsqu'il interagit avec l'utilisateur, réagit aux changements ou adapte son comportement en fonction de divers facteurs (données,environnements,conditions,...)
+Un code est plus dynamique lorsqu'il interagit avec l'utilisateur, réagit aux changements ou adapte son comportement en fonction de divers facteurs (données,environnements,conditions,...).
+Props: sert à communiquer avec le composant parent

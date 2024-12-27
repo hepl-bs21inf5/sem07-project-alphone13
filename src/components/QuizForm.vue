@@ -1,10 +1,25 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import QuestionRadio from './Questionradio.vue'
 import QuestionText from './QuestionText.vue'
 import { QuestionState } from '@/utils/models'
 import QuestionCheckbox from './QuestionCheckbox.vue'
 import QuestionSelect from './QuestionSelect.vue'
+
+// Mélanger un tableau
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array] // Crée une copie du tableau
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]] // Echange les éléments
+  }
+  return shuffled
+}
+
+onMounted(() => {
+  // Mélanger les questions au moment de l'initialisation
+  questions.value = shuffleArray(questions.value)
+})
 
 // Déclarer les questions comme un tableau réactif
 const questions = ref([
@@ -28,7 +43,6 @@ const questions = ref([
     ],
     answer: 'dio',
     type: 'select',
-
   },
 
   {
@@ -111,11 +125,16 @@ function reset(event: Event): void {
   questionStates.value = questionStates.value.map(() => QuestionState.Empty) //on met l'état des réponses à vide.
 }
 
+// Mélange des questions après le montage
+onMounted(() => {
+  questions.value = shuffleArray(questions.value)
+})
 </script>
 
 <template>
   <form>
     <p>&nbsp;</p>
+    <p class="question-title">Question 1</p>
     <!--Là on a modifier le v-model correct.Answer en questionStates pour que ça corresponde à une valeur réactive (ref), qu'on a définit plus haut. -->
     <QuestionRadio
       id="cheval"
@@ -130,6 +149,8 @@ function reset(event: Event): void {
       ]"
     />
     &nbsp;
+    <p class="question-title">Question 2</p>
+
     <QuestionSelect
       id="question-select-jojo"
       v-model="questionStates[1]"
@@ -142,7 +163,7 @@ function reset(event: Event): void {
       answer="StarPlatinum"
       answer-detail="Le Stand de Jotaro Kujo s'appelle Star Platinum, connu pour sa vitesse et sa force exceptionnelles."
     />
-
+    <p class="question-title">Question 3</p>
     &nbsp;
     <!--ça importe ce qu'il y a dans le questiontext. permet de faire une réponse libre-->
     <QuestionText
@@ -154,6 +175,8 @@ function reset(event: Event): void {
       :answer="['4', 'quatre', 'Quatre', 'Un quadripède']"
     />
     &nbsp;
+    <p class="question-title">Question 4</p>
+
     <QuestionRadio
       id="calcul"
       v-model="questionStates[3]"
@@ -167,6 +190,8 @@ function reset(event: Event): void {
       ]"
     />
     &nbsp;
+    <p class="question-title">Question 5</p>
+
     <QuestionCheckbox
       id="games"
       v-model="questionStates[4]"
@@ -182,6 +207,8 @@ function reset(event: Event): void {
       answer-detail="['Pou et Talking with Tom ne sont pas des licences Nintendo.']"
     />
     <p>&nbsp;</p>
+    <p class="question-title">Question 6</p>
+
     <QuestionRadio
       id="eiffel"
       v-model="questionStates[5]"
@@ -195,6 +222,7 @@ function reset(event: Event): void {
       ]"
     />
     &nbsp;
+    <p class="question-title">Question 7</p>
 
     <QuestionSelect
       id="Jojo's Bizarre Adventure"
@@ -210,32 +238,21 @@ function reset(event: Event): void {
       answer-detail="Dio Brando est l'antagoniste principal de Stardust Crusaders. Son Stand est Tha Warudo."
     />
   </form>
-  <div>Réponses correctes : {{ questionStates }}</div>
+  &nbsp;
+  <div>Debug états : {{ questionStates }}</div>
   &nbsp;
   <button class="btn btn-primary" :class="{ disabled: !filled }" @click="submit">Terminer</button>
   &nbsp;
-  <button class="btn btn-primary" @click="reset">Réinitialiser</button>
-  <div>Score : {{ score }} / {{ totalScore }}</div>
+  <button class="btn btn-primary" @click="reset">Réinitialiser</button>&nbsp;
+  <div class="score">Score : {{ score }} / {{ totalScore }}</div>
+  &nbsp;
 </template>
 
 <style scoped>
 .text-danger {
-  color: rgb(128, 0, 0) !important;
+  color: rgb(239, 46, 46) !important;
 }
 .text-success {
   color: rgb(196, 34, 196) !important;
-}
-</style>
-<style>
-.buttons {
-  margin-top: 20px;
-  display: flex;
-  gap: 10px;
-}
-
-.score {
-  margin-top: 20px;
-  font-size: 1.2rem;
-  font-weight: bold;
 }
 </style>

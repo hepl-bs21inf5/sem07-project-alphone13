@@ -1,42 +1,93 @@
 /* https://getbootstrap.com/docs/5.3/components/buttons/#variables */
 /* Styles généraux pour tous les boutons */
+/* Bouton principal */
 .btn {
-  --bs-btn-color: #4b0082; /* Couleur du texte (violet intense pastel) */
-  --bs-btn-border-color: #e6e6fa; /* Couleur de bordure par défaut (lavande très claire) */
-  --bs-btn-focus-shadow-rgb: 216, 191, 216; /* Ombre violette douce au focus (tons lavande) */
-  --bs-btn-active-shadow: inset 0 3px 5px rgba(186, 85, 211, 0.125); /* Ombre interne douce (violet doux) */
+  --bs-btn-color: #a83b9e; /* Texte violet foncé */
+  --bs-btn-border-color: #ff66b2; /* Bordure rose vif */
+  --bs-btn-focus-shadow-rgb: 255, 153, 204; /* Ombre rose doux au focus */
+  --bs-btn-active-shadow: inset 0 3px 6px rgba(255, 102, 178, 0.2); /* Ombre interne légère rose */
 }
 
-/* Bouton "Terminer" (violet plus foncé) */
+/* Bouton "Terminer" */
 .btn-primary {
-  --bs-btn-bg: #d291e6; /* Une teinte plus foncée de lavande pastel */
-  --bs-btn-hover-bg: #c77aeb; /* Violet légèrement plus foncé au survol */
-  --bs-btn-hover-color: #4b0082; /* Couleur de texte plus foncée au survol */
-  --bs-btn-active-bg: #b166d6; /* Violet foncé pastel au clic */
-  --bs-btn-active-border-color: #9c4fc1; /* Bordure plus foncée lors de l'activation */
-  --bs-btn-disabled-bg: #dcd6eb; /* Bleu lavande foncé pour l'état désactivé */
-  --bs-btn-disabled-color: #6a3cb0; /* Texte en violet plus foncé pour l'état désactivé */
+  --bs-btn-bg: #cd44c19f; /* Violet doux pour le fond */
+  --bs-btn-hover-bg: #ff66b2; /* Rose vif au survol */
+  --bs-btn-hover-color: #ffffff; /* Texte blanc au survol */
+  --bs-btn-active-bg: #b738ac; /* Violet foncé au clic */
+  --bs-btn-active-border-color: #ff3385; /* Bordure rose foncé */
+  --bs-btn-disabled-bg: #ffc4e6; /* Rose pâle pour l'état désactivé */
+  --bs-btn-disabled-color: #bf25b2; /* Texte violet foncé pour l'état désactivé */
 }
 
-/* Bouton "Réinitialiser" (lavande plus foncée) */
+/* Bouton "Réinitialiser" */
 .btn-secondary {
-  --bs-btn-bg: #d1c6e8; /* Lavande foncé plus doux pour le fond */
-  --bs-btn-hover-bg: #c4b7e0; /* Lavande plus foncée au survol */
-  --bs-btn-hover-color: #4b0082; /* Texte en violet plus foncé au survol */
-  --bs-btn-active-bg: #a9a0d9; /* Violet pastel foncé au clic */
-  --bs-btn-active-border-color: #b19cd9; /* Bordure violet foncé lors de l'activation */
-  --bs-btn-disabled-bg: #e8e8f3; /* Lavande très pâle lors du désactivé */
-  --bs-btn-disabled-color: #8a68b0; /* Texte désactivé en violet plus foncé */
+  --bs-btn-bg: #ff66b2; /* Rose vif pour le fond */
+  --bs-btn-hover-bg: #eb77a5; /* Rose plus foncé au survol */
+  --bs-btn-hover-color: #ffffff; /* Texte blanc au survol */
+  --bs-btn-active-bg: #ad17a1; /* Violet foncé au clic */
+  --bs-btn-active-border-color: #ff66b2; /* Bordure rose vif */
+  --bs-btn-disabled-bg: #f7b9d4; /* Rose doux pour l'état désactivé */
+  --bs-btn-disabled-color: #c34fb9; /* Texte violet foncé pour l'état désactivé */
 }
 
-/* Bouton "Nouvelles questions" (lavande foncée) */
+/* Bouton "Nouvelles questions" */
 .btn-info {
-  --bs-btn-bg: #e1c5f0; /* Une teinte un peu plus foncée de lavande clair */
-  --bs-btn-hover-bg: #d2aef0; /* Survol un peu plus foncé */
-  --bs-btn-hover-color: #4b0082; /* Texte en violet foncé au survol */
-  --bs-btn-active-bg: #c79df0; /* Violet un peu plus foncé au clic */
-  --bs-btn-active-border-color: #b19cd9; /* Bordure violet foncé lors de l'activation */
-  --bs-btn-disabled-bg: #f1f0fa; /* Couleur plus claire pour l'état désactivé */
-  --bs-btn-disabled-color: #b19cd9; /* Texte désactivé en violet pastel foncé */
+  --bs-btn-bg: #f08fc0; /* Violet clair avec touche rose */
+  --bs-btn-hover-bg: #ff66b2; /* Rose vif au survol */
+  --bs-btn-hover-color: #ffffff; /* Texte blanc au survol */
+  --bs-btn-active-bg: #93308a; /* Violet foncé au clic */
+  --bs-btn-active-border-color: #ff66b2; /* Bordure rose vif */
+  --bs-btn-disabled-bg: #ffd9e6; /* Rose très pâle pour l'état désactivé */
+  --bs-btn-disabled-color: #c652bcd8; /* Texte violet foncé pour l'état désactivé */
 }
 
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+/*Style général du quiz*/
+.quiz-title {
+  font-family: 'Arial', sans-serif;
+  font-size: 2.2rem;
+  font-weight: bold; /*texte en gras*/
+  color: #862d7e; /* Violet foncé */
+  text-align: center; /*alignement au milieu*/
+  margin-bottom: 15px;
+}
+
+.container {
+  background-color: #f6e1f2; /* Fond rose clair très doux */
+  padding: 25px; /*Ajoute des espaces sur les bords latéraux*/
+  border-radius: 12px; /*Arrondis*/
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1); /*effet ombre*/
+}
+/*écriture du titre*/
+.quiz-title {
+  color: #862d7e;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+}
+
+.question-title {
+  font-family: 'Arial', sans-serif; /* Choisir une police de caractères */
+  font-size: 1.5rem; /* Taille du texte */
+  font-weight: bold; /* Mettre en gras */
+  color: #ff66b2; /* Couleur du texte */
+  margin-bottom: 10px; /* Espacement en bas */
+}
+.score {
+  margin-top: 20px;
+  font-size: 1.5rem; /* Augmenter la taille du texte */
+  font-weight: bold;
+  color: #ff66b2; /* Couleur rose vif */
+  background-color: #862d7e; /* Fond rose clair */
+  padding: 10px 20px; /* Espacement autour du texte */
+  border-radius: 12px; /* Bords arrondis */
+  text-align: center; /* Centrer le texte */
+  box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3); /* Ombre rose pour un effet de profondeur */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease; /* Effet de transition */
+}

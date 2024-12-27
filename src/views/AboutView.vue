@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-3">
-    <h1>À propos</h1>
+    <h1 class="quiz-title">À propos</h1>
     <p>
       Bienvenue sur notre site ! 🌟 Nous sommes ravis de vous accueillir sur notre plateforme dédiée
       au projet de la HEP. Notre mission est de réussir cette année académique. Que vous soyez un
