@@ -1,61 +1,10 @@
 # JOURNAL DE BORD
 
-## Réponses aux questions avec mes propres mots
-
-un watch est un handler. Il observe une donnée et quand la donnée change le watch s'exécute.
-
-Un handler (ou gestionnaire en français) est une fonction ou un bloc de code que vous définissez pour répondre à un événement ou à une situation particulière (pris de Chat)
-
-Proposer une autre manière de calculer le score et comparer les deux méthodes.
-
-# Temps
-
-commencé à 10h15 et finis ce que qu'il fallait faire vers environ 11h30
-
 ## Améliorations des composants
-
-#### Problèmes rencontrés avec les boutons terminer et réinitialiser
-
-J'arrivais pas à faire fonctionner les boutons correctement. J'ai dû demander de l'aide car je ne trouvais pas l'erreur. En fait, les boutons marchaient correctement que après avoir cliquer sur 'réinitialiser'. Puis par la suite c'était le bouton réinitialiser qui ne marchait pas. Je suis restée bloquer dessus pendant un bon moment et j'ai demandé de l'aide au prof.
-
-Ce dont j'ai compris avec ça c'est qu'il faut bien faire attention à bien lier les valeurs avec leurs propriétés. Aussi il faut faire attention à la manière dont on définit les constantes et les imports car sinon le code ne marche pas. Finalement, j'ai décidé de tout effacer et de recommencer afin de voir si le problème venait des imports ou bien des fonctions. J'ai vu que le problème venait de la synchronisation et de la gestion associées aux boutons.
 
 La gestion des états des boutons était compliquée dans le premier code car les bouton n'appelaient pas de méthodes bien définies. En fait, la gestion des boutons se fait avec questionState. Et dans le premier code j'ai mal lié les états de questionState et c'est pour ça qu'il y avait des incohérences.
 
 J'ai ensuite déclaré les constantes (états des question, score, total score, rempli, et envoyé) et c'était similaire à quizForm. Pour j'ai défini les différentes actions (méthodes) qui vont envoyer les résultats, réinitiliser les questions cochées, mélanger les questions (fetchQuestions) et qui mélange les réponses.
-
-#### QuestionSelect.Vue
-
-J'ai implémenté une question avec une sélection multiple dans **QuizForm.Vue**:
-
-et j'ai également mis dans **QuizForm.Vue** une question type déroulant.
-Pour que la logique du code puisse toujours marcher, j'ai transformé certaines parties.
-
-const questionStates = ref<QuestionState[]>([])
-
-en
-const questionStates = ref<QuestionState[]>(new Array(questions.value.length).fill(QuestionState.Empty));
-
-1. **Validation et retour utilisateur** :
-   - Ajouter des boutons de validation et de réinitialisation des réponses.
-   - Améliorer le feedback utilisateur avec des messages clairs et des animations.
-2. **Gestion des réponses incorrectes** :
-   - Intégrer une indication visuelle pour signaler les réponses incorrectes.
-3. **Optimisation de l'interface utilisateur** :
-   - Rendre le design plus interactif et accessible avec des composants Vue et Bootstrap.
-4. **Gestion avancée des scores** :
-
-   - Enregistrer les scores pour permettre une analyse à long terme.
-
-   1. **Personnalisation et feedback utilisateur** :
-
-   - Ajouter des messages ou animations pour indiquer les réponses correctes ou incorrectes.
-   - Améliorer la gestion des erreurs pour guider l’utilisateur.
-
-5. **Optimisation des interactions** :
-
-   - Intégrer une barre de progression pour visualiser l’avancement.
-   - Simplifier les transitions pour les rendre plus intuitives.
 
 ```JS
 
@@ -773,6 +722,7 @@ Sinon, afficher le texte normal de answerDetail.
   J'ai fait le ce qu'il faillait faire en classe en 1 heure.
 
 ## Lien Github
+
 https://hepl-bs21inf5.github.io/sem07-project-alphone13/
 
 ## Notes concernant les améliorations
@@ -1129,7 +1079,13 @@ j'ai hiérarchisé pour appliquer un style différent à chaque bouton, mais le 
 J'ai implémenté les différentes améliorations en m'inspirant principalement du code des composants réalisés en classe (en m'inspirant par exemple de Questionradio pour faire QuestionSelect). Je me suis également documentée sur Vue.js pour approfondir mes connaissances.
 
 **Quels problèmes avez-vous rencontrés ?**
-Pendant que je faisais le projet j'avais perdu de vue que QuizForm était le composant principal (parent) et que pour créer d'autres composants, il ne fallait pas s'inspirer de lui pour faire les autres composants.
+Pendant que je faisais le projet j'avais perdu de vue que QuizForm était le composant principal (parent) et que pour créer d'autres composants, il ne fallait pas s'inspirer de lui pour faire les autres composants. Et cette erreur m'a fait perdre beaucoup de temps. Voici un extrait de ce que j'avais écrit auparavant dans le rapport à propos de boutons:
+
+**Problèmes rencontrés avec les boutons terminer et réinitialiser**
+
+J'arrivais pas à faire fonctionner les boutons correctement. J'ai dû demander de l'aide car je ne trouvais pas l'erreur. En fait, les boutons marchaient correctement que après avoir cliquer sur 'réinitialiser'. Puis par la suite c'était le bouton réinitialiser qui ne marchait pas. Je suis restée bloquer dessus pendant un bon moment et j'ai demandé de l'aide au prof.
+
+Ce dont j'ai compris avec ça c'est qu'il faut bien faire attention à bien lier les valeurs avec leurs propriétés. Aussi il faut faire attention à la manière dont on définit les constantes et les imports car sinon le code ne marche pas. Finalement, j'ai décidé de tout effacer et de recommencer afin de voir si le problème venait des imports ou bien des fonctions. J'ai vu que le problème venait de la synchronisation et de la gestion associées aux boutons, ainsi que du modèle dont je m'inspirait pour écrire le code des boutons.
 
 #### Quelles améliorations pourrais-je encore apporter ?
 
@@ -1144,13 +1100,3 @@ J'aurais pu par exemple intégrer une barre de progression pour visualiser l’a
 
 **Pour le style glogal du quiz**:
 J'aurais pu mettre la barre de navigation (navbar) en rose comme le reste de mon quiz.
-
-# Pour conclure le projet
-
-J'ai appris à créer une page web
-### Notes de compréhension
-
-Que veut dire qu'un code est plus dynamique?:
-
-Un code est plus dynamique lorsqu'il interagit avec l'utilisateur, réagit aux changements ou adapte son comportement en fonction de divers facteurs (données,environnements,conditions,...).
-Props: sert à communiquer avec le composant parent
