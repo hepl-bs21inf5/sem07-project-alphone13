@@ -772,6 +772,9 @@ Sinon, afficher le texte normal de answerDetail.
 - **Temps passé :** 7 heures
   J'ai fait le ce qu'il faillait faire en classe en 1 heure.
 
+## Lien Github
+https://hepl-bs21inf5.github.io/sem07-project-alphone13/
+
 ## Notes concernant les améliorations
 
 Au début, de chaque nouvelles améliorations (pour les composants) je prenais exemple sur le mauvais composant. Ce qui fait que j'ai passé énormément de temps à essayer de lier deux composants (parents?). Par exemple pour QuestionSelect.vue je me suis inspiré de QuizForm.vue au lieu de QuestionCheckBox par exemple. Ce qui fait que quand je voulais importer QuestionSelect.vue dans QuizForm.vue il y avait des beug. C'est après de longues heures à me tromper que j'ai bien compris qu'il fallait faire attention aux liens qu'il y a entre les différents composants.
@@ -1122,7 +1125,7 @@ j'ai hiérarchisé pour appliquer un style différent à chaque bouton, mais le 
 
 **Pourquoi avez-vous choisi ces améliorations ?**
 
-Comment les avez-vous implémentées ?
+**Comment les avez-vous implémentées ?**
 J'ai implémenté les différentes améliorations en m'inspirant principalement du code des composants réalisés en classe (en m'inspirant par exemple de Questionradio pour faire QuestionSelect). Je me suis également documentée sur Vue.js pour approfondir mes connaissances.
 
 **Quels problèmes avez-vous rencontrés ?**
@@ -1136,11 +1139,11 @@ je pense que j'aurais pu éviter de faire des répétitions dans le code. Aussi 
 Pour **Ordre aléatoire des choix dans QuestionRadio.vue.**;
 J'aurais pu faire en sorte que quand on clique sur le bouton réinitialiser, les options des réponses se mélangent.
 
-Pour \*\*\*\*
+Pour **QuizTrivia et QuizForm**
 J'aurais pu par exemple intégrer une barre de progression pour visualiser l’avancement lors du remplissage du quiz.
 
-- Simplifier les transitions pour les rendre plus intuitives.
-
+**Pour le style glogal du quiz**:
+J'aurais pu mettre la barre de navigation (navbar) en rose comme le reste de mon quiz
 ### Notes de compréhension
 
 Que veut dire qu'un code est plus dynamique?:
