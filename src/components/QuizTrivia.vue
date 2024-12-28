@@ -109,7 +109,7 @@ function submit(event: Event): void {
         Nouvelles questions
       </button>
     </div>
-    <div>Debug états : {{ questionStates }}</div>
+
     <!-- Affichage du score -->
     <div v-if="submitted" class="score">
       <p>Votre score : {{ score }} / {{ totalScore }}</p>

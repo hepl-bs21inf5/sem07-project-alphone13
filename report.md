@@ -1143,7 +1143,11 @@ Pour **QuizTrivia et QuizForm**
 J'aurais pu par exemple intégrer une barre de progression pour visualiser l’avancement lors du remplissage du quiz.
 
 **Pour le style glogal du quiz**:
-J'aurais pu mettre la barre de navigation (navbar) en rose comme le reste de mon quiz
+J'aurais pu mettre la barre de navigation (navbar) en rose comme le reste de mon quiz.
+
+# Pour conclure le projet
+
+J'ai appris à créer une page web
 ### Notes de compréhension
 
 Que veut dire qu'un code est plus dynamique?:

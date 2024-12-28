@@ -219,7 +219,6 @@ function reset(event: Event): void {
     />
   </form>
   &nbsp;
-  <div>Debug états : {{ questionStates }}</div>
   &nbsp;
   <button class="btn btn-primary" :class="{ disabled: !filled }" @click="submit">Terminer</button>
   &nbsp;
