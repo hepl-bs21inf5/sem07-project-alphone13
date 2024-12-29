@@ -1,12 +1,4 @@
 # JOURNAL DE BORD
-```JS
-
-```
-
-```JS
-
-```
-
 # Rapport de Projet - Semaine 1
 
 ## Temps de travail
@@ -895,7 +887,7 @@ J'ai choisi cette approche car elle est simple et très adaptée à un formulair
 ### Tâches réalisées
 
 - **Création du composant `QuestionSelect.vue`** : J'ai développé un composant permettant de gérer une question de type "sélection" avec un menu déroulant (`<select>`) se trouvant dans le template.
-  Voici un extrait de code pour expliquer cela :
+  Voici un extrait de code pour illustrer :
 
   ```HTML
   <template>
