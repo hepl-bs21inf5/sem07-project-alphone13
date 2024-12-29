@@ -1072,7 +1072,7 @@ Pour **Ordre aléatoire des choix dans QuestionRadio.vue.**;
 J'aurais pu faire en sorte que quand on clique sur le bouton réinitialiser, les options des réponses se mélangent.
 
 Pour **QuizTrivia et QuizForm**
-J'aurais pu par exemple intégrer une barre de progression pour visualiser l’avancement lors du remplissage du quiz.
+J'aurais pu par exemple intégrer une barre de progression pour visualiser l’avancement lors du remplissage du quiz. Aussi dans QuizForm faire en sorte que les réponses se mélangent quand je rafraîchis la page.
 
 **Pour le style glogal du quiz**:
 J'aurais pu mettre la barre de navigation (navbar) en rose comme le reste de mon quiz.
