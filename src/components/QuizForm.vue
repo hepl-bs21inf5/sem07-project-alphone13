@@ -218,7 +218,7 @@ function reset(event: Event): void {
       answer-detail="Dio Brando est l'antagoniste principal de Stardust Crusaders. Son Stand est Tha Warudo."
     />
   </form>
-  &nbsp; &nbsp;
+  <p>&nbsp;</p>
   <button class="btn btn-primary" :class="{ disabled: !filled }" @click="submit">Terminer</button>
   &nbsp;
   <button class="btn btn-primary" @click="reset">Réinitialiser</button>&nbsp;
