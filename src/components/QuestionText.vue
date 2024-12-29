@@ -37,7 +37,7 @@ watch(model, (newModel) => {
 })
 </script>
 <template>
-  <label for="exampleFormControlInput" class="form-label"> Combien de pattes a un chat ? </label>
+  <label for="exampleFormControlInput" class="form-label"> Combien de pattes a un chat ? (répondez avec max. 2 mots) </label>
   <input
     id="exampleFormControlInput"
     v-model="value"
