@@ -149,7 +149,7 @@ function reset(event: Event): void {
     <QuestionText
       id="exampleFormControlInput"
       v-model="questionStates[2]"
-      text=" Combien de pattes a un chat ?"
+      text=" Combien de pattes a un chat ? (répondez avec max. 2 mots)"
       placeholder="Veuillez saisir une réponse"
       answer-detail="Le chat est un mammifère quadrupède, donc un animal à quatre pattes."
       :answer="['4', 'quatre', 'Quatre', 'Un quadripède']"
@@ -218,8 +218,7 @@ function reset(event: Event): void {
       answer-detail="Dio Brando est l'antagoniste principal de Stardust Crusaders. Son Stand est Tha Warudo."
     />
   </form>
-  &nbsp;
-  &nbsp;
+  &nbsp; &nbsp;
   <button class="btn btn-primary" :class="{ disabled: !filled }" @click="submit">Terminer</button>
   &nbsp;
   <button class="btn btn-primary" @click="reset">Réinitialiser</button>&nbsp;
