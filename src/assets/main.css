@@ -1,0 +1,92 @@
+/* https://getbootstrap.com/docs/5.3/components/buttons/#variables */
+/* Styles généraux pour tous les boutons */
+/* Bouton principal */
+.btn {
+  --bs-btn-color: #a83b9e; /* Texte violet foncé */
+  --bs-btn-border-color: #ff66b2; /* Bordure rose vif */
+  --bs-btn-focus-shadow-rgb: 255, 153, 204; /* Ombre rose doux au focus */
+  --bs-btn-active-shadow: inset 0 3px 6px rgba(255, 102, 178, 0.2); /* Ombre interne légère rose */
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Bouton "Terminer" */
+.btn-primary {
+  --bs-btn-bg: #cd44c19f; /* Violet doux pour le fond */
+  --bs-btn-hover-bg: #ff66b2; /* Rose vif au survol */
+  --bs-btn-hover-color: #ffffff; /* Texte blanc au survol */
+  --bs-btn-active-bg: #b738ac; /* Violet foncé au clic */
+  --bs-btn-active-border-color: #ff3385; /* Bordure rose foncé */
+  --bs-btn-disabled-bg: #ffc4e6; /* Rose pâle pour l'état désactivé */
+  --bs-btn-disabled-color: #bf25b2; /* Texte violet foncé pour l'état désactivé */
+}
+
+/* Bouton "Réinitialiser" */
+.btn-secondary {
+  --bs-btn-bg: #ff66b2; /* Rose vif pour le fond */
+  --bs-btn-hover-bg: #eb77a5; /* Rose plus foncé au survol */
+  --bs-btn-hover-color: #ffffff; /* Texte blanc au survol */
+  --bs-btn-active-bg: #ad17a1; /* Violet foncé au clic */
+  --bs-btn-active-border-color: #ff66b2; /* Bordure rose vif */
+  --bs-btn-disabled-bg: #f7b9d4; /* Rose doux pour l'état désactivé */
+  --bs-btn-disabled-color: #c34fb9; /* Texte violet foncé pour l'état désactivé */
+}
+
+/* Bouton "Nouvelles questions" */
+.btn-info {
+  --bs-btn-bg: #f08fc0; /* Violet clair avec touche rose */
+  --bs-btn-hover-bg: #ff66b2; /* Rose vif au survol */
+  --bs-btn-hover-color: #ffffff; /* Texte blanc au survol */
+  --bs-btn-active-bg: #93308a; /* Violet foncé au clic */
+  --bs-btn-active-border-color: #ff66b2; /* Bordure rose vif */
+  --bs-btn-disabled-bg: #ffd9e6; /* Rose très pâle pour l'état désactivé */
+  --bs-btn-disabled-color: #c652bcd8; /* Texte violet foncé pour l'état désactivé */
+}
+
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+/*Style général du titre*/
+.quiz-title {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.2rem;
+  font-weight: bold; /*texte en gras*/
+  color: #862d7e; /* Violet foncé */
+  text-align: center; /*alignement au milieu*/
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.container {
+  background-color: #f2d4ea; /* Fond rose clair très doux */
+  padding: 25px; /*Ajoute des espaces sur les bords latéraux*/
+  border-radius: 12px; /*Arrondis*/
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1); /*effet ombre*/
+  font-family: 'Poppins', sans-serif;
+}
+
+.question-title {
+  font-family: 'Poppins', sans-serif; /*  une police de caractères */
+  font-size: 1.5rem; /* Taille du texte */
+  font-weight: bold; /* Mettre en gras */
+  color: #ff66b2; /* Couleur du texte */
+  margin-bottom: 10px; /* Espacement en bas */
+}
+.score {
+  font-family: 'Poppins', sans-serif;
+  margin-top: 20px;
+  font-size: 1.5rem; /* Augmenter la taille du texte */
+  font-weight: bold;
+  color: #ff66d1; /* Couleur rose vif */
+  background-color: #c159b8; /* Fond rose clair */
+  padding: 10px 20px; /* Espacement autour du texte */
+  border-radius: 12px; /* Bords arrondis */
+  text-align: center; /* Centrer le texte */
+  box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3); /* Ombre rose pour un effet de profondeur */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease; /* Effet de transition */
+}
+
