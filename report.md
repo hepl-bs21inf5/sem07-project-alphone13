@@ -1,11 +1,4 @@
 # JOURNAL DE BORD
-
-## Améliorations des composants
-
-La gestion des états des boutons était compliquée dans le premier code car les bouton n'appelaient pas de méthodes bien définies. En fait, la gestion des boutons se fait avec questionState. Et dans le premier code j'ai mal lié les états de questionState et c'est pour ça qu'il y avait des incohérences.
-
-J'ai ensuite déclaré les constantes (états des question, score, total score, rempli, et envoyé) et c'était similaire à quizForm. Pour j'ai défini les différentes actions (méthodes) qui vont envoyer les résultats, réinitiliser les questions cochées, mélanger les questions (fetchQuestions) et qui mélange les réponses.
-
 ```JS
 
 ```
@@ -927,19 +920,10 @@ J'ai choisi cette approche car elle est simple et très adaptée à un formulair
 #### Comment l'ai-je implémentée ?
 
 Pour implémenter cette fonctionnalité, j'ai d'abord analysé le composant `QuestionSelect.vue`, qui était déjà en place pour gérer une seule option. L'objectif était de lui permettre de traiter une liste d'options, afin que l'utilisateur puisse choisir parmi une liste déroulante. J'ai utilisé `QuestionState` pour définir clairement les différents états possibles de la question, ce qui aide à la gestion de l'affichage des résultats.
-Voici les étapes que j'ai suivies :
-
-1. **Modification de la structure des données :** J'ai ajusté les données de la question pour qu'elles incluent une liste d'options à afficher dans le sélecteur. Cela signifie que, pour chaque question de type `QuestionSelect`, il faut maintenant une clé supplémentaire avec un tableau d'options.
-
-2. **Mise à jour du template :** J'ai utilisé la balise `<select>` en HTML pour créer un menu déroulant. À l'intérieur de cette balise, j'ai utilisé la directive `v-for` pour afficher dynamiquement chaque option à partir du tableau d'options.
-
-3. **Gestion de la réponse sélectionnée :** J'ai lié le modèle `v-model` à une variable `selectedAnswer`, afin de capturer la réponse de l'utilisateur et la comparer à la réponse correcte de la question. Cela permet une gestion facile et réactive des choix de l'utilisateur.
-
-4. **Validation de la réponse :** Une fois que l'utilisateur a sélectionné une réponse, j'ai intégré une logique de validation pour comparer la réponse choisie à la réponse correcte. Si la réponse est correcte, un message de confirmation apparaît, sinon un message d'erreur est affiché.
 
 #### Quels problèmes ai-je rencontrés ?
 
-L'un des défis majeurs a été de m'assurer que le composant `QuestionSelect.vue` fonctionne correctement avec les autres composants du quiz, notamment ceux qui gèrent la validation des réponses et le passage à la question suivante.
+L'un des défis majeurs a été de m'assurer que le composant `QuestionSelect.vue` fonctionne correctement avec les autres composants du quiz, notamment ceux qui gèrent la validation des réponses et le score.
 
 - **Problème de désactivation des menus déroulants :** J'avais oublié de désactiver le menu déroulant une fois la réponse donnée. J'ai corrigé cela en utilisant la condition sur `model` pour désactiver les éléments lorsque la question est soumise ou la réponse est correcte/incorrecte.
 
